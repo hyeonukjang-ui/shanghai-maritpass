@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상하이 마리트패스 - 마이리얼트립</title>
+  <meta name="description" content="2개 상품 구매하고 상하이 현지 할인 혜택 받으세요!">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --background: #ffffff;
+      --foreground: #2b3040;
+      --primary: #0ea5e9;
+      --primary-fg: #ffffff;
+      --muted: #f0f1f3;
+      --muted-fg: #6b7280;
+      --border: #e2e4e8;
+      --destructive: #ef4444;
+      --success: #22c55e;
+      --radius: 0.75rem;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #f8f9fb; color: var(--foreground); }
+
+    /* Header */
+    .header { background: var(--background); border-bottom: 1px solid var(--border); }
+    .container { max-width: 896px; margin: 0 auto; padding: 0 1rem; }
+    .header-inner { padding: 1.5rem 0; text-align: center; }
+    .logo { height: 28px; margin-bottom: 1.5rem; }
+    h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .subtitle { color: var(--muted-fg); font-size: 0.938rem; line-height: 1.5; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 0; background: var(--background); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .tab { flex: 1; padding: 0.875rem 0; text-align: center; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; background: none; color: var(--muted-fg); border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .tab:hover { color: var(--foreground); }
+
+    /* Main */
+    .main { padding: 1.5rem 1rem 2rem; }
+    .pack-section { display: none; }
+    .pack-section.active { display: block; }
+
+    /* Pack Header */
+    .pack-header { background: var(--background); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; border: 1px solid var(--border); }
+    .pack-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .pack-desc { font-size: 0.813rem; color: var(--muted-fg); line-height: 1.5; }
+    .progress-bar { height: 6px; background: var(--muted); border-radius: 3px; margin-top: 0.75rem; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 0.4s ease; }
+
+    /* Mission Cards */
+    .mission-cards { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .card { background: var(--background); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+    .card-top { display: flex; gap: 1rem; padding: 1rem; }
+    .card-img { width: 80px; height: 80px; border-radius: 0.5rem; object-fit: cover; flex-shrink: 0; }
+    .card-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .card-title { font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem; }
+    .card-subtitle { font-size: 0.75rem; color: var(--muted-fg); }
+    .card-bottom { padding: 0 1rem 1rem; }
+    .input-row { display: flex; gap: 0.5rem; }
+    .input-row input { flex: 1; padding: 0.625rem 0.75rem; font-size: 0.813rem; border: 1px solid var(--border); border-radius: 0.5rem; outline: none; background: var(--background); font-family: inherit; }
+    .input-row input:focus { box-shadow: 0 0 0 2px rgba(14,165,233,0.25); border-color: var(--primary); }
+    .btn-confirm { padding: 0.625rem 1rem; background: var(--primary); color: var(--primary-fg); font-size: 0.813rem; font-weight: 600; border: none; border-radius: 0.5rem; cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .btn-confirm:hover { opacity: 0.9; }
+    .btn-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
+    .booking-link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--primary); text-decoration: none; font-weight: 500; margin-top: 0.5rem; }
+    .booking-link:hover { opacity: 0.8; }
+    .error-msg { color: var(--destructive); font-size: 0.75rem; font-weight: 500; margin-top: 0.5rem; }
+    .cleared-state { display: flex; align-items: center; justify-content: space-between; }
+    .cleared-info { display: flex; align-items: center; gap: 0.5rem; }
+    .cleared-check { width: 20px; height: 20px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cleared-check svg { width: 12px; height: 12px; }
+    .cleared-text { font-size: 0.813rem; color: var(--foreground); font-weight: 500; }
+    .cleared-badge { background: var(--success); color: white; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+
+    /* Rewards */
+    .rewards-section { background: var(--background); border-radius: var(--radius); padding: 1.25rem; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+    .rewards-title { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+    .reward-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.625rem 0; border-bottom: 1px solid var(--muted); }
+    .reward-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .reward-discount { background: #fef2f2; color: #dc2626; font-weight: 700; font-size: 0.813rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; white-space: nowrap; }
+    .reward-name { font-size: 0.813rem; font-weight: 500; }
+    .reward-locked { opacity: 0.4; }
+
+    /* How to */
+    .howto { background: var(--background); border-radius: var(--radius); padding: 1.25rem; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+    .howto h3 { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .step { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .step:last-child { margin-bottom: 0; }
+    .step-num { width: 24px; height: 24px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+    .step-text { font-size: 0.813rem; color: var(--muted-fg); line-height: 1.5; padding-top: 2px; }
+
+    /* Phone form */
+    .phone-box { background: var(--background); border-radius: var(--radius); padding: 1.5rem; border: 2px solid var(--primary); text-align: center; margin-bottom: 1.5rem; }
+    .phone-box h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .phone-box p { color: var(--muted-fg); font-size: 0.875rem; margin-bottom: 1rem; }
+    .phone-box input { width: 100%; padding: 0.75rem; text-align: center; font-size: 1rem; border: 1px solid var(--border); border-radius: 0.5rem; outline: none; margin-bottom: 0.75rem; font-family: inherit; }
+    .phone-box input:focus { box-shadow: 0 0 0 2px rgba(14,165,233,0.25); border-color: var(--primary); }
+    .submit-btn { width: 100%; padding: 0.875rem; background: var(--primary); color: var(--primary-fg); font-weight: 600; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-family: inherit; }
+    .submit-btn:hover { opacity: 0.9; }
+
+    /* Footer */
+    .footer { text-align: center; padding-bottom: 2rem; }
+    .footer p { color: var(--muted-fg); font-size: 0.75rem; }
+
+    @media (min-width: 768px) {
+      h1 { font-size: 1.875rem; }
+      .mission-cards { flex-direction: row; }
+      .card { flex: 1; }
+      .card-top { flex-direction: column; }
+      .card-img { width: 100%; height: 160px; border-radius: 0; margin: -1rem -1rem 0 -1rem; width: calc(100% + 2rem); }
+      .card-info { padding-top: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="container header-inner">
+      <svg class="logo" viewBox="0 0 1000 200" style="height:28px;">
+        <text x="0" y="160" font-family="Pretendard, sans-serif" font-size="180" font-weight="900" fill="#1a1a1a">Myrealtrip</text>
+      </svg>
+      <h1>상하이 마리트패스</h1>
+      <p class="subtitle">2개 상품을 구매하고 예약번호를 인증하면<br>상하이 현지 할인 혜택을 드려요!</p>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs container">
+    <button class="tab active" onclick="switchPack('pack1')">1팩: 디즈니 코스</button>
+    <button class="tab" onclick="switchPack('pack2')">2팩: 시내관광 코스</button>
+  </div>
+
+  <!-- Main -->
+  <div class="container main">
+
+    <!-- Pack 1 -->
+    <div class="pack-section active" id="pack1">
+      <div class="pack-header">
+        <div class="pack-title">1팩: 디즈니 코스</div>
+        <div class="pack-desc">디즈니랜드 + 픽업샌딩 또는 마사지 중 1개를 구매하세요</div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-pack1" style="width:0%"></div></div>
+      </div>
+
+      <div class="mission-cards" id="missions-pack1"></div>
+
+      <div class="rewards-section">
+        <div class="rewards-title">완성 시 받는 혜택</div>
+        <div class="reward-item" id="reward-pack1-0"><span class="reward-discount">12% OFF</span><span class="reward-name">하이디라오 할인</span></div>
+        <div class="reward-item" id="reward-pack1-1"><span class="reward-discount">10% OFF</span><span class="reward-name">마사지샵 할인</span></div>
+        <div class="reward-item" id="reward-pack1-2"><span class="reward-discount">10% OFF</span><span class="reward-name">康友四季 난징동루 현장할인</span></div>
+      </div>
+
+      <div id="phone-pack1" style="display:none;"></div>
+
+      <div class="howto">
+        <h3>이용방법</h3>
+        <div class="step"><div class="step-num">1</div><div class="step-text">위 상품 중 2개를 마이리얼트립에서 구매하세요</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">예약번호를 입력하고 인증하세요</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">전화번호를 입력하면 할인 혜택 URL을 문자로 보내드려요</div></div>
+      </div>
+    </div>
+
+    <!-- Pack 2 -->
+    <div class="pack-section" id="pack2">
+      <div class="pack-header">
+        <div class="pack-title">2팩: 시내관광 코스</div>
+        <div class="pack-desc">황푸강 유람선 + 우전 수향마을 야경투어를 구매하세요</div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-pack2" style="width:0%"></div></div>
+      </div>
+
+      <div class="mission-cards" id="missions-pack2"></div>
+
+      <div class="rewards-section">
+        <div class="rewards-title">완성 시 받는 혜택</div>
+        <div class="reward-item" id="reward-pack2-0"><span class="reward-discount">12% OFF</span><span class="reward-name">하이디라오 할인</span></div>
+        <div class="reward-item" id="reward-pack2-1"><span class="reward-discount">10% OFF</span><span class="reward-name">BFC 중식당 (유람선 근처) 할인</span></div>
+        <div class="reward-item" id="reward-pack2-2"><span class="reward-discount">10% OFF</span><span class="reward-name">마사지샵 할인</span></div>
+      </div>
+
+      <div id="phone-pack2" style="display:none;"></div>
+
+      <div class="howto">
+        <h3>이용방법</h3>
+        <div class="step"><div class="step-num">1</div><div class="step-text">위 상품 2개를 마이리얼트립에서 구매하세요</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">예약번호를 입력하고 인증하세요</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">전화번호를 입력하면 할인 혜택 URL을 문자로 보내드려요</div></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 마이리얼트립. All rights reserved.</p>
+    </div>
+  </div>
+
+<script>
+  // ── Config ──
+  const SUPABASE_URL = 'https://glxqsuxhiomukbtqumat.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_dQAbR9SZqND6iX7cqgBWZw_5riX65Eq';
+
+  // ── Session ID (브라우저별 고유) ──
+  function getSessionId() {
+    let sid = localStorage.getItem('maritpass_session');
+    if (!sid) {
+      sid = crypto.randomUUID();
+      localStorage.setItem('maritpass_session', sid);
+    }
+    return sid;
+  }
+  const SESSION_ID = getSessionId();
+
+  // ── Supabase REST helper ──
+  async function sb(path, options = {}) {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': options.prefer || 'return=representation',
+        ...options.headers
+      },
+      method: options.method || 'GET',
+      body: options.body ? JSON.stringify(options.body) : undefined
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw err;
+    }
+    return res.json();
+  }
+
+  async function rpc(fn, params) {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/rpc/' + fn, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    });
+    if (!res.ok) throw await res.json().catch(() => ({}));
+    return res.json();
+  }
+
+  // ── State ──
+  let missions = [];
+  const cleared = {}; // { mission_type: order_id }
+
+  // Pack별 미션 요구사항:
+  // pack1: disney 필수 + (pickup OR massage) 중 1개
+  // pack2: cruise + wuzhen 둘 다
+  function getPackMissions(pack) {
+    return missions.filter(m => m.pack === pack);
+  }
+
+  function isPackComplete(pack) {
+    const packMissions = getPackMissions(pack);
+    if (pack === 'pack1') {
+      const hasDisney = cleared['disney'];
+      const hasSecond = cleared['pickup'] || cleared['massage'];
+      return hasDisney && hasSecond;
+    }
+    return packMissions.every(m => cleared[m.mission_type]);
+  }
+
+  function getPackProgress(pack) {
+    const packMissions = getPackMissions(pack);
+    if (pack === 'pack1') {
+      let count = 0;
+      if (cleared['disney']) count++;
+      if (cleared['pickup'] || cleared['massage']) count++;
+      return count / 2;
+    }
+    const done = packMissions.filter(m => cleared[m.mission_type]).length;
+    return done / packMissions.length;
+  }
+
+  // ── Tab switching ──
+  function switchPack(pack) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (i === 0 && pack === 'pack1') || (i === 1 && pack === 'pack2'));
+    });
+    document.querySelectorAll('.pack-section').forEach(s => {
+      s.classList.toggle('active', s.id === pack);
+    });
+  }
+
+  // ── Render ──
+  function renderMissions() {
+    ['pack1', 'pack2'].forEach(pack => {
+      const container = document.getElementById('missions-' + pack);
+      const packMissions = getPackMissions(pack);
+      container.innerHTML = '';
+
+      packMissions.forEach(m => {
+        const isCleared = !!cleared[m.mission_type];
+        // pack1에서 pickup/massage는 하나만 클리어하면 나머지 비활성
+        let isDisabled = false;
+        if (pack === 'pack1' && (m.mission_type === 'pickup' || m.mission_type === 'massage')) {
+          const other = m.mission_type === 'pickup' ? 'massage' : 'pickup';
+          if (cleared[other] && !cleared[m.mission_type]) isDisabled = true;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const subtitle = pack === 'pack1' && (m.mission_type === 'pickup' || m.mission_type === 'massage')
+          ? '선택 미션 (둘 중 1개)' : '필수 미션';
+
+        card.innerHTML = `
+          <div class="card-top">
+            <img class="card-img" src="${m.image_url || 'https://placehold.co/160x160/e2e4e8/6b7280?text=' + encodeURIComponent(m.title)}" alt="${m.title}">
+            <div class="card-info">
+              <div class="card-title">${m.title}</div>
+              <div class="card-subtitle">${subtitle}</div>
+            </div>
+          </div>
+          <div class="card-bottom" id="bottom-${m.mission_type}">
+            ${isCleared ? renderCleared(m.mission_type) : isDisabled ? renderDisabled() : renderInput(m)}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Progress
+      const progress = getPackProgress(pack);
+      document.getElementById('progress-' + pack).style.width = (progress * 100) + '%';
+
+      // Rewards unlock
+      const complete = isPackComplete(pack);
+      for (let i = 0; i < 3; i++) {
+        const el = document.getElementById(`reward-${pack}-${i}`);
+        if (el) el.classList.toggle('reward-locked', !complete);
+      }
+
+      // Phone form
+      const phoneContainer = document.getElementById('phone-' + pack);
+      if (complete && !phoneContainer.dataset.submitted) {
+        phoneContainer.style.display = 'block';
+        phoneContainer.innerHTML = `
+          <div class="phone-box">
+            <h3>미션 완료!</h3>
+            <p>전화번호를 입력하시면 할인 혜택 URL을 문자로 보내드립니다.</p>
+            <input type="tel" id="phone-input-${pack}" placeholder="010-0000-0000" maxlength="13" oninput="this.value=formatPhone(this.value)">
+            <div id="phone-error-${pack}" class="error-msg" style="display:none;"></div>
+            <button class="submit-btn" onclick="submitPhone('${pack}')">마리트패스 받기</button>
+          </div>
+        `;
+      }
+    });
+  }
+
+  function renderCleared(type) {
+    return `
+      <div class="cleared-state">
+        <div class="cleared-info">
+          <div class="cleared-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="cleared-text">예약번호 ${cleared[type]}</span>
+        </div>
+        <span class="cleared-badge">CLEAR!</span>
+      </div>`;
+  }
+
+  function renderDisabled() {
+    return `<div style="font-size:0.75rem; color:var(--muted-fg); text-align:center; padding:0.5rem 0;">다른 선택 미션이 이미 완료되었습니다</div>`;
+  }
+
+  function renderInput(m) {
+    return `
+      <div class="input-row">
+        <input type="text" id="input-${m.mission_type}" placeholder="예약번호 입력 (숫자)" inputmode="numeric">
+        <button class="btn-confirm" id="btn-${m.mission_type}" onclick="verify('${m.mission_type}')">인증</button>
+      </div>
+      <div id="error-${m.mission_type}" class="error-msg" style="display:none;"></div>
+      <a href="${m.booking_url}" target="_blank" rel="noopener" class="booking-link">
+        <span>예약하러 가기</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>`;
+  }
+
+  // ── Verify reservation ──
+  async function verify(type) {
+    const input = document.getElementById('input-' + type);
+    const errEl = document.getElementById('error-' + type);
+    const btn = document.getElementById('btn-' + type);
+    const val = input.value.trim();
+    errEl.style.display = 'none';
+
+    if (!val) {
+      errEl.textContent = '예약번호를 입력해주세요';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    if (!/^\d+$/.test(val)) {
+      errEl.textContent = '예약번호는 숫자만 입력해주세요';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '확인중...';
+
+    try {
+      const valid = await rpc('verify_reservation', { p_order_id: val, p_mission_type: type });
+
+      if (!valid) {
+        errEl.textContent = '유효하지 않은 예약번호입니다. 마이리얼트립 예약 확인 이메일을 확인해주세요.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '인증';
+        return;
+      }
+
+      // Save to user_missions
+      await sb('user_missions', {
+        method: 'POST',
+        body: { session_id: SESSION_ID, mission_type: type, order_id: val }
+      });
+
+      cleared[type] = val;
+      renderMissions();
+    } catch (e) {
+      if (e.code === '23505') {
+        errEl.textContent = '이미 인증된 미션입니다';
+      } else {
+        errEl.textContent = '오류가 발생했습니다. 다시 시도해주세요.';
+      }
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '인증';
+    }
+  }
+
+  // ── Phone ──
+  function formatPhone(v) {
+    const n = v.replace(/[^0-9]/g, '');
+    if (n.length <= 3) return n;
+    if (n.length <= 7) return n.slice(0,3) + '-' + n.slice(3);
+    return n.slice(0,3) + '-' + n.slice(3,7) + '-' + n.slice(7,11);
+  }
+
+  async function submitPhone(pack) {
+    const input = document.getElementById('phone-input-' + pack);
+    const errEl = document.getElementById('phone-error-' + pack);
+    const val = input.value.replace(/-/g, '');
+    errEl.style.display = 'none';
+
+    if (!val || !/^01[0-9]{8,9}$/.test(val)) {
+      errEl.textContent = '올바른 전화번호를 입력해주세요';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    try {
+      await sb('pass_claims', {
+        method: 'POST',
+        body: { session_id: SESSION_ID, phone_number: val, pack: pack }
+      });
+
+      const container = document.getElementById('phone-' + pack);
+      container.dataset.submitted = 'true';
+      container.innerHTML = `
+        <div class="phone-box" style="border-color: var(--success);">
+          <div style="width:48px;height:48px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>신청 완료!</h3>
+          <p>${input.value}로 마리트패스 할인 혜택 안내를 보내드리겠습니다.</p>
+        </div>`;
+    } catch (e) {
+      errEl.textContent = e.code === '23505' ? '이미 신청된 전화번호입니다' : '오류가 발생했습니다. 다시 시도해주세요.';
+      errEl.style.display = 'block';
+    }
+  }
+
+  // ── Init ──
+  (async () => {
+    try {
+      missions = await sb('missions?is_active=eq.true&order=display_order.asc');
+
+      // Load existing cleared missions for this session
+      const existing = await sb(`user_missions?session_id=eq.${SESSION_ID}`);
+      existing.forEach(r => { cleared[r.mission_type] = r.order_id; });
+
+      renderMissions();
+    } catch (e) {
+      console.error('Failed to load:', e);
+    }
+  })();
+</script>
+</body>
+</html>
