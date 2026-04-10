@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상하이 마리트패스 - 마이리얼트립</title>
+  <title>상하이 마이리얼패스 - 마이리얼트립</title>
   <meta name="description" content="2개 상품 구매하고 상하이 현지 할인 혜택 받으세요!">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <style>
@@ -155,7 +155,7 @@
       <svg class="logo" viewBox="0 0 1000 200" style="height:28px;">
         <text x="0" y="160" font-family="Pretendard, sans-serif" font-size="180" font-weight="900" fill="#1a1a1a">Myrealtrip</text>
       </svg>
-      <h1>상하이 마리트패스</h1>
+      <h1>상하이 마이리얼패스</h1>
       <p class="subtitle">2개 상품을 구매하고 예약번호를 인증하면<br>상하이 현지 할인 혜택을 드려요!</p>
     </div>
   </div>
@@ -219,6 +219,12 @@
       </div>
     </div>
 
+    <!-- 테스트 버튼 (나중에 삭제) -->
+    <div style="text-align:center; margin-bottom:1.5rem;">
+      <button onclick="showPassModal('pack1')" style="padding:0.75rem 1.5rem; background:#0ea5e9; color:white; border:none; border-radius:0.5rem; font-weight:600; cursor:pointer; margin:0.25rem;">1팩 보딩패스 미리보기</button>
+      <button onclick="showPassModal('pack2')" style="padding:0.75rem 1.5rem; background:#0ea5e9; color:white; border:none; border-radius:0.5rem; font-weight:600; cursor:pointer; margin:0.25rem;">2팩 보딩패스 미리보기</button>
+    </div>
+
     <!-- Footer -->
     <div class="footer">
       <p>&copy; 마이리얼트립. All rights reserved.</p>
@@ -235,7 +241,7 @@
         <div class="bp-header">
           <div class="bp-airline">MYREALTRIP</div>
           <div class="bp-icon">&#9992;</div>
-          <div class="bp-title">SHANGHAI MARIT PASS</div>
+          <div class="bp-title">SHANGHAI MYREAL PASS</div>
           <div class="bp-subtitle" id="bp-pack-name"></div>
           <div class="bp-stamp">
             <div class="bp-stamp-text">MISSION<br>CLEAR</div>
@@ -298,8 +304,8 @@
 
   // ── Session ID ──
   function getSessionId() {
-    let sid = localStorage.getItem('maritpass_session');
-    if (!sid) { sid = crypto.randomUUID(); localStorage.setItem('maritpass_session', sid); }
+    let sid = localStorage.getItem('myrealpass_session');
+    if (!sid) { sid = crypto.randomUUID(); localStorage.setItem('myrealpass_session', sid); }
     return sid;
   }
   const SESSION_ID = getSessionId();
@@ -404,7 +410,7 @@
 
       // Download
       const link = document.createElement('a');
-      link.download = `shanghai-maritpass-${pack}.png`;
+      link.download = `shanghai-myrealpass-${pack}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
 
