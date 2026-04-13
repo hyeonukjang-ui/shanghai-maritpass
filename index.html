@@ -22,33 +22,21 @@
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #f8f9fb; color: var(--foreground); }
 
-    /* Header */
     .header { background: var(--background); border-bottom: 1px solid var(--border); }
-    .container { max-width: 896px; margin: 0 auto; padding: 0 1rem; }
+    .container { max-width: 480px; margin: 0 auto; padding: 0 1rem; }
     .header-inner { padding: 1.5rem 0; text-align: center; }
     .logo { height: 28px; margin-bottom: 1.5rem; }
     h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
     .subtitle { color: var(--muted-fg); font-size: 0.938rem; line-height: 1.5; }
 
-    /* Tabs */
-    .tabs { display: flex; gap: 0; background: var(--background); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-    .tab { flex: 1; padding: 0.875rem 0; text-align: center; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; background: none; color: var(--muted-fg); border-bottom: 2px solid transparent; transition: all 0.2s; }
-    .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
-    .tab:hover { color: var(--foreground); }
-
-    /* Main */
     .main { padding: 1.5rem 1rem 2rem; }
-    .pack-section { display: none; }
-    .pack-section.active { display: block; }
 
-    /* Pack Header */
     .pack-header { background: var(--background); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; border: 1px solid var(--border); }
     .pack-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
     .pack-desc { font-size: 0.813rem; color: var(--muted-fg); line-height: 1.5; }
     .progress-bar { height: 6px; background: var(--muted); border-radius: 3px; margin-top: 0.75rem; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 0.4s ease; }
 
-    /* Mission Cards */
     .mission-cards { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
     .card { background: var(--background); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
     .card-top { display: flex; gap: 1rem; padding: 1rem; }
@@ -72,8 +60,8 @@
     .cleared-check svg { width: 12px; height: 12px; }
     .cleared-text { font-size: 0.813rem; color: var(--foreground); font-weight: 500; }
     .cleared-badge { background: var(--success); color: white; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+    .disabled-msg { font-size: 0.75rem; color: var(--muted-fg); text-align: center; padding: 0.5rem 0; }
 
-    /* Rewards */
     .rewards-section { background: var(--background); border-radius: var(--radius); padding: 1.25rem; border: 1px solid var(--border); margin-bottom: 1.5rem; }
     .rewards-title { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.75rem; }
     .reward-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.625rem 0; border-bottom: 1px solid var(--muted); }
@@ -82,7 +70,6 @@
     .reward-name { font-size: 0.813rem; font-weight: 500; }
     .reward-locked { opacity: 0.4; }
 
-    /* How to */
     .howto { background: var(--background); border-radius: var(--radius); padding: 1.25rem; border: 1px solid var(--border); margin-bottom: 1.5rem; }
     .howto h3 { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.75rem; }
     .step { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; }
@@ -90,142 +77,85 @@
     .step-num { width: 24px; height: 24px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
     .step-text { font-size: 0.813rem; color: var(--muted-fg); line-height: 1.5; padding-top: 2px; }
 
-    /* Footer */
     .footer { text-align: center; padding-bottom: 2rem; }
     .footer p { color: var(--muted-fg); font-size: 0.75rem; }
 
-    /* Modal overlay */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; justify-content: center; align-items: center; padding: 1rem; backdrop-filter: blur(4px); }
     .modal-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
     .modal-content { animation: slideUp 0.4s ease; width: 100%; max-width: 380px; }
     .modal-close { position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 101; }
     .modal-close svg { width: 16px; height: 16px; stroke: white; }
 
-    /* Boarding Pass */
     .boarding-pass { background: #1a1f35; border-radius: 1rem; overflow: hidden; color: white; position: relative; }
     .bp-header { padding: 1.5rem 1.5rem 1rem; text-align: center; position: relative; }
     .bp-airline { font-size: 0.688rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem; }
     .bp-title { font-size: 1.375rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 0.25rem; }
     .bp-subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
     .bp-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-
     .bp-divider { display: flex; align-items: center; padding: 0 0.5rem; }
     .bp-divider-line { flex: 1; border-top: 2px dashed rgba(255,255,255,0.15); }
     .bp-divider-circle-l { width: 20px; height: 20px; background: rgba(0,0,0,0.6); border-radius: 50%; margin-left: -10px; flex-shrink: 0; }
     .bp-divider-circle-r { width: 20px; height: 20px; background: rgba(0,0,0,0.6); border-radius: 50%; margin-right: -10px; flex-shrink: 0; }
-
     .bp-rewards { padding: 1rem 1.5rem; }
     .bp-reward { display: flex; align-items: center; justify-content: space-between; padding: 0.625rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .bp-reward:last-child { border-bottom: none; }
     .bp-reward-name { font-size: 0.813rem; font-weight: 500; }
     .bp-reward-badge { background: rgba(239,68,68,0.15); color: #fca5a5; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.625rem; border-radius: 9999px; }
-
     .bp-footer { padding: 0.75rem 1.5rem 1.25rem; text-align: center; }
     .bp-valid { font-size: 0.688rem; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; }
     .bp-date { font-size: 0.813rem; font-weight: 600; color: rgba(255,255,255,0.7); margin-top: 0.125rem; }
     .bp-notice { font-size: 0.688rem; color: rgba(255,255,255,0.35); margin-top: 0.75rem; line-height: 1.4; }
-
     .bp-stamp { position: absolute; top: 1rem; right: 1rem; width: 52px; height: 52px; border: 2px solid rgba(34,197,94,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: rotate(12deg); }
     .bp-stamp-text { font-size: 0.5rem; font-weight: 900; color: rgba(34,197,94,0.7); text-transform: uppercase; letter-spacing: 1px; text-align: center; line-height: 1.2; }
 
-    /* Save button */
     .save-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; margin-top: 1rem; padding: 0.875rem; background: white; color: var(--foreground); font-weight: 600; font-size: 0.938rem; border: none; border-radius: 0.75rem; cursor: pointer; font-family: inherit; }
     .save-btn:hover { background: #f0f0f0; }
     .save-btn svg { width: 18px; height: 18px; }
     .save-btn-sub { text-align: center; margin-top: 0.5rem; font-size: 0.688rem; color: rgba(255,255,255,0.5); }
-
-    @media (min-width: 768px) {
-      h1 { font-size: 1.875rem; }
-      .mission-cards { flex-direction: row; }
-      .card { flex: 1; }
-      .card-top { flex-direction: column; }
-      .card-img { width: 100%; height: 160px; border-radius: 0; margin: -1rem -1rem 0 -1rem; width: calc(100% + 2rem); }
-      .card-info { padding-top: 0.5rem; }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <div class="header">
     <div class="container header-inner">
       <svg class="logo" viewBox="0 0 1000 200" style="height:28px;">
         <text x="0" y="160" font-family="Pretendard, sans-serif" font-size="180" font-weight="900" fill="#1a1a1a">Myrealtrip</text>
       </svg>
       <h1>상하이 마이리얼패스</h1>
-      <p class="subtitle">2개 상품을 구매하고 예약번호를 인증하면<br>상하이 현지 할인 혜택을 드려요!</p>
+      <p class="subtitle">황푸강 유람선 + 수향마을을 구매하고<br>상하이 현지 할인 혜택을 받으세요!</p>
     </div>
   </div>
 
-  <!-- Tabs -->
-  <div class="tabs container">
-    <button class="tab active" onclick="switchPack('pack1')">1팩: 디즈니 코스</button>
-    <button class="tab" onclick="switchPack('pack2')">2팩: 시내관광 코스</button>
-  </div>
-
-  <!-- Main -->
   <div class="container main">
-
-    <!-- Pack 1 -->
-    <div class="pack-section active" id="pack1">
-      <div class="pack-header">
-        <div class="pack-title">1팩: 디즈니 코스</div>
-        <div class="pack-desc">디즈니랜드 + 픽업샌딩 또는 마사지 중 1개를 구매하세요</div>
-        <div class="progress-bar"><div class="progress-fill" id="progress-pack1" style="width:0%"></div></div>
-      </div>
-
-      <div class="mission-cards" id="missions-pack1"></div>
-
-      <div class="rewards-section">
-        <div class="rewards-title">완성 시 받는 혜택</div>
-        <div class="reward-item" id="reward-pack1-0"><span class="reward-discount">12% OFF</span><span class="reward-name">하이디라오 할인</span></div>
-        <div class="reward-item" id="reward-pack1-1"><span class="reward-discount">10% OFF</span><span class="reward-name">마사지샵 할인</span></div>
-        <div class="reward-item" id="reward-pack1-2"><span class="reward-discount">10% OFF</span><span class="reward-name">康友四季 난징동루 현장할인</span></div>
-      </div>
-
-      <div class="howto">
-        <h3>이용방법</h3>
-        <div class="step"><div class="step-num">1</div><div class="step-text">위 상품 중 2개를 마이리얼트립에서 구매하세요</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-text">예약번호를 입력하고 인증하세요</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-text">미션 완료 시 보딩패스가 나타나요. 이미지를 저장해서 현장에서 제시하세요!</div></div>
-      </div>
+    <div class="pack-header">
+      <div class="pack-title">미션: 2개 상품 구매 인증</div>
+      <div class="pack-desc">황푸강 유람선(필수) + 우전 또는 주가각 수향마을 중 1개를 구매하고 예약번호를 인증하세요</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
     </div>
 
-    <!-- Pack 2 -->
-    <div class="pack-section" id="pack2">
-      <div class="pack-header">
-        <div class="pack-title">2팩: 시내관광 코스</div>
-        <div class="pack-desc">황푸강 유람선 + 우전 수향마을 야경투어를 구매하세요</div>
-        <div class="progress-bar"><div class="progress-fill" id="progress-pack2" style="width:0%"></div></div>
-      </div>
+    <div class="mission-cards" id="mission-cards"></div>
 
-      <div class="mission-cards" id="missions-pack2"></div>
+    <div class="rewards-section">
+      <div class="rewards-title">미션 완료 시 받는 혜택</div>
+      <div class="reward-item" id="reward-0"><span class="reward-discount">12% OFF</span><span class="reward-name">하이디라오 할인</span></div>
+      <div class="reward-item" id="reward-1"><span class="reward-discount">10% OFF</span><span class="reward-name">BFC 중식당 (유람선 근처) 할인</span></div>
+      <div class="reward-item" id="reward-2"><span class="reward-discount">10% OFF</span><span class="reward-name">마사지샵 할인</span></div>
+    </div>
 
-      <div class="rewards-section">
-        <div class="rewards-title">완성 시 받는 혜택</div>
-        <div class="reward-item" id="reward-pack2-0"><span class="reward-discount">12% OFF</span><span class="reward-name">하이디라오 할인</span></div>
-        <div class="reward-item" id="reward-pack2-1"><span class="reward-discount">10% OFF</span><span class="reward-name">BFC 중식당 (유람선 근처) 할인</span></div>
-        <div class="reward-item" id="reward-pack2-2"><span class="reward-discount">10% OFF</span><span class="reward-name">마사지샵 할인</span></div>
-      </div>
-
-      <div class="howto">
-        <h3>이용방법</h3>
-        <div class="step"><div class="step-num">1</div><div class="step-text">위 상품 2개를 마이리얼트립에서 구매하세요</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-text">예약번호를 입력하고 인증하세요</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-text">미션 완료 시 보딩패스가 나타나요. 이미지를 저장해서 현장에서 제시하세요!</div></div>
-      </div>
+    <div class="howto">
+      <h3>이용방법</h3>
+      <div class="step"><div class="step-num">1</div><div class="step-text">황푸강 유람선 + 수향마을(우전 or 주가각) 2개를 마이리얼트립에서 구매하세요</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">예약번호를 입력하고 인증하세요</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">미션 완료 시 보딩패스가 나타나요. 이미지를 저장해서 현장에서 제시하세요!</div></div>
     </div>
 
     <!-- 테스트 버튼 (나중에 삭제) -->
     <div style="text-align:center; margin-bottom:1.5rem;">
-      <button onclick="showPassModal('pack1')" style="padding:0.75rem 1.5rem; background:#0ea5e9; color:white; border:none; border-radius:0.5rem; font-weight:600; cursor:pointer; margin:0.25rem;">1팩 보딩패스 미리보기</button>
-      <button onclick="showPassModal('pack2')" style="padding:0.75rem 1.5rem; background:#0ea5e9; color:white; border:none; border-radius:0.5rem; font-weight:600; cursor:pointer; margin:0.25rem;">2팩 보딩패스 미리보기</button>
+      <button onclick="showPassModal()" style="padding:0.75rem 1.5rem; background:#0ea5e9; color:white; border:none; border-radius:0.5rem; font-weight:600; cursor:pointer;">보딩패스 미리보기</button>
     </div>
 
-    <!-- Footer -->
     <div class="footer">
       <p>&copy; 마이리얼트립. All rights reserved.</p>
     </div>
@@ -242,33 +172,22 @@
           <div class="bp-airline">MYREALTRIP</div>
           <div class="bp-icon">&#9992;</div>
           <div class="bp-title">SHANGHAI MYREAL PASS</div>
-          <div class="bp-subtitle" id="bp-pack-name"></div>
-          <div class="bp-stamp">
-            <div class="bp-stamp-text">MISSION<br>CLEAR</div>
-          </div>
+          <div class="bp-subtitle">CITY TOUR COURSE</div>
+          <div class="bp-stamp"><div class="bp-stamp-text">MISSION<br>CLEAR</div></div>
         </div>
-
-        <div class="bp-divider">
-          <div class="bp-divider-circle-l"></div>
-          <div class="bp-divider-line"></div>
-          <div class="bp-divider-circle-r"></div>
+        <div class="bp-divider"><div class="bp-divider-circle-l"></div><div class="bp-divider-line"></div><div class="bp-divider-circle-r"></div></div>
+        <div class="bp-rewards">
+          <div class="bp-reward"><span class="bp-reward-name">하이디라오</span><span class="bp-reward-badge">12% OFF</span></div>
+          <div class="bp-reward"><span class="bp-reward-name">BFC 중식당 (와이탄)</span><span class="bp-reward-badge">10% OFF</span></div>
+          <div class="bp-reward"><span class="bp-reward-name">마사지샵</span><span class="bp-reward-badge">10% OFF</span></div>
         </div>
-
-        <div class="bp-rewards" id="bp-rewards"></div>
-
-        <div class="bp-divider">
-          <div class="bp-divider-circle-l"></div>
-          <div class="bp-divider-line"></div>
-          <div class="bp-divider-circle-r"></div>
-        </div>
-
+        <div class="bp-divider"><div class="bp-divider-circle-l"></div><div class="bp-divider-line"></div><div class="bp-divider-circle-r"></div></div>
         <div class="bp-footer">
           <div class="bp-valid">VALID UNTIL</div>
           <div class="bp-date">2026.06.30</div>
           <div class="bp-notice">현장에서 이 이미지를 제시해주세요</div>
         </div>
       </div>
-
       <button class="save-btn" onclick="savePassImage()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         <span>이미지 저장하기</span>
@@ -279,30 +198,13 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-  // ── Config ──
   const SUPABASE_URL = 'https://glxqsuxhiomukbtqumat.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_dQAbR9SZqND6iX7cqgBWZw_5riX65Eq';
 
-  // ── Reward data ──
-  const REWARDS = {
-    pack1: [
-      { name: '하이디라오', discount: '12% OFF' },
-      { name: '마사지샵', discount: '10% OFF' },
-      { name: '康友四季 난징동루', discount: '10% OFF' }
-    ],
-    pack2: [
-      { name: '하이디라오', discount: '12% OFF' },
-      { name: 'BFC 중식당 (와이탄)', discount: '10% OFF' },
-      { name: '마사지샵', discount: '10% OFF' }
-    ]
-  };
+  // 미션 구조: cruise(필수) + wuzhen OR zhujiaojiao(선택 1개)
+  const REQUIRED = 'cruise';
+  const OPTIONAL = ['wuzhen', 'zhujiaojiao'];
 
-  const PACK_NAMES = {
-    pack1: 'DISNEY COURSE',
-    pack2: 'CITY TOUR COURSE'
-  };
-
-  // ── Session ID ──
   function getSessionId() {
     let sid = localStorage.getItem('myrealpass_session');
     if (!sid) { sid = crypto.randomUUID(); localStorage.setItem('myrealpass_session', sid); }
@@ -310,7 +212,6 @@
   }
   const SESSION_ID = getSessionId();
 
-  // ── Supabase helpers ──
   async function sb(path, options = {}) {
     const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
       headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': options.prefer || 'return=representation', ...options.headers },
@@ -331,227 +232,146 @@
     return res.json();
   }
 
-  // ── State ──
   let missions = [];
   const cleared = {};
 
-  function getPackMissions(pack) { return missions.filter(m => m.pack === pack); }
-
-  function isPackComplete(pack) {
-    if (pack === 'pack1') return cleared['disney'] && (cleared['pickup'] || cleared['massage']);
-    return getPackMissions(pack).every(m => cleared[m.mission_type]);
+  function isComplete() {
+    return cleared[REQUIRED] && OPTIONAL.some(t => cleared[t]);
+  }
+  function getProgress() {
+    let c = 0;
+    if (cleared[REQUIRED]) c++;
+    if (OPTIONAL.some(t => cleared[t])) c++;
+    return c / 2;
   }
 
-  function getPackProgress(pack) {
-    if (pack === 'pack1') {
-      let c = 0;
-      if (cleared['disney']) c++;
-      if (cleared['pickup'] || cleared['massage']) c++;
-      return c / 2;
-    }
-    const pm = getPackMissions(pack);
-    return pm.filter(m => cleared[m.mission_type]).length / pm.length;
-  }
-
-  // ── Tabs ──
-  function switchPack(pack) {
-    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', (i === 0 && pack === 'pack1') || (i === 1 && pack === 'pack2')));
-    document.querySelectorAll('.pack-section').forEach(s => s.classList.toggle('active', s.id === pack));
-  }
-
-  // ── Modal ──
-  function showPassModal(pack) {
-    document.getElementById('bp-pack-name').textContent = PACK_NAMES[pack];
-    const rewardsEl = document.getElementById('bp-rewards');
-    rewardsEl.innerHTML = REWARDS[pack].map(r => `
-      <div class="bp-reward">
-        <span class="bp-reward-name">${r.name}</span>
-        <span class="bp-reward-badge">${r.discount}</span>
-      </div>
-    `).join('');
+  function showPassModal() {
     document.getElementById('pass-modal').classList.add('show');
-    document.getElementById('pass-modal').dataset.pack = pack;
     document.body.style.overflow = 'hidden';
   }
-
   function closeModal() {
     document.getElementById('pass-modal').classList.remove('show');
     document.body.style.overflow = '';
   }
+  document.getElementById('pass-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
-  document.getElementById('pass-modal').addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeModal();
-  });
-
-  // ── Save image ──
   async function savePassImage() {
     const btn = document.querySelector('.save-btn');
-    btn.textContent = '저장 중...';
-    btn.disabled = true;
-
+    btn.textContent = '저장 중...'; btn.disabled = true;
     try {
-      const el = document.getElementById('boarding-pass');
-      const canvas = await html2canvas(el, {
-        backgroundColor: null,
-        scale: 3,
-        useCORS: true,
-        logging: false
-      });
-
-      const pack = document.getElementById('pass-modal').dataset.pack;
-
-      // Record claim
-      try {
-        await sb('pass_claims', {
-          method: 'POST',
-          body: { session_id: SESSION_ID, phone_number: 'image_save', pack: pack }
-        });
-      } catch(_) {}
-
-      // Download
+      const canvas = await html2canvas(document.getElementById('boarding-pass'), { backgroundColor: null, scale: 3, useCORS: true, logging: false });
+      try { await sb('pass_claims', { method: 'POST', body: { session_id: SESSION_ID, phone_number: 'image_save', pack: 'city_tour' } }); } catch(_) {}
       const link = document.createElement('a');
-      link.download = `shanghai-myrealpass-${pack}.png`;
+      link.download = 'shanghai-myreal-pass.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
-
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg><span>저장 완료!</span>';
       setTimeout(() => {
         btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>이미지 저장하기</span>';
         btn.disabled = false;
       }, 2000);
     } catch (e) {
-      console.error('Save failed:', e);
-      btn.innerHTML = '<span>저장 실패 - 스크린샷을 찍어주세요</span>';
-      btn.disabled = false;
+      btn.innerHTML = '<span>저장 실패 - 스크린샷을 찍어주세요</span>'; btn.disabled = false;
     }
   }
 
-  // ── Render ──
-  function renderMissions() {
-    ['pack1', 'pack2'].forEach(pack => {
-      const container = document.getElementById('missions-' + pack);
-      const packMissions = getPackMissions(pack);
-      container.innerHTML = '';
+  function render() {
+    const container = document.getElementById('mission-cards');
+    container.innerHTML = '';
+    const showTypes = [REQUIRED, ...OPTIONAL];
 
-      packMissions.forEach(m => {
-        const isCleared = !!cleared[m.mission_type];
-        let isDisabled = false;
-        if (pack === 'pack1' && (m.mission_type === 'pickup' || m.mission_type === 'massage')) {
-          const other = m.mission_type === 'pickup' ? 'massage' : 'pickup';
-          if (cleared[other] && !cleared[m.mission_type]) isDisabled = true;
-        }
+    missions.forEach(m => {
+      if (!showTypes.includes(m.mission_type)) return;
+      const done = !!cleared[m.mission_type];
+      const isOptional = OPTIONAL.includes(m.mission_type);
 
-        const card = document.createElement('div');
-        card.className = 'card';
-        const subtitle = pack === 'pack1' && (m.mission_type === 'pickup' || m.mission_type === 'massage')
-          ? '선택 미션 (둘 중 1개)' : '필수 미션';
-
-        card.innerHTML = `
-          <div class="card-top">
-            <img class="card-img" src="${m.image_url || 'https://placehold.co/160x160/e2e4e8/6b7280?text=' + encodeURIComponent(m.title)}" alt="${m.title}">
-            <div class="card-info">
-              <div class="card-title">${m.title}</div>
-              <div class="card-subtitle">${subtitle}</div>
-            </div>
-          </div>
-          <div class="card-bottom" id="bottom-${m.mission_type}">
-            ${isCleared ? renderCleared(m.mission_type) : isDisabled ? renderDisabled() : renderInput(m)}
-          </div>`;
-        container.appendChild(card);
-      });
-
-      // Progress
-      document.getElementById('progress-' + pack).style.width = (getPackProgress(pack) * 100) + '%';
-
-      // Rewards lock
-      const complete = isPackComplete(pack);
-      for (let i = 0; i < 3; i++) {
-        const el = document.getElementById(`reward-${pack}-${i}`);
-        if (el) el.classList.toggle('reward-locked', !complete);
+      // 선택 미션 중 다른 게 이미 클리어되면 비활성
+      let isDisabled = false;
+      if (isOptional && !done) {
+        const otherDone = OPTIONAL.some(t => t !== m.mission_type && cleared[t]);
+        if (otherDone) isDisabled = true;
       }
-    });
-  }
 
-  function renderCleared(type) {
-    return `
-      <div class="cleared-state">
-        <div class="cleared-info">
-          <div class="cleared-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span class="cleared-text">예약번호 ${cleared[type]}</span>
+      const card = document.createElement('div');
+      card.className = 'card';
+      const subtitle = isOptional ? '선택 미션 (둘 중 1개)' : '필수 미션';
+
+      let bottomHTML;
+      if (done) {
+        bottomHTML = `
+          <div class="cleared-state">
+            <div class="cleared-info">
+              <div class="cleared-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="cleared-text">예약번호 ${cleared[m.mission_type]}</span>
+            </div>
+            <span class="cleared-badge">CLEAR!</span>
+          </div>`;
+      } else if (isDisabled) {
+        bottomHTML = `<div class="disabled-msg">다른 수향마을이 이미 인증되었습니다</div>`;
+      } else {
+        bottomHTML = `
+          <div class="input-row">
+            <input type="text" id="input-${m.mission_type}" placeholder="예약번호 입력 (숫자)" inputmode="numeric">
+            <button class="btn-confirm" id="btn-${m.mission_type}" onclick="verify('${m.mission_type}')">인증</button>
+          </div>
+          <div id="error-${m.mission_type}" class="error-msg" style="display:none;"></div>
+          <a href="${m.booking_url}" target="_blank" rel="noopener" class="booking-link">
+            <span>예약하러 가기</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>`;
+      }
+
+      card.innerHTML = `
+        <div class="card-top">
+          <img class="card-img" src="${m.image_url || 'https://placehold.co/160x160/e2e4e8/6b7280?text=' + encodeURIComponent(m.title)}" alt="${m.title}">
+          <div class="card-info">
+            <div class="card-title">${m.title}</div>
+            <div class="card-subtitle">${subtitle}</div>
+          </div>
         </div>
-        <span class="cleared-badge">CLEAR!</span>
-      </div>`;
+        <div class="card-bottom">${bottomHTML}</div>`;
+      container.appendChild(card);
+    });
+
+    document.getElementById('progress').style.width = (getProgress() * 100) + '%';
+    const complete = isComplete();
+    for (let i = 0; i < 3; i++) {
+      const el = document.getElementById('reward-' + i);
+      if (el) el.classList.toggle('reward-locked', !complete);
+    }
   }
 
-  function renderDisabled() {
-    return `<div style="font-size:0.75rem; color:var(--muted-fg); text-align:center; padding:0.5rem 0;">다른 선택 미션이 이미 완료되었습니다</div>`;
-  }
-
-  function renderInput(m) {
-    return `
-      <div class="input-row">
-        <input type="text" id="input-${m.mission_type}" placeholder="예약번호 입력 (숫자)" inputmode="numeric">
-        <button class="btn-confirm" id="btn-${m.mission_type}" onclick="verify('${m.mission_type}')">인증</button>
-      </div>
-      <div id="error-${m.mission_type}" class="error-msg" style="display:none;"></div>
-      <a href="${m.booking_url}" target="_blank" rel="noopener" class="booking-link">
-        <span>예약하러 가기</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>`;
-  }
-
-  // ── Verify ──
   async function verify(type) {
     const input = document.getElementById('input-' + type);
     const errEl = document.getElementById('error-' + type);
     const btn = document.getElementById('btn-' + type);
     const val = input.value.trim();
     errEl.style.display = 'none';
-
     if (!val) { errEl.textContent = '예약번호를 입력해주세요'; errEl.style.display = 'block'; return; }
     if (!/^\d+$/.test(val)) { errEl.textContent = '예약번호는 숫자만 입력해주세요'; errEl.style.display = 'block'; return; }
-
-    btn.disabled = true;
-    btn.textContent = '확인중...';
-
+    btn.disabled = true; btn.textContent = '확인중...';
     try {
       const valid = await rpc('verify_reservation', { p_order_id: val, p_mission_type: type });
-
       if (!valid) {
         errEl.textContent = '유효하지 않은 예약번호입니다. 마이리얼트립 예약 확인 이메일을 확인해주세요.';
-        errEl.style.display = 'block';
-        btn.disabled = false; btn.textContent = '인증';
-        return;
+        errEl.style.display = 'block'; btn.disabled = false; btn.textContent = '인증'; return;
       }
-
       await sb('user_missions', { method: 'POST', body: { session_id: SESSION_ID, mission_type: type, order_id: val } });
-
       cleared[type] = val;
-      renderMissions();
-
-      // Check if pack just completed → show boarding pass
-      const pack = missions.find(m => m.mission_type === type)?.pack;
-      if (pack && isPackComplete(pack)) {
-        setTimeout(() => showPassModal(pack), 500);
-      }
+      render();
+      if (isComplete()) setTimeout(() => showPassModal(), 500);
     } catch (e) {
-      if (e.code === '23505') {
-        errEl.textContent = '이미 인증된 미션입니다';
-      } else {
-        errEl.textContent = '오류가 발생했습니다. 다시 시도해주세요.';
-      }
-      errEl.style.display = 'block';
-      btn.disabled = false; btn.textContent = '인증';
+      errEl.textContent = e.code === '23505' ? '이미 인증된 미션입니다' : '오류가 발생했습니다. 다시 시도해주세요.';
+      errEl.style.display = 'block'; btn.disabled = false; btn.textContent = '인증';
     }
   }
 
-  // ── Init ──
   (async () => {
     try {
       missions = await sb('missions?is_active=eq.true&order=display_order.asc');
       const existing = await sb(`user_missions?session_id=eq.${SESSION_ID}`);
       existing.forEach(r => { cleared[r.mission_type] = r.order_id; });
-      renderMissions();
+      render();
     } catch (e) { console.error('Failed to load:', e); }
   })();
 </script>
