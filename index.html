@@ -181,8 +181,8 @@
         </div>
         <div class="bp-divider"><div class="bp-divider-circle-l"></div><div class="bp-divider-line"></div><div class="bp-divider-circle-r"></div></div>
         <div class="bp-footer">
-          <div class="bp-valid">VALID UNTIL</div>
-          <div class="bp-date">2026.06.30</div>
+          <div class="bp-valid">VALID PERIOD</div>
+          <div class="bp-date" id="bp-date-range">여행일 기준 자동 계산</div>
           <div class="bp-howto"><div class="bp-howto-text"><strong>현장에서 이 화면을 제시</strong>하시면<br>할인이 적용됩니다</div></div>
         </div>
       </div>
@@ -225,14 +225,32 @@
   }
 
   let missions = [];
-  const cleared = {};
-  let selected = null; // 현재 선택된 미션 (인증 영역에 표시할 것)
+  const cleared = {};   // { mission_type: order_id }
+  const travelDates = {}; // { mission_type: { start, end } }
+  let selected = null;
 
   function getMission(type) { return missions.find(m => m.mission_type === type); }
   function isComplete() { return cleared[REQUIRED] && OPTIONAL.some(t => cleared[t]); }
   function doneCount() { let c = 0; if (cleared[REQUIRED]) c++; if (OPTIONAL.some(t => cleared[t])) c++; return c; }
 
-  function showPassModal() { document.getElementById('pass-modal').classList.add('show'); document.body.style.overflow = 'hidden'; }
+  function updatePassDates() {
+    const dates = Object.values(travelDates).filter(d => d.start && d.end);
+    if (dates.length === 0) return;
+
+    // 가장 빠른 시작일
+    const starts = dates.map(d => new Date(d.start));
+    const ends = dates.map(d => new Date(d.end));
+    const earliest = new Date(Math.min(...starts));
+    // 가장 늦은 종료일 + 7일
+    const latest = new Date(Math.max(...ends));
+    latest.setDate(latest.getDate() + 7);
+
+    const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+
+    document.getElementById('bp-date-range').textContent = `${fmt(earliest)} – ${fmt(latest)}`;
+  }
+
+  function showPassModal() { updatePassDates(); document.getElementById('pass-modal').classList.add('show'); document.body.style.overflow = 'hidden'; }
   function closeModal() { document.getElementById('pass-modal').classList.remove('show'); document.body.style.overflow = ''; }
   document.getElementById('pass-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
@@ -326,7 +344,7 @@
           <div style="font-size:32px; margin-bottom:8px;">🎉</div>
           <div style="font-size:16px; font-weight:700; margin-bottom:4px;">미션 완료!</div>
           <div style="font-size:13px; color:var(--text-sub); margin-bottom:16px;">마리트 패스를 받으세요</div>
-          <button onclick="showPassModal()" style="padding:12px 32px; background:var(--brand); color:white; border:none; border-radius:var(--r2); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">패스 받기</button>
+          <button onclick="updatePassDates();showPassModal()" style="padding:12px 32px; background:var(--brand); color:white; border:none; border-radius:var(--r2); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">패스 받기</button>
         </div>`;
       return;
     }
@@ -379,13 +397,14 @@
     if (!/^\d+$/.test(val)) { err.textContent = '예약번호는 숫자만 입력해주세요'; err.style.display = 'block'; return; }
     btn.disabled = true; btn.textContent = '확인중...';
     try {
-      const valid = await rpc('verify_reservation', { p_order_id: val, p_mission_type: type });
-      if (!valid) { err.textContent = '유효하지 않은 예약번호입니다'; err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증'; return; }
+      const result = await rpc('verify_reservation', { p_order_id: val, p_mission_type: type });
+      if (!result || !result.valid) { err.textContent = '유효하지 않은 예약번호입니다'; err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증'; return; }
       await sb('user_missions', { method:'POST', body:{ session_id:SESSION_ID, mission_type:type, order_id:val } });
       cleared[type] = val;
+      travelDates[type] = { start: result.travel_start, end: result.travel_end };
       fireConfetti();
       render();
-      if (isComplete()) setTimeout(() => { fireConfetti(); showPassModal(); }, 600);
+      if (isComplete()) setTimeout(() => { updatePassDates(); fireConfetti(); showPassModal(); }, 600);
     } catch (e) {
       err.textContent = e.code === '23505' ? '이미 인증된 미션입니다' : '오류가 발생했습니다';
       err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증';
