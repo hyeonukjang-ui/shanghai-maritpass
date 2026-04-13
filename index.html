@@ -8,125 +8,152 @@
   <style>
     :root {
       --brand:#51abf3; --brand-dark:#3d8fd6; --brand-light:#e8f4fd;
-      --secondary:#33b893; --secondary-light:#e6f7f2; --error:#fa5b4a;
+      --secondary:#33b893; --secondary-light:#e6f7f2;
+      --error:#fa5b4a; --gold:#ffbf00;
       --gray-50:#f8f9fa; --gray-100:#f1f3f5; --gray-200:#e9ecef; --gray-300:#dee2e6;
       --gray-400:#ced4da; --gray-500:#adb5bd; --gray-600:#868e96; --gray-700:#495057;
       --gray-800:#343a40; --gray-900:#212529;
       --bg:#ffffff; --text:var(--gray-900); --text-sub:var(--gray-600); --text-muted:var(--gray-500);
-      --r2:8px; --r3:12px; --r4:16px; --r-full:9999px;
-      --z1:0 1px 3px rgba(0,0,0,0.08); --z2:0 4px 12px rgba(0,0,0,0.12);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Noto Sans KR',-apple-system,sans-serif; background:var(--gray-50); color:var(--text); -webkit-font-smoothing:antialiased; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--gray-50);color:var(--text);-webkit-font-smoothing:antialiased}
+    .container{max-width:480px;margin:0 auto}
 
-    .header { background:var(--bg); border-bottom:1px solid var(--gray-200); position:sticky; top:0; z-index:50; }
-    .container { max-width:480px; margin:0 auto; padding:0 16px; }
-    .header-inner { display:flex; align-items:center; justify-content:center; height:56px; }
-    .logo { height:24px; }
-    .main { padding:24px 16px 40px; }
-    .page-title { font-size:20px; font-weight:800; text-align:center; margin-bottom:4px; }
-    .page-desc { font-size:13px; color:var(--text-sub); text-align:center; margin-bottom:20px; line-height:1.5; }
+    .header{background:var(--bg);border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:50}
+    .header-inner{display:flex;align-items:center;justify-content:center;height:56px;padding:0 16px}
+    .logo{height:24px}
 
-    /* 스탬프판 — 스타벅스 프리퀀시 스타일 */
-    .stamp-board { background:var(--bg); border-radius:var(--r3); box-shadow:var(--z1); padding:20px 16px; margin-bottom:16px; }
-    .stamp-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
-    .stamp-title { font-size:14px; font-weight:700; }
-    .stamp-count { font-size:13px; font-weight:700; color:var(--brand); }
-    .stamp-count .total { color:var(--gray-400); font-weight:400; }
+    /* Hero */
+    .hero{position:relative;height:200px;overflow:hidden;
+      background:linear-gradient(180deg,rgba(15,22,40,0) 0%,rgba(15,22,40,0.85) 100%),
+      url('https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2024/08/05/ANRQ/Nd3XAHWuCE.jpg') center/cover;
+      display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px;color:white}
+    .hero h1{font-size:24px;font-weight:800;margin-bottom:4px}
+    .hero p{font-size:13px;opacity:0.7}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;margin-top:12px;width:fit-content}
+    .hero-dot{width:8px;height:8px;border-radius:50%}
+    .hero-dot.done{background:var(--secondary)}
+    .hero-dot.pending{background:rgba(255,255,255,0.3)}
 
-    .stamp-grid { display:flex; gap:8px; }
-    .stamp-slot { flex:1; text-align:center; cursor:pointer; }
-    .stamp-img-wrap { position:relative; width:100%; aspect-ratio:1; border-radius:var(--r3); overflow:hidden; border:2.5px solid var(--gray-200); background:var(--gray-50); transition:all 0.2s; }
-    .stamp-slot.active .stamp-img-wrap { border-color:var(--brand); box-shadow:0 0 0 3px rgba(81,171,243,0.15); }
-    .stamp-slot.done .stamp-img-wrap { border-color:var(--secondary); }
-    .stamp-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
-    .stamp-overlay { position:absolute; inset:0; background:rgba(51,184,147,0.8); display:flex; align-items:center; justify-content:center; animation:stampIn 0.4s ease; }
-    .stamp-overlay svg { width:32px; height:32px; }
-    .stamp-name { font-size:11px; font-weight:600; color:var(--text); margin-top:6px; line-height:1.3; }
-    .stamp-slot.done .stamp-name { color:var(--secondary); }
-    .stamp-badge { font-size:9px; font-weight:700; color:var(--text-muted); margin-top:2px; }
-    .stamp-slot.done .stamp-badge { color:var(--secondary); }
-    .stamp-slot.active .stamp-badge { color:var(--brand); }
-    @keyframes stampIn { 0%{transform:scale(0.3) rotate(-20deg);opacity:0} 60%{transform:scale(1.15) rotate(5deg)} 100%{transform:scale(1) rotate(0)} }
+    /* Timeline */
+    .timeline{padding:0 20px 40px}
+    .tl-item{display:flex;gap:16px;position:relative}
+    .tl-item:last-child .tl-track::after{display:none}
+    .tl-track{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;padding-top:24px}
+    .tl-dot{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--gray-300);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--gray-400);position:relative;z-index:2;transition:all 0.3s}
+    .tl-dot.active{border-color:var(--brand);color:var(--brand);background:var(--brand-light)}
+    .tl-dot.done{border-color:var(--secondary);background:var(--secondary);color:white}
+    .tl-dot.reward{border-color:var(--gold);background:#fff9e6;color:var(--gold);font-size:16px}
+    .tl-dot.reward.unlocked{background:var(--gold);color:white;animation:popIn 0.4s ease}
+    .tl-track::after{content:'';width:2px;flex:1;background:var(--gray-200);margin-top:4px}
+    .tl-item.done .tl-track::after{background:var(--secondary)}
+    .tl-content{flex:1;padding:16px 0 32px}
+    .tl-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 
-    /* OR 구분자 */
-    .stamp-or { display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; width:20px; margin-top:-20px; }
-    .stamp-or span { font-size:9px; font-weight:700; color:var(--gray-400); background:var(--bg); padding:2px 0; }
+    @keyframes popIn{0%{transform:scale(0.5)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+    @keyframes stampIn{0%{transform:scale(0.3) rotate(-20deg);opacity:0}60%{transform:scale(1.15) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
 
-    /* 인증 영역 */
-    .auth-section { background:var(--bg); border-radius:var(--r3); box-shadow:var(--z1); padding:16px; margin-bottom:16px; transition:all 0.2s; }
-    .auth-section.highlight { box-shadow:var(--z2); border:1.5px solid var(--brand); }
-    .auth-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-    .auth-img { width:48px; height:48px; border-radius:var(--r2); object-fit:cover; }
-    .auth-info { flex:1; }
-    .auth-title { font-size:14px; font-weight:600; }
-    .auth-sub { font-size:11px; color:var(--text-muted); }
-    .input-row { display:flex; gap:8px; }
-    .input-row input { flex:1; padding:10px 12px; font-size:13px; border:1px solid var(--gray-300); border-radius:var(--r2); outline:none; background:var(--bg); font-family:inherit; color:var(--text); }
-    .input-row input::placeholder { color:var(--gray-400); }
-    .input-row input:focus { border-color:var(--brand); box-shadow:0 0 0 3px rgba(81,171,243,0.15); }
-    .btn-confirm { padding:10px 20px; background:var(--brand); color:white; font-size:13px; font-weight:600; border:none; border-radius:var(--r2); cursor:pointer; font-family:inherit; white-space:nowrap; }
-    .btn-confirm:hover { background:var(--brand-dark); }
-    .btn-confirm:disabled { opacity:0.45; cursor:not-allowed; }
-    .booking-link { display:inline-flex; align-items:center; gap:3px; font-size:12px; color:var(--brand); text-decoration:none; font-weight:500; margin-top:8px; }
-    .error-msg { color:var(--error); font-size:12px; font-weight:500; margin-top:8px; }
+    /* Select grid */
+    .select-grid{display:flex;gap:8px;margin-bottom:12px}
+    .select-option{flex:1;border:1.5px solid var(--gray-200);border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.15s;background:var(--bg)}
+    .select-option:hover{border-color:var(--gray-400)}
+    .select-option.active{border-color:var(--brand);box-shadow:0 0 0 3px rgba(81,171,243,0.1)}
+    .select-option.done{border-color:var(--secondary)}
+    .select-option.disabled{opacity:0.3;pointer-events:none}
+    .select-option img{width:100%;height:80px;object-fit:cover;display:block}
+    .select-option-body{padding:8px;text-align:center}
+    .select-option-name{font-size:12px;font-weight:600}
+    .select-option-status{font-size:10px;color:var(--text-muted);margin-top:2px}
+    .select-option.active .select-option-name{color:var(--brand)}
+    .select-option.done .select-option-name{color:var(--secondary)}
+    .select-option.done .select-option-status{color:var(--secondary);font-weight:600}
 
-    .cleared-row { display:flex; align-items:center; justify-content:space-between; padding:4px 0; }
-    .cleared-left { display:flex; align-items:center; gap:8px; }
-    .cleared-icon { width:22px; height:22px; background:var(--secondary); border-radius:50%; display:flex; align-items:center; justify-content:center; }
-    .cleared-icon svg { width:13px; height:13px; }
-    .cleared-num { font-size:13px; color:var(--text); font-weight:500; }
-    .cleared-badge { background:var(--secondary); color:white; font-weight:700; font-size:11px; padding:3px 10px; border-radius:var(--r-full); letter-spacing:0.5px; }
+    /* Card */
+    .tl-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow:hidden;border:1.5px solid transparent;transition:all 0.2s}
+    .tl-card.active{border-color:var(--brand);box-shadow:0 4px 16px rgba(81,171,243,0.12)}
+    .tl-card.done{border-color:var(--secondary)}
+    .tl-card-body{padding:14px 16px}
+    .tl-card-title{font-size:15px;font-weight:700;margin-bottom:2px}
+    .tl-card-sub{font-size:12px;color:var(--text-muted);margin-bottom:12px}
 
-    /* 선택 안내 */
-    .select-prompt { text-align:center; padding:8px 0; font-size:12px; color:var(--text-muted); }
+    /* Cleared */
+    .tl-cleared{display:flex;align-items:center;justify-content:space-between}
+    .tl-cleared-left{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--secondary)}
+    .tl-cleared-left svg{width:16px;height:16px}
+    .cleared-pill{background:var(--secondary);color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
 
-    .footer { text-align:center; margin-top:32px; }
-    .footer-logo { height:18px; opacity:0.25; }
-    .footer p { color:var(--text-muted); font-size:11px; margin-top:4px; }
+    /* Input */
+    .input-row{display:flex;gap:8px}
+    .input-row input{flex:1;padding:10px 14px;font-size:13px;border:1px solid var(--gray-300);border-radius:8px;outline:none;font-family:inherit;background:var(--bg);color:var(--text)}
+    .input-row input::placeholder{color:var(--gray-400)}
+    .input-row input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(81,171,243,0.12)}
+    .btn{padding:10px 20px;background:var(--brand);color:white;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit;white-space:nowrap}
+    .btn:hover{background:var(--brand-dark)}
+    .btn:disabled{opacity:0.45;cursor:not-allowed}
+    .booking-link{display:inline-flex;align-items:center;gap:3px;font-size:12px;color:var(--brand);text-decoration:none;font-weight:500;margin-top:8px}
+    .error-msg{color:var(--error);font-size:12px;font-weight:500;margin-top:8px}
+    .select-prompt{font-size:12px;color:var(--text-muted);text-align:center;padding:8px 0}
+
+    /* Reward */
+    .reward-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);padding:20px;text-align:center}
+    .reward-card.locked{opacity:0.5}
+    .reward-card.unlocked{border:2px solid var(--gold);box-shadow:0 4px 20px rgba(255,191,0,0.15);opacity:1}
+    .reward-icon{font-size:32px;margin-bottom:8px}
+    .reward-title{font-size:16px;font-weight:700;margin-bottom:4px}
+    .reward-desc{font-size:12px;color:var(--text-sub);margin-bottom:16px}
+    .reward-list{display:flex;flex-direction:column;gap:8px;text-align:left}
+    .reward-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--gray-50);border-radius:8px}
+    .reward-item-name{font-size:13px;font-weight:500}
+    .reward-item-badge{font-size:11px;font-weight:700;color:var(--error);background:#fff1f0;padding:2px 8px;border-radius:4px}
+    .reward-btn{margin-top:16px;padding:14px 32px;background:var(--gold);color:var(--gray-900);font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-family:inherit;width:100%}
+    .reward-btn:disabled{background:var(--gray-200);color:var(--gray-500);cursor:not-allowed}
+
+    .footer{text-align:center;padding:0 20px 32px}
+    .footer-logo{height:18px;opacity:0.25}
+    .footer p{color:var(--text-muted);font-size:11px;margin-top:4px}
 
     /* Modal */
-    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:100; justify-content:center; align-items:center; padding:16px; backdrop-filter:blur(4px); }
-    .modal-overlay.show { display:flex; animation:fadeIn 0.3s ease; }
-    @keyframes fadeIn { from{opacity:0}to{opacity:1} }
-    @keyframes slideUp { from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1} }
-    .modal-content { animation:slideUp 0.35s ease; width:100%; max-width:360px; }
-    .modal-close { position:absolute; top:16px; right:16px; width:32px; height:32px; background:rgba(255,255,255,0.15); border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:101; }
-    .modal-close svg { width:16px; height:16px; stroke:white; }
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:100;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(4px)}
+    .modal-overlay.show{display:flex;animation:fadeIn 0.3s ease}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .modal-content{animation:slideUp 0.35s ease;width:100%;max-width:360px}
+    .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(255,255,255,0.15);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:101}
+    .modal-close svg{width:16px;height:16px;stroke:white}
 
     /* Boarding Pass */
-    .boarding-pass { background:linear-gradient(150deg,#0f1628 0%,#1a2744 40%,#0d2137 100%); border-radius:var(--r4); overflow:hidden; color:white; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.3); }
-    .boarding-pass::before { content:''; position:absolute; top:-60px; right:-60px; width:180px; height:180px; background:radial-gradient(circle,rgba(81,171,243,0.12) 0%,transparent 70%); pointer-events:none; }
-    .bp-header { padding:24px 24px 16px; text-align:center; position:relative; }
-    .bp-logo { height:16px; opacity:0.45; margin-bottom:12px; }
-    .bp-pass-label { display:inline-block; font-size:9px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.12); padding:2px 10px; border-radius:var(--r-full); margin-bottom:12px; }
-    .bp-title { font-size:26px; font-weight:800; letter-spacing:-0.5px; margin-bottom:4px; background:linear-gradient(135deg,#fff 0%,#93ccfa 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .bp-subtitle { font-size:12px; color:rgba(255,255,255,0.4); letter-spacing:2px; text-transform:uppercase; }
-    .bp-divider { display:flex; align-items:center; }
-    .bp-divider-line { flex:1; border-top:2px dashed rgba(255,255,255,0.08); }
-    .bp-divider-circle-l { width:20px; height:20px; background:rgba(0,0,0,0.55); border-radius:50%; margin-left:-10px; flex-shrink:0; }
-    .bp-divider-circle-r { width:20px; height:20px; background:rgba(0,0,0,0.55); border-radius:50%; margin-right:-10px; flex-shrink:0; }
-    .bp-rewards { padding:16px 24px; }
-    .bp-reward { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
-    .bp-reward:last-child { border-bottom:none; }
-    .bp-reward-name { font-size:13px; font-weight:500; color:rgba(255,255,255,0.85); }
-    .bp-reward-badge { background:linear-gradient(135deg,rgba(250,91,74,0.2) 0%,rgba(255,191,0,0.15) 100%); color:#ffcf6b; font-weight:700; font-size:12px; padding:3px 10px; border-radius:var(--r-full); }
-    .bp-footer { padding:12px 24px 20px; text-align:center; }
-    .bp-valid { font-size:9px; color:rgba(255,255,255,0.3); letter-spacing:1.5px; text-transform:uppercase; }
-    .bp-date { font-size:14px; font-weight:700; color:rgba(255,255,255,0.55); margin-top:2px; }
-    .bp-howto { margin-top:16px; padding:12px; background:rgba(255,255,255,0.04); border-radius:var(--r2); border:1px solid rgba(255,255,255,0.06); }
-    .bp-howto-text { font-size:12px; color:rgba(255,255,255,0.5); text-align:center; line-height:1.5; }
-    .bp-howto-text strong { color:rgba(255,255,255,0.8); }
-    .bp-stamp { position:absolute; top:16px; right:16px; width:50px; height:50px; border:2px solid rgba(51,184,147,0.45); border-radius:50%; display:flex; align-items:center; justify-content:center; transform:rotate(12deg); }
-    .bp-stamp-text { font-size:8px; font-weight:900; color:rgba(51,184,147,0.55); text-transform:uppercase; letter-spacing:0.5px; text-align:center; line-height:1.2; }
-    .save-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin-top:12px; padding:12px; background:white; color:var(--text); font-weight:600; font-size:14px; border:none; border-radius:var(--r3); cursor:pointer; font-family:inherit; }
-    .save-btn:hover { background:var(--gray-100); }
-    .save-btn svg { width:18px; height:18px; }
-    .save-btn-sub { text-align:center; margin-top:8px; font-size:11px; color:rgba(255,255,255,0.45); }
+    .boarding-pass{background:linear-gradient(150deg,#0f1628 0%,#1a2744 40%,#0d2137 100%);border-radius:16px;overflow:hidden;color:white;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+    .boarding-pass::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(81,171,243,0.12) 0%,transparent 70%);pointer-events:none}
+    .bp-header{padding:24px 24px 16px;text-align:center;position:relative}
+    .bp-logo{height:16px;opacity:0.45;margin-bottom:12px}
+    .bp-pass-label{display:inline-block;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.35);border:1px solid rgba(255,255,255,0.12);padding:2px 10px;border-radius:9999px;margin-bottom:12px}
+    .bp-title{font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px;background:linear-gradient(135deg,#fff 0%,#93ccfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .bp-subtitle{font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase}
+    .bp-divider{display:flex;align-items:center}
+    .bp-divider-line{flex:1;border-top:2px dashed rgba(255,255,255,0.08)}
+    .bp-divider-circle-l{width:20px;height:20px;background:rgba(0,0,0,0.55);border-radius:50%;margin-left:-10px;flex-shrink:0}
+    .bp-divider-circle-r{width:20px;height:20px;background:rgba(0,0,0,0.55);border-radius:50%;margin-right:-10px;flex-shrink:0}
+    .bp-rewards{padding:16px 24px}
+    .bp-reward{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .bp-reward:last-child{border-bottom:none}
+    .bp-reward-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.85)}
+    .bp-reward-badge{background:linear-gradient(135deg,rgba(250,91,74,0.2) 0%,rgba(255,191,0,0.15) 100%);color:#ffcf6b;font-weight:700;font-size:12px;padding:3px 10px;border-radius:9999px}
+    .bp-footer{padding:12px 24px 20px;text-align:center}
+    .bp-valid{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase}
+    .bp-date{font-size:14px;font-weight:700;color:rgba(255,255,255,0.55);margin-top:2px}
+    .bp-howto{margin-top:16px;padding:12px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.06)}
+    .bp-howto-text{font-size:12px;color:rgba(255,255,255,0.5);text-align:center;line-height:1.5}
+    .bp-howto-text strong{color:rgba(255,255,255,0.8)}
+    .bp-stamp{position:absolute;top:16px;right:16px;width:50px;height:50px;border:2px solid rgba(51,184,147,0.45);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(12deg)}
+    .bp-stamp-text{font-size:8px;font-weight:900;color:rgba(51,184,147,0.55);text-transform:uppercase;letter-spacing:0.5px;text-align:center;line-height:1.2}
+    .save-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:12px;background:white;color:var(--text);font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;font-family:inherit}
+    .save-btn:hover{background:var(--gray-100)}
+    .save-btn svg{width:18px;height:18px}
+    .save-btn-sub{text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,0.45)}
 
-    .confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:200; }
-    .confetti-piece { position:absolute; width:8px; height:8px; border-radius:2px; animation:confettiFall 1.5s ease forwards; }
-    @keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
+    .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
+    .confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;animation:confettiFall 1.5s ease forwards}
+    @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
   </style>
 </head>
 <body>
@@ -137,21 +164,57 @@
     </div>
   </div>
 
-  <div class="container main">
-    <div class="page-title">마리트 패스(상하이)</div>
-    <div class="page-desc">2개 상품을 인증하고 패스를 받으세요</div>
-
-    <!-- 스탬프판 -->
-    <div class="stamp-board">
-      <div class="stamp-header">
-        <div class="stamp-title">미션 스탬프</div>
-        <div class="stamp-count"><span id="stamp-done">0</span><span class="total"> / 2</span></div>
+  <div class="container">
+    <div class="hero">
+      <h1>마리트 패스(상하이)</h1>
+      <p>2개 인증하면 상하이 현지 할인 혜택!</p>
+      <div class="hero-badge">
+        <div class="hero-dot pending" id="hdot1"></div>
+        <div class="hero-dot pending" id="hdot2"></div>
+        <span id="hero-status">0 / 2 완료</span>
       </div>
-      <div class="stamp-grid" id="stamp-grid"></div>
     </div>
 
-    <!-- 인증 영역 -->
-    <div id="auth-area"></div>
+    <div class="timeline">
+      <!-- Mission 1: 티켓 -->
+      <div class="tl-item" id="tl-ticket">
+        <div class="tl-track"><div class="tl-dot active" id="dot-ticket">1</div></div>
+        <div class="tl-content">
+          <div class="tl-label">티켓 선택 (1개)</div>
+          <div class="select-grid" id="grid-ticket"></div>
+          <div id="auth-ticket"></div>
+        </div>
+      </div>
+
+      <!-- Mission 2: 수향마을 -->
+      <div class="tl-item" id="tl-village">
+        <div class="tl-track"><div class="tl-dot active" id="dot-village">2</div></div>
+        <div class="tl-content">
+          <div class="tl-label">수향마을 선택 (1개)</div>
+          <div class="select-grid" id="grid-village"></div>
+          <div id="auth-village"></div>
+        </div>
+      </div>
+
+      <!-- Reward -->
+      <div class="tl-item">
+        <div class="tl-track"><div class="tl-dot reward" id="dot-reward">🎁</div></div>
+        <div class="tl-content">
+          <div class="tl-label">리워드</div>
+          <div class="reward-card locked" id="reward-card">
+            <div class="reward-icon">🎫</div>
+            <div class="reward-title">마리트 패스</div>
+            <div class="reward-desc" id="reward-desc">2개 미션을 완료하면 패스를 받을 수 있어요</div>
+            <div class="reward-list">
+              <div class="reward-item"><span class="reward-item-name">하이디라오</span><span class="reward-item-badge">12% OFF</span></div>
+              <div class="reward-item"><span class="reward-item-name">BFC 중식당</span><span class="reward-item-badge">10% OFF</span></div>
+              <div class="reward-item"><span class="reward-item-name">마사지샵</span><span class="reward-item-badge">10% OFF</span></div>
+            </div>
+            <button class="reward-btn" disabled id="reward-btn" onclick="updatePassDates();showPassModal()">미션을 완료해주세요</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="footer">
       <img class="footer-logo" src="logo.png" alt="마이리얼트립">
@@ -161,9 +224,7 @@
 
   <!-- Boarding Pass Modal -->
   <div class="modal-overlay" id="pass-modal">
-    <button class="modal-close" onclick="closeModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+    <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <div class="modal-content">
       <div class="boarding-pass" id="boarding-pass">
         <div class="bp-header">
@@ -198,8 +259,25 @@
 <script>
   const SUPABASE_URL = 'https://glxqsuxhiomukbtqumat.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_dQAbR9SZqND6iX7cqgBWZw_5riX65Eq';
-  const REQUIRED = 'cruise';
-  const OPTIONAL = ['wuzhen', 'zhujiaojiao'];
+
+  // 미션 그룹: 티켓(디즈니 or 유람선) + 수향마을(우전 or 주가각)
+  const TICKET_TYPES = ['disney', 'cruise'];
+  const VILLAGE_TYPES = ['wuzhen', 'zhujiaojiao'];
+
+  const IMAGES = {
+    disney: 'https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2026/03/20/JQoc/LsfcVTJhCw.jpg',
+    cruise: 'https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2024/08/05/ANRQ/Nd3XAHWuCE.jpg',
+    wuzhen: 'https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2025/06/05/1SOP/SlakPmcJ9T.jpg',
+    zhujiaojiao: 'https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2024/08/05/DBuy/aBBAhRx3SB.jpg'
+  };
+  const NAMES = {
+    disney: '디즈니랜드', cruise: '황푸강 유람선',
+    wuzhen: '우전 수향마을', zhujiaojiao: '주가각 수향마을'
+  };
+  const SHORT_NAMES = {
+    disney: '디즈니랜드', cruise: '유람선',
+    wuzhen: '우전', zhujiaojiao: '주가각'
+  };
 
   function getSessionId() {
     let sid = localStorage.getItem('myrealpass_session');
@@ -225,34 +303,32 @@
   }
 
   let missions = [];
-  const cleared = {};   // { mission_type: order_id }
-  const travelDates = {}; // { mission_type: { start, end } }
-  let selected = null;
+  const cleared = {};
+  const travelDates = {};
+  let selectedTicket = null;
+  let selectedVillage = null;
 
   function getMission(type) { return missions.find(m => m.mission_type === type); }
-  function isComplete() { return cleared[REQUIRED] && OPTIONAL.some(t => cleared[t]); }
-  function doneCount() { let c = 0; if (cleared[REQUIRED]) c++; if (OPTIONAL.some(t => cleared[t])) c++; return c; }
+  function ticketDone() { return TICKET_TYPES.find(t => cleared[t]); }
+  function villageDone() { return VILLAGE_TYPES.find(t => cleared[t]); }
+  function isComplete() { return !!ticketDone() && !!villageDone(); }
+  function doneCount() { return (ticketDone() ? 1 : 0) + (villageDone() ? 1 : 0); }
+
+  function showPassModal() { document.getElementById('pass-modal').classList.add('show'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { document.getElementById('pass-modal').classList.remove('show'); document.body.style.overflow = ''; }
+  document.getElementById('pass-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
   function updatePassDates() {
     const dates = Object.values(travelDates).filter(d => d.start && d.end);
-    if (dates.length === 0) return;
-
-    // 가장 빠른 시작일
+    if (!dates.length) return;
     const starts = dates.map(d => new Date(d.start));
     const ends = dates.map(d => new Date(d.end));
     const earliest = new Date(Math.min(...starts));
-    // 가장 늦은 종료일 + 7일
     const latest = new Date(Math.max(...ends));
     latest.setDate(latest.getDate() + 7);
-
     const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-
     document.getElementById('bp-date-range').textContent = `${fmt(earliest)} – ${fmt(latest)}`;
   }
-
-  function showPassModal() { updatePassDates(); document.getElementById('pass-modal').classList.add('show'); document.body.style.overflow = 'hidden'; }
-  function closeModal() { document.getElementById('pass-modal').classList.remove('show'); document.body.style.overflow = ''; }
-  document.getElementById('pass-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
   function fireConfetti() {
     const c = document.createElement('div'); c.className = 'confetti'; document.body.appendChild(c);
@@ -279,111 +355,109 @@
     } catch (e) { btn.innerHTML = '<span>저장 실패 - 스크린샷을 찍어주세요</span>'; btn.disabled = false; }
   }
 
-  function selectSlot(type) {
-    if (cleared[type]) return; // 이미 완료된 건 클릭 무시
-    // 선택 미션 중 다른 게 이미 완료되면 선택 불가
-    if (OPTIONAL.includes(type) && OPTIONAL.some(t => t !== type && cleared[t])) return;
-    selected = type;
+  function selectItem(group, type) {
+    if (group === 'ticket') {
+      if (ticketDone()) return;
+      selectedTicket = type;
+    } else {
+      if (villageDone()) return;
+      selectedVillage = type;
+    }
     render();
   }
 
-  function render() {
-    // 스탬프판
-    const grid = document.getElementById('stamp-grid');
-    grid.innerHTML = '';
-
-    const cruiseM = getMission(REQUIRED);
-    const wuzhenM = getMission('wuzhen');
-    const zhujiaojiaoM = getMission('zhujiaojiao');
-
-    const allSlots = [
-      { m: cruiseM, type: 'cruise', label: '유람선', badge: '필수' },
-      { m: wuzhenM, type: 'wuzhen', label: '우전', badge: '선택' },
-      { m: zhujiaojiaoM, type: 'zhujiaojiao', label: '주가각', badge: '선택' }
-    ];
-
-    allSlots.forEach((s, i) => {
-      if (!s.m) return;
-      const done = !!cleared[s.type];
-      const isActive = selected === s.type;
-      const isDisabledOpt = OPTIONAL.includes(s.type) && OPTIONAL.some(t => t !== s.type && cleared[t]);
-
-      // OR 구분자 (우전과 주가각 사이)
-      if (i === 2) {
-        const orEl = document.createElement('div');
-        orEl.className = 'stamp-or';
-        orEl.innerHTML = '<span>OR</span>';
-        grid.appendChild(orEl);
-      }
-
-      const slot = document.createElement('div');
-      slot.className = 'stamp-slot' + (done ? ' done' : '') + (isActive ? ' active' : '');
-      if (isDisabledOpt) slot.style.opacity = '0.3';
-      slot.onclick = () => selectSlot(s.type);
-
-      const overlay = done ? `<div class="stamp-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>` : '';
-
-      slot.innerHTML = `
-        <div class="stamp-img-wrap">
-          <img src="${s.m.image_url || ''}" alt="${s.label}">
-          ${overlay}
-        </div>
-        <div class="stamp-name">${s.label}</div>
-        <div class="stamp-badge">${done ? 'CLEAR!' : s.badge}</div>
-      `;
-      grid.appendChild(slot);
+  function renderSelectGrid(containerId, types, selectedType, doneType) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = '';
+    types.forEach(t => {
+      const isDone = cleared[t];
+      const isSelected = selectedType === t;
+      const isDisabled = doneType && doneType !== t;
+      let cls = 'select-option';
+      if (isDone) cls += ' done';
+      else if (isSelected) cls += ' active';
+      if (isDisabled) cls += ' disabled';
+      const status = isDone ? 'CLEAR!' : isSelected ? '선택됨' : '선택하기';
+      const group = TICKET_TYPES.includes(t) ? 'ticket' : 'village';
+      el.innerHTML += `
+        <div class="${cls}" onclick="selectItem('${group}','${t}')">
+          <img src="${IMAGES[t]}" alt="${NAMES[t]}">
+          <div class="select-option-body">
+            <div class="select-option-name">${SHORT_NAMES[t]}</div>
+            <div class="select-option-status">${status}</div>
+          </div>
+        </div>`;
     });
+  }
 
-    document.getElementById('stamp-done').textContent = doneCount();
+  function renderAuthArea(containerId, types, selectedType, doneType) {
+    const el = document.getElementById(containerId);
+    if (doneType) {
+      const m = getMission(doneType);
+      el.innerHTML = `
+        <div class="tl-card done"><div class="tl-card-body">
+          <div class="tl-cleared">
+            <div class="tl-cleared-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 예약번호 ${cleared[doneType]}</div>
+            <span class="cleared-pill">CLEAR!</span>
+          </div>
+        </div></div>`;
+      return;
+    }
+    if (!selectedType) {
+      el.innerHTML = '<div class="select-prompt">위에서 상품을 선택해주세요</div>';
+      return;
+    }
+    const m = getMission(selectedType);
+    const url = m ? m.booking_url : '#';
+    el.innerHTML = `
+      <div class="tl-card active"><div class="tl-card-body">
+        <div class="tl-card-title">${NAMES[selectedType]}</div>
+        <div class="tl-card-sub">예약번호를 입력해주세요</div>
+        <div class="input-row">
+          <input type="text" id="input-${selectedType}" placeholder="예약번호 입력" inputmode="numeric">
+          <button class="btn" id="btn-${selectedType}" onclick="verify('${selectedType}')">인증</button>
+        </div>
+        <div id="error-${selectedType}" class="error-msg" style="display:none;"></div>
+        <a href="${url}" target="_blank" class="booking-link">아직 안 샀다면? 예약하러 가기 →</a>
+      </div></div>`;
+  }
 
-    // 인증 영역
-    const auth = document.getElementById('auth-area');
+  function render() {
+    const td = ticketDone();
+    const vd = villageDone();
+    const count = doneCount();
+
+    renderSelectGrid('grid-ticket', TICKET_TYPES, selectedTicket, td);
+    renderAuthArea('auth-ticket', TICKET_TYPES, selectedTicket, td);
+
+    renderSelectGrid('grid-village', VILLAGE_TYPES, selectedVillage, vd);
+    renderAuthArea('auth-village', VILLAGE_TYPES, selectedVillage, vd);
+
+    // Timeline dots
+    const dotT = document.getElementById('dot-ticket');
+    const dotV = document.getElementById('dot-village');
+    const dotR = document.getElementById('dot-reward');
+    dotT.className = 'tl-dot' + (td ? ' done' : ' active');
+    dotT.innerHTML = td ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '1';
+    dotV.className = 'tl-dot' + (vd ? ' done' : ' active');
+    dotV.innerHTML = vd ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '2';
+    document.getElementById('tl-ticket').className = 'tl-item' + (td ? ' done' : '');
+    document.getElementById('tl-village').className = 'tl-item' + (vd ? ' done' : '');
+
+    // Hero
+    document.getElementById('hdot1').className = 'hero-dot ' + (td ? 'done' : 'pending');
+    document.getElementById('hdot2').className = 'hero-dot ' + (vd ? 'done' : 'pending');
+    document.getElementById('hero-status').textContent = count + ' / 2 완료';
+
+    // Reward
     if (isComplete()) {
-      auth.innerHTML = `
-        <div class="auth-section" style="text-align:center; padding:24px 16px;">
-          <div style="font-size:32px; margin-bottom:8px;">🎉</div>
-          <div style="font-size:16px; font-weight:700; margin-bottom:4px;">미션 완료!</div>
-          <div style="font-size:13px; color:var(--text-sub); margin-bottom:16px;">마리트 패스를 받으세요</div>
-          <button onclick="updatePassDates();showPassModal()" style="padding:12px 32px; background:var(--brand); color:white; border:none; border-radius:var(--r2); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">패스 받기</button>
-        </div>`;
-      return;
-    }
-
-    if (!selected) {
-      auth.innerHTML = '<div class="select-prompt">위 스탬프를 눌러 인증할 상품을 선택하세요</div>';
-      return;
-    }
-
-    const m = getMission(selected);
-    if (!m) return;
-    const done = !!cleared[selected];
-
-    if (done) {
-      auth.innerHTML = `
-        <div class="auth-section">
-          <div class="auth-header">
-            <img class="auth-img" src="${m.image_url || ''}" alt="${m.title}">
-            <div class="auth-info"><div class="auth-title">${m.title}</div><div class="auth-sub">인증 완료</div></div>
-          </div>
-          <div class="cleared-row">
-            <div class="cleared-left"><div class="cleared-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><span class="cleared-num">예약번호 ${cleared[selected]}</span></div>
-            <span class="cleared-badge">CLEAR!</span>
-          </div>
-        </div>`;
-    } else {
-      auth.innerHTML = `
-        <div class="auth-section highlight">
-          <div class="auth-header">
-            <img class="auth-img" src="${m.image_url || ''}" alt="${m.title}">
-            <div class="auth-info"><div class="auth-title">${m.title}</div><div class="auth-sub">예약번호를 입력해주세요</div></div>
-          </div>
-          <div class="input-row">
-            <input type="text" id="input-${selected}" placeholder="예약번호 입력" inputmode="numeric">
-            <button class="btn-confirm" id="btn-${selected}" onclick="verify('${selected}')">인증</button>
-          </div>
-          <div id="error-${selected}" class="error-msg" style="display:none;"></div>
-          <a href="${m.booking_url}" target="_blank" class="booking-link"><span>아직 안 샀다면? 예약하러 가기</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-        </div>`;
+      dotR.className = 'tl-dot reward unlocked';
+      document.getElementById('reward-card').className = 'reward-card unlocked';
+      document.getElementById('reward-desc').textContent = '미션 완료! 패스를 받으세요 🎉';
+      const btn = document.getElementById('reward-btn');
+      btn.disabled = false;
+      btn.textContent = '🎫 마리트 패스 받기';
+      btn.style.background = '#ffbf00';
     }
   }
 
@@ -416,6 +490,9 @@
       missions = await sb('missions?is_active=eq.true&order=display_order.asc');
       const ex = await sb(`user_missions?session_id=eq.${SESSION_ID}`);
       ex.forEach(r => { cleared[r.mission_type] = r.order_id; });
+      // auto-select if cleared
+      if (ticketDone()) selectedTicket = ticketDone();
+      if (villageDone()) selectedVillage = villageDone();
       render();
     } catch (e) { console.error('Failed:', e); }
   })();
