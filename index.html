@@ -118,38 +118,39 @@
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     @keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
     .modal-content{animation:slideUp 0.35s ease;width:100%;max-width:360px}
-    .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(255,255,255,0.15);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:101}
+    .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(255,255,255,0.25);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:101;backdrop-filter:blur(4px)}
     .modal-close svg{width:16px;height:16px;stroke:white}
 
-    /* Boarding Pass */
-    .boarding-pass{background:linear-gradient(150deg,#0f1628 0%,#1a2744 40%,#0d2137 100%);border-radius:16px;overflow:hidden;color:white;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-    .boarding-pass::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(81,171,243,0.12) 0%,transparent 70%);pointer-events:none}
+    /* Boarding Pass — MRT 브랜드 밝은 스타일 */
+    .boarding-pass{background:linear-gradient(135deg,#51abf3 0%,#3d8fd6 50%,#33b893 100%);border-radius:16px;overflow:hidden;color:white;position:relative;box-shadow:0 8px 32px rgba(81,171,243,0.3)}
+    .boarding-pass::before{content:'';position:absolute;top:-80px;right:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);pointer-events:none}
+    .boarding-pass::after{content:'';position:absolute;bottom:-60px;left:-60px;width:160px;height:160px;background:radial-gradient(circle,rgba(51,184,147,0.2) 0%,transparent 70%);pointer-events:none}
     .bp-header{padding:24px 24px 16px;text-align:center;position:relative}
-    .bp-logo{height:16px;opacity:0.45;margin-bottom:12px}
-    .bp-pass-label{display:inline-block;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.35);border:1px solid rgba(255,255,255,0.12);padding:2px 10px;border-radius:9999px;margin-bottom:12px}
-    .bp-title{font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px;background:linear-gradient(135deg,#fff 0%,#93ccfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .bp-subtitle{font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase}
+    .bp-logo{height:18px;opacity:0.7;margin-bottom:12px}
+    .bp-pass-label{display:inline-block;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);border:1.5px solid rgba(255,255,255,0.3);padding:3px 12px;border-radius:9999px;margin-bottom:12px}
+    .bp-title{font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px;color:white}
+    .bp-subtitle{font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:2px;text-transform:uppercase}
     .bp-divider{display:flex;align-items:center}
-    .bp-divider-line{flex:1;border-top:2px dashed rgba(255,255,255,0.08)}
-    .bp-divider-circle-l{width:20px;height:20px;background:rgba(0,0,0,0.55);border-radius:50%;margin-left:-10px;flex-shrink:0}
-    .bp-divider-circle-r{width:20px;height:20px;background:rgba(0,0,0,0.55);border-radius:50%;margin-right:-10px;flex-shrink:0}
+    .bp-divider-line{flex:1;border-top:2px dashed rgba(255,255,255,0.25)}
+    .bp-divider-circle-l{width:20px;height:20px;background:rgba(0,0,0,0.4);border-radius:50%;margin-left:-10px;flex-shrink:0}
+    .bp-divider-circle-r{width:20px;height:20px;background:rgba(0,0,0,0.4);border-radius:50%;margin-right:-10px;flex-shrink:0}
     .bp-rewards{padding:16px 24px}
-    .bp-reward{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .bp-reward{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.15)}
     .bp-reward:last-child{border-bottom:none}
-    .bp-reward-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.85)}
-    .bp-reward-badge{background:linear-gradient(135deg,rgba(250,91,74,0.2) 0%,rgba(255,191,0,0.15) 100%);color:#ffcf6b;font-weight:700;font-size:12px;padding:3px 10px;border-radius:9999px}
+    .bp-reward-name{font-size:13px;font-weight:600;color:white}
+    .bp-reward-badge{background:rgba(255,255,255,0.2);color:white;font-weight:700;font-size:12px;padding:3px 10px;border-radius:9999px;backdrop-filter:blur(4px)}
     .bp-footer{padding:12px 24px 20px;text-align:center}
-    .bp-valid{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase}
-    .bp-date{font-size:14px;font-weight:700;color:rgba(255,255,255,0.55);margin-top:2px}
-    .bp-howto{margin-top:16px;padding:12px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.06)}
-    .bp-howto-text{font-size:12px;color:rgba(255,255,255,0.5);text-align:center;line-height:1.5}
-    .bp-howto-text strong{color:rgba(255,255,255,0.8)}
-    .bp-stamp{position:absolute;top:16px;right:16px;width:50px;height:50px;border:2px solid rgba(51,184,147,0.45);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(12deg)}
-    .bp-stamp-text{font-size:8px;font-weight:900;color:rgba(51,184,147,0.55);text-transform:uppercase;letter-spacing:0.5px;text-align:center;line-height:1.2}
-    .save-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:12px;background:white;color:var(--text);font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;font-family:inherit}
+    .bp-valid{font-size:9px;color:rgba(255,255,255,0.6);letter-spacing:1.5px;text-transform:uppercase}
+    .bp-date{font-size:14px;font-weight:700;color:white;margin-top:2px}
+    .bp-howto{margin-top:16px;padding:12px;background:rgba(255,255,255,0.12);border-radius:8px;backdrop-filter:blur(4px)}
+    .bp-howto-text{font-size:12px;color:rgba(255,255,255,0.85);text-align:center;line-height:1.5}
+    .bp-howto-text strong{color:white}
+    .bp-stamp{position:absolute;top:16px;right:16px;width:50px;height:50px;border:2.5px solid rgba(255,255,255,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(12deg)}
+    .bp-stamp-text{font-size:8px;font-weight:900;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.5px;text-align:center;line-height:1.2}
+    .save-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:12px;background:white;color:var(--brand);font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;font-family:inherit}
     .save-btn:hover{background:var(--gray-100)}
     .save-btn svg{width:18px;height:18px}
-    .save-btn-sub{text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,0.45)}
+    .save-btn-sub{text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,0.5)}
 
     .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
     .confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;animation:confettiFall 1.5s ease forwards}
