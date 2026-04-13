@@ -48,6 +48,14 @@
     .badge-optional { display: inline-block; background: #f0fdf4; color: var(--secondary); font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; }
     .card-subtitle { font-size: 12px; color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px; }
 
+    /* 수향마을 선택 토글 */
+    .select-label { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+    .select-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+    .select-tab { flex:1; padding:10px 0; text-align:center; font-size:13px; font-weight:600; border:1.5px solid var(--gray-300); border-radius:var(--r2); background:var(--bg); color:var(--text-sub); cursor:pointer; font-family:inherit; transition:all 0.15s; }
+    .select-tab:hover { border-color: var(--gray-400); }
+    .select-tab.active { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .select-tab.cleared { border-color: var(--secondary); color: var(--secondary); background: #f0fdf4; }
+
     .card-bottom { padding: 0 16px 16px; }
     .input-row { display: flex; gap: 8px; }
     .input-row input { flex:1; padding:8px 12px; font-size:13px; border:1px solid var(--gray-300); border-radius:var(--r2); outline:none; background:var(--bg); font-family:inherit; color:var(--text); }
@@ -204,12 +212,20 @@
 
   let missions = [];
   const cleared = {};
+  let selectedOptional = null; // 선택된 수향마을
+
   function isComplete() { return cleared[REQUIRED] && OPTIONAL.some(t => cleared[t]); }
   function getProgress() { let c = 0; if (cleared[REQUIRED]) c++; if (OPTIONAL.some(t => cleared[t])) c++; return c; }
 
   function showPassModal() { document.getElementById('pass-modal').classList.add('show'); document.body.style.overflow = 'hidden'; }
   function closeModal() { document.getElementById('pass-modal').classList.remove('show'); document.body.style.overflow = ''; }
   document.getElementById('pass-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+
+  function selectOptional(type) {
+    if (OPTIONAL.some(t => cleared[t])) return; // 이미 인증 완료면 변경 불가
+    selectedOptional = type;
+    render();
+  }
 
   async function savePassImage() {
     const btn = document.querySelector('.save-btn');
@@ -226,29 +242,61 @@
     } catch (e) { btn.innerHTML = '<span>저장 실패 - 스크린샷을 찍어주세요</span>'; btn.disabled = false; }
   }
 
+  function getMission(type) { return missions.find(m => m.mission_type === type); }
+
+  function renderCard(m, badgeClass, badgeText) {
+    const done = !!cleared[m.mission_type];
+    let bottom;
+    if (done) {
+      bottom = `<div class="cleared-state"><div class="cleared-info"><div class="cleared-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><span class="cleared-text">예약번호 ${cleared[m.mission_type]}</span></div><span class="cleared-badge">CLEAR!</span></div>`;
+    } else {
+      bottom = `<div class="input-row"><input type="text" id="input-${m.mission_type}" placeholder="예약번호 입력" inputmode="numeric"><button class="btn-confirm" id="btn-${m.mission_type}" onclick="verify('${m.mission_type}')">인증</button></div><div id="error-${m.mission_type}" class="error-msg" style="display:none;"></div><a href="${m.booking_url}" target="_blank" rel="noopener" class="booking-link"><span>예약하러 가기</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`;
+    }
+    return `<div class="card"><div class="card-top"><img class="card-img" src="${m.image_url || 'https://placehold.co/128x128/e9ecef/868e96?text=' + encodeURIComponent(m.title)}" alt="${m.title}"><div class="card-info"><div class="card-title">${m.title}</div><div class="card-subtitle"><span class="${badgeClass}">${badgeText}</span></div></div></div><div class="card-bottom">${bottom}</div></div>`;
+  }
+
   function render() {
     const el = document.getElementById('mission-cards');
     el.innerHTML = '';
-    missions.forEach(m => {
-      if (m.mission_type !== REQUIRED && !OPTIONAL.includes(m.mission_type)) return;
-      const done = !!cleared[m.mission_type];
-      const isOpt = OPTIONAL.includes(m.mission_type);
-      let dis = false;
-      if (isOpt && !done && OPTIONAL.some(t => t !== m.mission_type && cleared[t])) dis = true;
 
-      const card = document.createElement('div');
-      card.className = 'card';
-      let bottom;
-      if (done) {
-        bottom = `<div class="cleared-state"><div class="cleared-info"><div class="cleared-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><span class="cleared-text">예약번호 ${cleared[m.mission_type]}</span></div><span class="cleared-badge">CLEAR!</span></div>`;
-      } else if (dis) {
-        bottom = `<div class="disabled-msg">다른 수향마을이 이미 인증되었습니다</div>`;
-      } else {
-        bottom = `<div class="input-row"><input type="text" id="input-${m.mission_type}" placeholder="예약번호 입력" inputmode="numeric"><button class="btn-confirm" id="btn-${m.mission_type}" onclick="verify('${m.mission_type}')">인증</button></div><div id="error-${m.mission_type}" class="error-msg" style="display:none;"></div><a href="${m.booking_url}" target="_blank" rel="noopener" class="booking-link"><span>예약하러 가기</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`;
-      }
-      card.innerHTML = `<div class="card-top"><img class="card-img" src="${m.image_url || 'https://placehold.co/128x128/e9ecef/868e96?text=' + encodeURIComponent(m.title)}" alt="${m.title}"><div class="card-info"><div class="card-title">${m.title}</div><div class="card-subtitle"><span class="${isOpt ? 'badge-optional' : 'badge-required'}">${isOpt ? '선택' : '필수'}</span>${isOpt ? ' 둘 중 1개' : ''}</div></div></div><div class="card-bottom">${bottom}</div>`;
-      el.appendChild(card);
+    // 1. 유람선 (필수)
+    const cruise = getMission(REQUIRED);
+    if (cruise) el.innerHTML += renderCard(cruise, 'badge-required', '필수');
+
+    // 2. 수향마을 선택
+    const optCleared = OPTIONAL.find(t => cleared[t]);
+    const optMissions = OPTIONAL.map(t => getMission(t)).filter(Boolean);
+
+    let optHTML = '<div class="card"><div style="padding:16px;">';
+    optHTML += '<div class="select-label">수향마을 선택</div>';
+    optHTML += '<div class="select-tabs">';
+    optMissions.forEach(m => {
+      const isCl = !!cleared[m.mission_type];
+      const isActive = selectedOptional === m.mission_type;
+      let cls = 'select-tab';
+      if (isCl) cls += ' cleared';
+      else if (isActive) cls += ' active';
+      const disabled = optCleared && !isCl ? ' style="opacity:0.4;pointer-events:none;"' : '';
+      optHTML += `<button class="${cls}"${disabled} onclick="selectOptional('${m.mission_type}')">${m.title.replace(' 야경투어','').replace('+유람선','')}</button>`;
     });
+    optHTML += '</div>';
+
+    // 선택된 수향마을의 입력 영역
+    const activeOpt = optCleared ? getMission(optCleared) : (selectedOptional ? getMission(selectedOptional) : null);
+    if (activeOpt) {
+      const done = !!cleared[activeOpt.mission_type];
+      if (done) {
+        optHTML += `<div class="cleared-state"><div class="cleared-info"><div class="cleared-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><span class="cleared-text">예약번호 ${cleared[activeOpt.mission_type]}</span></div><span class="cleared-badge">CLEAR!</span></div>`;
+      } else {
+        optHTML += `<div class="input-row"><input type="text" id="input-${activeOpt.mission_type}" placeholder="예약번호 입력" inputmode="numeric"><button class="btn-confirm" id="btn-${activeOpt.mission_type}" onclick="verify('${activeOpt.mission_type}')">인증</button></div><div id="error-${activeOpt.mission_type}" class="error-msg" style="display:none;"></div><a href="${activeOpt.booking_url}" target="_blank" rel="noopener" class="booking-link"><span>예약하러 가기</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`;
+      }
+    } else {
+      optHTML += '<div style="font-size:12px;color:var(--text-muted);text-align:center;padding:8px 0;">위에서 수향마을을 선택해주세요</div>';
+    }
+
+    optHTML += '</div></div>';
+    el.innerHTML += optHTML;
+
     const p = getProgress();
     document.getElementById('progress').style.width = (p / 2 * 100) + '%';
     document.getElementById('progress-text').textContent = p + ' / 2';
