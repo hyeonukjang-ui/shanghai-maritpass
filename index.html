@@ -168,6 +168,7 @@
         <div class="step-label" id="step2-label">수향마을</div>
       </div>
     </div>
+    <div style="font-size:11px; color:var(--text-muted); text-align:center; margin-top:-16px; margin-bottom:20px;">순서 상관없이 2개 모두 인증하면 패스를 받을 수 있어요</div>
 
     <div class="mission-cards" id="mission-cards"></div>
 
@@ -302,11 +303,11 @@
     const d1 = !!cleared[REQUIRED];
     const d2 = OPTIONAL.some(t => cleared[t]);
 
-    s1.className = 'step-circle' + (d1 ? ' done' : (d1 || !d2 ? ' active' : ''));
-    s2.className = 'step-circle' + (d2 ? ' done' : (d1 ? ' active' : ''));
+    s1.className = 'step-circle' + (d1 ? ' done' : ' active');
+    s2.className = 'step-circle' + (d2 ? ' done' : ' active');
     l1.className = 'step-label' + (d1 ? ' done' : ' active');
-    l2.className = 'step-label' + (d2 ? ' done' : (d1 ? ' active' : ''));
-    line.className = 'step-line' + (d1 ? ' done' : '');
+    l2.className = 'step-label' + (d2 ? ' done' : ' active');
+    line.className = 'step-line' + (d1 && d2 ? ' done' : '');
   }
 
   function render() {
@@ -327,7 +328,7 @@
       } else {
         bottom = `<div class="input-row"><input type="text" id="input-cruise" placeholder="예약번호 입력" inputmode="numeric"><button class="btn-confirm" id="btn-cruise" onclick="verify('cruise')">인증</button></div><div id="error-cruise" class="error-msg" style="display:none;"></div><a href="${cruise.booking_url}" target="_blank" class="booking-link"><span>예약하러 가기</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`;
       }
-      el.innerHTML += `<div class="card${!done ? ' card-highlight' : ''}"><div class="card-top">${imgWrap}<div class="card-info"><div class="card-title">${cruise.title}</div><div class="card-subtitle"><span class="badge-required">STEP 1</span></div></div></div><div class="card-bottom">${bottom}</div></div>`;
+      el.innerHTML += `<div class="card${!done ? ' card-highlight' : ''}"><div class="card-top">${imgWrap}<div class="card-info"><div class="card-title">${cruise.title}</div><div class="card-subtitle"><span class="badge-required">필수</span></div></div></div><div class="card-bottom">${bottom}</div></div>`;
     }
 
     // 2. 수향마을 선택 카드
@@ -335,8 +336,8 @@
     const optMissions = OPTIONAL.map(t => getMission(t)).filter(Boolean);
     const isStep2Active = !!cleared[REQUIRED];
 
-    let optHTML = `<div class="card${isStep2Active && !optCleared ? ' card-highlight' : ''}" style="${!isStep2Active ? 'opacity:0.5;pointer-events:none;' : ''}"><div style="padding:16px;">`;
-    optHTML += '<div class="select-label">STEP 2: 수향마을 선택</div>';
+    let optHTML = `<div class="card${!optCleared ? ' card-highlight' : ''}"><div style="padding:16px;">`;
+    optHTML += '<div class="select-label">수향마을 선택 <span style="font-size:11px;font-weight:400;color:var(--text-muted);">(둘 중 1개)</span></div>';
     optHTML += '<div class="select-cards">';
     optMissions.forEach(m => {
       const isCl = !!cleared[m.mission_type];
