@@ -6,120 +6,225 @@
   <title>마리트 패스 — 관리자</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
   <style>
-    :root { --brand:#51abf3; --secondary:#33b893; --error:#fa5b4a; --bg:#fff; --gray-50:#f8f9fa; --gray-100:#f1f3f5; --gray-200:#e9ecef; --gray-300:#dee2e6; --gray-500:#adb5bd; --gray-600:#868e96; --gray-800:#343a40; --gray-900:#212529; }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Noto Sans KR',-apple-system,sans-serif; background:var(--gray-50); color:var(--gray-900); }
-    .header { background:var(--bg); border-bottom:1px solid var(--gray-200); padding:16px 24px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10; }
-    .header h1 { font-size:18px; font-weight:700; }
-    .header a { font-size:13px; color:var(--brand); text-decoration:none; font-weight:500; }
-    .container { max-width:720px; margin:0 auto; padding:24px 16px; }
+    :root{--brand:#51abf3;--brand-dark:#3d8fd6;--brand-light:#e8f4fd;--secondary:#33b893;--error:#fa5b4a;--bg:#fff;--gray-50:#f8f9fa;--gray-100:#f1f3f5;--gray-200:#e9ecef;--gray-300:#dee2e6;--gray-400:#ced4da;--gray-500:#adb5bd;--gray-600:#868e96;--gray-800:#343a40;--gray-900:#212529}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--gray-50);color:var(--gray-900)}
+    .header{background:var(--bg);border-bottom:1px solid var(--gray-200);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+    .header h1{font-size:18px;font-weight:700}
+    .header-right{display:flex;align-items:center;gap:12px}
+    .header a{font-size:13px;color:var(--brand);text-decoration:none;font-weight:500}
+    .container{max-width:600px;margin:0 auto;padding:24px 16px}
 
-    .section { background:var(--bg); border-radius:12px; padding:20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
-    .section-title { font-size:15px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; }
-    .section-title .count { font-size:12px; color:var(--gray-500); font-weight:400; }
+    /* Tabs */
+    .nav-tabs{display:flex;background:var(--bg);border-bottom:1px solid var(--gray-200);position:sticky;top:57px;z-index:9}
+    .nav-tab{flex:1;padding:14px;text-align:center;font-size:13px;font-weight:600;color:var(--gray-500);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s}
+    .nav-tab.active{color:var(--brand);border-bottom-color:var(--brand)}
+    .nav-tab:hover{color:var(--gray-800)}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
 
-    .form-group { margin-bottom:12px; }
-    .form-group label { display:block; font-size:12px; font-weight:600; color:var(--gray-600); margin-bottom:4px; }
-    .form-group input, .form-group select { width:100%; padding:10px 12px; border:1px solid var(--gray-300); border-radius:8px; font-size:13px; font-family:inherit; outline:none; }
-    .form-group input:focus, .form-group select:focus { border-color:var(--brand); box-shadow:0 0 0 3px rgba(81,171,243,0.1); }
-    .form-row { display:flex; gap:8px; }
-    .form-row .form-group { flex:1; }
+    .card{background:var(--bg);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+    .card-title{font-size:16px;font-weight:700;margin-bottom:4px}
+    .card-desc{font-size:12px;color:var(--gray-600);margin-bottom:16px;line-height:1.5}
 
-    .btn { padding:10px 20px; font-size:13px; font-weight:600; border:none; border-radius:8px; cursor:pointer; font-family:inherit; }
-    .btn-primary { background:var(--brand); color:white; }
-    .btn-primary:hover { background:#3d8fd6; }
-    .btn-secondary { background:var(--gray-100); color:var(--gray-800); }
-    .btn-danger { background:#fff1f0; color:var(--error); }
-    .btn-sm { padding:6px 12px; font-size:12px; }
+    .field{margin-bottom:16px}
+    .field-label{display:block;font-size:13px;font-weight:600;color:var(--gray-800);margin-bottom:6px}
+    .field-hint{font-size:11px;color:var(--gray-500);margin-top:3px}
+    .field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--gray-300);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.15s}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(81,171,243,0.1)}
+    .field input::placeholder{color:var(--gray-400)}
+    .field textarea{resize:vertical;min-height:60px}
+    .field-row{display:flex;gap:10px}
+    .field-row .field{flex:1}
 
-    .city-card { border:1px solid var(--gray-200); border-radius:10px; padding:14px; margin-bottom:10px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:all 0.15s; }
-    .city-card:hover { border-color:var(--brand); background:var(--gray-50); }
-    .city-card.active { border-color:var(--brand); background:#e8f4fd; }
-    .city-card img { width:48px; height:48px; border-radius:8px; object-fit:cover; }
-    .city-card-info { flex:1; }
-    .city-card-name { font-size:14px; font-weight:600; }
-    .city-card-meta { font-size:11px; color:var(--gray-500); margin-top:2px; }
-    .city-card-link { font-size:11px; color:var(--brand); text-decoration:none; }
+    .btn{padding:12px 24px;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:inherit;width:100%;transition:background 0.15s}
+    .btn-primary{background:var(--brand);color:white}
+    .btn-primary:hover{background:var(--brand-dark)}
+    .btn-secondary{background:var(--gray-100);color:var(--gray-800)}
+    .btn:disabled{opacity:0.45;cursor:not-allowed}
 
-    .item-row { display:flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--gray-200); border-radius:8px; margin-bottom:6px; font-size:13px; }
-    .item-row img { width:36px; height:36px; border-radius:6px; object-fit:cover; }
-    .item-row .name { flex:1; font-weight:500; }
-    .item-row .meta { font-size:11px; color:var(--gray-500); }
-    .item-row .badge { font-size:10px; font-weight:600; padding:2px 6px; border-radius:4px; }
-    .badge-ticket { background:#e8f4fd; color:var(--brand); }
-    .badge-village { background:#e6f7f2; color:var(--secondary); }
+    /* City cards */
+    .city-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+    .city-item{border:1.5px solid var(--gray-200);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s}
+    .city-item:hover{border-color:var(--gray-400);background:var(--gray-50)}
+    .city-item.active{border-color:var(--brand);background:var(--brand-light)}
+    .city-item img{width:56px;height:56px;border-radius:10px;object-fit:cover}
+    .city-item-info{flex:1}
+    .city-item-name{font-size:15px;font-weight:600}
+    .city-item-meta{font-size:12px;color:var(--gray-500);margin-top:2px}
+    .city-item-link{font-size:12px;color:var(--brand);text-decoration:none;font-weight:500;white-space:nowrap}
 
-    .empty { text-align:center; padding:24px; font-size:13px; color:var(--gray-500); }
-    .msg { padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:12px; }
-    .msg-success { background:#e6f7f2; color:var(--secondary); }
-    .msg-error { background:#fff1f0; color:var(--error); }
-    .divider { height:1px; background:var(--gray-200); margin:16px 0; }
-    .tabs { display:flex; gap:8px; margin-bottom:16px; }
-    .tab { padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; border:1.5px solid var(--gray-200); background:var(--bg); color:var(--gray-600); cursor:pointer; }
-    .tab.active { border-color:var(--brand); color:var(--brand); background:#e8f4fd; }
+    /* Item list */
+    .item-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .item{border:1px solid var(--gray-200);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+    .item img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0}
+    .item-info{flex:1}
+    .item-name{font-size:13px;font-weight:600}
+    .item-meta{font-size:11px;color:var(--gray-500);margin-top:1px}
+    .item-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;white-space:nowrap}
+    .badge-blue{background:var(--brand-light);color:var(--brand)}
+    .badge-green{background:#e6f7f2;color:var(--secondary)}
+    .badge-red{background:#fff1f0;color:var(--error)}
+
+    .empty-state{text-align:center;padding:32px 16px;color:var(--gray-500);font-size:13px}
+    .msg{padding:12px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;font-weight:500}
+    .msg-success{background:#e6f7f2;color:var(--secondary)}
+    .msg-error{background:#fff1f0;color:var(--error)}
+    .divider{height:1px;background:var(--gray-200);margin:20px 0}
+
+    /* Group selector */
+    .group-chips{display:flex;flex-wrap:wrap;gap:8px}
+    .group-chip{padding:8px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--gray-200);background:var(--bg);cursor:pointer;transition:all 0.15s}
+    .group-chip:hover{border-color:var(--gray-400)}
+    .group-chip.active{border-color:var(--brand);background:var(--brand-light);color:var(--brand)}
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>마리트 패스 관리자</h1>
-    <a href="/" target="_blank">고객 페이지 보기 →</a>
+    <h1>마리트 패스 관리</h1>
+    <div class="header-right">
+      <a id="preview-btn" href="/" target="_blank">고객 페이지 보기 →</a>
+    </div>
+  </div>
+
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="switchTab('cities')">도시 관리</div>
+    <div class="nav-tab" onclick="switchTab('missions')">상품 관리</div>
+    <div class="nav-tab" onclick="switchTab('rewards')">혜택 관리</div>
   </div>
 
   <div class="container">
     <div id="msg"></div>
 
-    <!-- 도시 목록 -->
-    <div class="section">
-      <div class="section-title">도시 목록 <span class="count" id="city-count"></span></div>
-      <div id="city-list"></div>
-      <div class="divider"></div>
-      <div class="section-title">새 도시 추가</div>
-      <div class="form-row">
-        <div class="form-group"><label>도시 키 (영문)</label><input id="new-city-key" placeholder="beijing"></div>
-        <div class="form-group"><label>도시 이름 (한글)</label><input id="new-city-name" placeholder="베이징"></div>
+    <!-- Tab 1: 도시 관리 -->
+    <div class="tab-content active" id="tab-cities">
+      <div class="card">
+        <div class="card-title">등록된 도시</div>
+        <div class="card-desc">도시를 선택하면 상품과 혜택을 편집할 수 있어요</div>
+        <div class="city-grid" id="city-list"></div>
       </div>
-      <div class="form-group"><label>히어로 이미지 URL</label><input id="new-city-hero" placeholder="https://...jpg"></div>
-      <div class="form-group"><label>미션 그룹 (JSON)</label><input id="new-city-groups" value='[{"key":"ticket","label":"티켓 선택","sub":"1개"},{"key":"tour","label":"투어 선택","sub":"1개"}]'></div>
-      <button class="btn btn-primary" onclick="addCity()">도시 추가</button>
+
+      <div class="card">
+        <div class="card-title">새 도시 추가하기</div>
+        <div class="card-desc">마리트 패스를 운영할 새 도시를 등록하세요</div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">도시 영문 이름</label>
+            <input id="nc-key" placeholder="예: beijing">
+            <div class="field-hint">URL에 사용됩니다 (영문 소문자)</div>
+          </div>
+          <div class="field">
+            <label class="field-label">도시 한글 이름</label>
+            <input id="nc-name" placeholder="예: 베이징">
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">대표 이미지 URL</label>
+          <input id="nc-hero" placeholder="도시 대표 사진 URL을 붙여넣으세요">
+          <div class="field-hint">히어로 배너에 사용됩니다</div>
+        </div>
+        <div class="field">
+          <label class="field-label">미션 구성</label>
+          <div class="field-hint" style="margin-bottom:8px">고객이 어떤 종류의 상품을 인증해야 하는지 설정하세요. 예: "티켓 1개 + 투어 1개"</div>
+          <div id="nc-groups-editor">
+            <div class="field-row" style="margin-bottom:8px">
+              <input class="nc-g-label" placeholder="그룹 이름 (예: 티켓 선택)" style="padding:10px 12px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;flex:2;font-family:inherit">
+              <input class="nc-g-key" placeholder="영문키 (예: ticket)" style="padding:10px 12px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;flex:1;font-family:inherit">
+            </div>
+            <div class="field-row" style="margin-bottom:8px">
+              <input class="nc-g-label" placeholder="그룹 이름 (예: 투어 선택)" style="padding:10px 12px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;flex:2;font-family:inherit">
+              <input class="nc-g-key" placeholder="영문키 (예: tour)" style="padding:10px 12px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;flex:1;font-family:inherit">
+            </div>
+          </div>
+          <button class="btn btn-secondary" style="width:auto;padding:8px 14px;font-size:12px;margin-bottom:12px" onclick="addGroupRow()">+ 그룹 추가</button>
+        </div>
+        <button class="btn btn-primary" onclick="addCity()">도시 등록하기</button>
+      </div>
     </div>
 
-    <!-- 선택된 도시 편집 -->
-    <div id="city-editor" style="display:none;">
-
-      <div class="section">
-        <div class="section-title">미션 상품 <span class="count" id="mission-count"></span></div>
-        <div id="mission-list"></div>
-        <div class="divider"></div>
-        <div class="section-title">미션 추가</div>
-        <div class="form-row">
-          <div class="form-group"><label>mission_type (영문)</label><input id="new-m-type" placeholder="greatwall"></div>
-          <div class="form-group"><label>그룹</label><input id="new-m-group" placeholder="tour"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>상품명</label><input id="new-m-title" placeholder="만리장성 투어"></div>
-          <div class="form-group"><label>GID (쉼표 구분)</label><input id="new-m-gids" placeholder="1234567"></div>
-        </div>
-        <div class="form-group"><label>이미지 URL</label><input id="new-m-img" placeholder="https://...jpg"></div>
-        <div class="form-group"><label>예약 URL</label><input id="new-m-url" placeholder="https://experiences.myrealtrip.com/products/..."></div>
-        <button class="btn btn-primary" onclick="addMission()">미션 추가</button>
+    <!-- Tab 2: 상품 관리 -->
+    <div class="tab-content" id="tab-missions">
+      <div class="card" id="mission-city-select">
+        <div class="card-title">도시를 먼저 선택하세요</div>
+        <div class="card-desc">어떤 도시의 상품을 관리할까요?</div>
+        <div class="city-grid" id="mission-city-list"></div>
       </div>
 
-      <div class="section">
-        <div class="section-title">리워드 혜택 <span class="count" id="reward-count"></span></div>
-        <div id="reward-list"></div>
-        <div class="divider"></div>
-        <div class="section-title">리워드 추가</div>
-        <div class="form-row">
-          <div class="form-group"><label>업체명</label><input id="new-r-name" placeholder="하이디라오"></div>
-          <div class="form-group"><label>할인</label><input id="new-r-discount" placeholder="12% OFF"></div>
+      <div id="mission-editor" style="display:none">
+        <div class="card">
+          <div class="card-title">등록된 상품 <span id="m-city-label" style="font-size:13px;color:var(--brand);font-weight:500"></span></div>
+          <div class="item-list" id="mission-list"></div>
         </div>
-        <button class="btn btn-primary" onclick="addReward()">리워드 추가</button>
+
+        <div class="card">
+          <div class="card-title">새 상품 추가하기</div>
+          <div class="card-desc">마이리얼트립 상품을 마리트 패스 미션으로 등록하세요</div>
+
+          <div class="field">
+            <label class="field-label">마이리얼트립 상품 URL</label>
+            <input id="nm-url" placeholder="https://experiences.myrealtrip.com/products/1234567" oninput="parseProductUrl(this.value)">
+            <div class="field-hint">상품 URL을 붙여넣으면 상품번호가 자동으로 입력됩니다</div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="field-label">상품 이름</label>
+              <input id="nm-title" placeholder="예: 만리장성 투어">
+            </div>
+            <div class="field">
+              <label class="field-label">상품 번호 (GID)</label>
+              <input id="nm-gid" placeholder="자동 입력" readonly style="background:var(--gray-50)">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">상품 이미지 URL</label>
+            <input id="nm-img" placeholder="상품 대표 이미지 URL">
+            <div class="field-hint">마이리얼트립 상품 페이지에서 이미지 주소를 복사하세요</div>
+          </div>
+          <div class="field">
+            <label class="field-label">미션 그룹</label>
+            <div class="field-hint" style="margin-bottom:8px">이 상품이 어떤 미션 그룹에 속하는지 선택하세요</div>
+            <div class="group-chips" id="nm-group-chips"></div>
+          </div>
+          <div class="field">
+            <label class="field-label">상품 영문 키</label>
+            <input id="nm-type" placeholder="예: greatwall (중복 불가, 영문소문자)">
+            <div class="field-hint">시스템에서 사용하는 고유 식별자입니다</div>
+          </div>
+          <button class="btn btn-primary" onclick="addMission()">상품 등록하기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: 혜택 관리 -->
+    <div class="tab-content" id="tab-rewards">
+      <div class="card" id="reward-city-select">
+        <div class="card-title">도시를 먼저 선택하세요</div>
+        <div class="card-desc">어떤 도시의 혜택을 관리할까요?</div>
+        <div class="city-grid" id="reward-city-list"></div>
       </div>
 
-      <div class="section">
-        <div class="section-title">미리보기</div>
-        <a id="preview-link" href="#" target="_blank" style="font-size:13px;color:var(--brand);font-weight:500;">고객 페이지 열기 →</a>
+      <div id="reward-editor" style="display:none">
+        <div class="card">
+          <div class="card-title">등록된 혜택 <span id="r-city-label" style="font-size:13px;color:var(--brand);font-weight:500"></span></div>
+          <div class="item-list" id="reward-list"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">새 혜택 추가하기</div>
+          <div class="card-desc">미션 완료 시 고객이 받을 현지 할인 혜택을 등록하세요</div>
+          <div class="field-row">
+            <div class="field">
+              <label class="field-label">업체 이름</label>
+              <input id="nr-name" placeholder="예: 하이디라오">
+            </div>
+            <div class="field">
+              <label class="field-label">할인 내용</label>
+              <input id="nr-discount" placeholder="예: 12% OFF">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="addReward()">혜택 등록하기</button>
+        </div>
       </div>
     </div>
   </div>
@@ -127,7 +232,9 @@
 <script>
   const SB_URL = 'https://glxqsuxhiomukbtqumat.supabase.co';
   const SB_KEY = 'sb_publishable_dQAbR9SZqND6iX7cqgBWZw_5riX65Eq';
+  let cities = [];
   let currentCity = null;
+  let selectedMissionGroup = null;
 
   async function sb(path, opts = {}) {
     const r = await fetch(SB_URL + '/rest/v1/' + path, {
@@ -143,108 +250,193 @@
     setTimeout(() => document.getElementById('msg').innerHTML = '', 3000);
   }
 
-  async function loadCities() {
-    const cities = await sb('city_config?order=city.asc');
-    document.getElementById('city-count').textContent = cities.length + '개';
-    document.getElementById('city-list').innerHTML = cities.length ? cities.map(c =>
-      `<div class="city-card ${currentCity === c.city ? 'active' : ''}" onclick="selectCity('${c.city}')">
-        <img src="${c.hero_image || 'https://placehold.co/96/e9ecef/868e96?text=?'}" alt="${c.city_name}">
-        <div class="city-card-info">
-          <div class="city-card-name">${c.city_name}</div>
-          <div class="city-card-meta">${c.city} · ${(typeof c.groups === 'string' ? JSON.parse(c.groups) : c.groups).length}개 미션 그룹</div>
-        </div>
-        <a class="city-card-link" href="/?city=${c.city}" target="_blank" onclick="event.stopPropagation()">열기</a>
-      </div>`
-    ).join('') : '<div class="empty">등록된 도시가 없습니다</div>';
+  function switchTab(tab) {
+    document.querySelectorAll('.nav-tab').forEach((t, i) => {
+      t.classList.toggle('active', ['cities','missions','rewards'][i] === tab);
+    });
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
   }
 
-  async function selectCity(city) {
+  function renderCityList(containerId, onClickFn) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = cities.length ? cities.map(c => {
+      const groups = typeof c.groups === 'string' ? JSON.parse(c.groups) : c.groups;
+      return `<div class="city-item ${currentCity === c.city ? 'active' : ''}" onclick="${onClickFn}('${c.city}')">
+        <img src="${c.hero_image || 'https://placehold.co/112/e9ecef/868e96?text=' + c.city_name}">
+        <div class="city-item-info">
+          <div class="city-item-name">${c.city_name}</div>
+          <div class="city-item-meta">미션 ${groups.length}개 그룹</div>
+        </div>
+        <a class="city-item-link" href="/${c.city}" target="_blank" onclick="event.stopPropagation()">미리보기</a>
+      </div>`;
+    }).join('') : '<div class="empty-state">등록된 도시가 없습니다.<br>아래에서 새 도시를 추가해보세요!</div>';
+  }
+
+  async function loadCities() {
+    cities = await sb('city_config?order=city.asc');
+    renderCityList('city-list', 'selectCityForTab');
+    renderCityList('mission-city-list', 'selectMissionCity');
+    renderCityList('reward-city-list', 'selectRewardCity');
+  }
+
+  function selectCityForTab(city) {
     currentCity = city;
-    document.getElementById('city-editor').style.display = 'block';
-    document.getElementById('preview-link').href = `/?city=${city}`;
-    document.getElementById('preview-link').textContent = `/?city=${city} →`;
-    await Promise.all([loadCities(), loadMissions(), loadRewards()]);
+    loadCities();
+  }
+
+  async function selectMissionCity(city) {
+    currentCity = city;
+    const c = cities.find(x => x.city === city);
+    document.getElementById('m-city-label').textContent = c ? c.city_name : city;
+    document.getElementById('mission-editor').style.display = 'block';
+    document.getElementById('preview-btn').href = '/' + city;
+    renderCityList('mission-city-list', 'selectMissionCity');
+    renderGroupChips(c);
+    await loadMissions();
+  }
+
+  async function selectRewardCity(city) {
+    currentCity = city;
+    const c = cities.find(x => x.city === city);
+    document.getElementById('r-city-label').textContent = c ? c.city_name : city;
+    document.getElementById('reward-editor').style.display = 'block';
+    renderCityList('reward-city-list', 'selectRewardCity');
+    await loadRewards();
+  }
+
+  function renderGroupChips(cityObj) {
+    if (!cityObj) return;
+    const groups = typeof cityObj.groups === 'string' ? JSON.parse(cityObj.groups) : cityObj.groups;
+    const el = document.getElementById('nm-group-chips');
+    selectedMissionGroup = null;
+    el.innerHTML = groups.map(g =>
+      `<div class="group-chip" onclick="pickGroup(this,'${g.key}')">${g.label}</div>`
+    ).join('');
+  }
+
+  function pickGroup(el, key) {
+    document.querySelectorAll('#nm-group-chips .group-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    selectedMissionGroup = key;
+  }
+
+  function parseProductUrl(url) {
+    const match = url.match(/products\/(\d+)/);
+    if (match) {
+      document.getElementById('nm-gid').value = match[1];
+      document.getElementById('nm-url').value = url.trim();
+    }
   }
 
   async function loadMissions() {
     const items = await sb(`missions?city=eq.${currentCity}&is_active=eq.true&order=display_order.asc`);
-    document.getElementById('mission-count').textContent = items.length + '개';
-    document.getElementById('mission-list').innerHTML = items.length ? items.map(m =>
-      `<div class="item-row">
-        <img src="${m.image_url || 'https://placehold.co/72/e9ecef/868e96?text=?'}">
-        <span class="name">${m.title}</span>
-        <span class="badge badge-${m.mission_group === 'ticket' ? 'ticket' : 'village'}">${m.mission_group}</span>
-        <span class="meta">${m.mission_type}</span>
+    const el = document.getElementById('mission-list');
+    el.innerHTML = items.length ? items.map(m =>
+      `<div class="item">
+        <img src="${m.image_url || 'https://placehold.co/88/e9ecef/868e96?text=?'}">
+        <div class="item-info">
+          <div class="item-name">${m.title}</div>
+          <div class="item-meta">${m.mission_group} · ${m.mission_type}</div>
+        </div>
+        <span class="item-badge badge-blue">${m.mission_group}</span>
       </div>`
-    ).join('') : '<div class="empty">미션이 없습니다</div>';
+    ).join('') : '<div class="empty-state">등록된 상품이 없습니다</div>';
   }
 
   async function loadRewards() {
     const items = await sb(`rewards?city=eq.${currentCity}&is_active=eq.true&order=display_order.asc`);
-    document.getElementById('reward-count').textContent = items.length + '개';
-    document.getElementById('reward-list').innerHTML = items.length ? items.map(r =>
-      `<div class="item-row">
-        <span class="name">${r.name}</span>
-        <span class="badge" style="background:#fff1f0;color:#fa5b4a;">${r.discount}</span>
+    const el = document.getElementById('reward-list');
+    el.innerHTML = items.length ? items.map(r =>
+      `<div class="item">
+        <div class="item-info">
+          <div class="item-name">${r.name}</div>
+        </div>
+        <span class="item-badge badge-red">${r.discount}</span>
       </div>`
-    ).join('') : '<div class="empty">리워드가 없습니다</div>';
+    ).join('') : '<div class="empty-state">등록된 혜택이 없습니다</div>';
+  }
+
+  function addGroupRow() {
+    const editor = document.getElementById('nc-groups-editor');
+    const row = document.createElement('div');
+    row.className = 'field-row';
+    row.style.marginBottom = '8px';
+    row.innerHTML = `
+      <input class="nc-g-label" placeholder="그룹 이름" style="padding:10px 12px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;flex:2;font-family:inherit">
+      <input class="nc-g-key" placeholder="영문키" style="padding:10px 12px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;flex:1;font-family:inherit">`;
+    editor.appendChild(row);
   }
 
   async function addCity() {
-    const city = document.getElementById('new-city-key').value.trim();
-    const name = document.getElementById('new-city-name').value.trim();
-    const hero = document.getElementById('new-city-hero').value.trim();
-    const groups = document.getElementById('new-city-groups').value.trim();
-    if (!city || !name) return showMsg('도시 키와 이름을 입력하세요', 'error');
+    const city = document.getElementById('nc-key').value.trim().toLowerCase();
+    const name = document.getElementById('nc-name').value.trim();
+    const hero = document.getElementById('nc-hero').value.trim();
+    if (!city || !name) return showMsg('도시 영문 이름과 한글 이름을 입력해주세요', 'error');
+
+    const labels = document.querySelectorAll('.nc-g-label');
+    const keys = document.querySelectorAll('.nc-g-key');
+    const groups = [];
+    labels.forEach((l, i) => {
+      const label = l.value.trim();
+      const key = keys[i].value.trim().toLowerCase();
+      if (label && key) groups.push({ key, label, sub: '1개' });
+    });
+    if (groups.length === 0) return showMsg('미션 그룹을 최소 1개 추가해주세요', 'error');
+
     try {
-      JSON.parse(groups);
-    } catch { return showMsg('그룹 JSON 형식이 올바르지 않습니다', 'error'); }
-    try {
-      await sb('city_config', { method: 'POST', body: { city, city_name: name, hero_image: hero || null, groups: JSON.parse(groups) } });
-      showMsg(`${name} 도시가 추가되었습니다`, 'success');
-      document.getElementById('new-city-key').value = '';
-      document.getElementById('new-city-name').value = '';
-      document.getElementById('new-city-hero').value = '';
+      await sb('city_config', { method: 'POST', body: { city, city_name: name, hero_image: hero || null, groups } });
+      showMsg(`${name} 도시가 추가되었습니다!`, 'success');
+      document.getElementById('nc-key').value = '';
+      document.getElementById('nc-name').value = '';
+      document.getElementById('nc-hero').value = '';
       await loadCities();
     } catch (e) {
-      showMsg(e.message || '추가 실패', 'error');
+      showMsg(e.code === '23505' ? '이미 존재하는 도시입니다' : '추가에 실패했습니다', 'error');
     }
   }
 
   async function addMission() {
-    const type = document.getElementById('new-m-type').value.trim();
-    const group = document.getElementById('new-m-group').value.trim();
-    const title = document.getElementById('new-m-title').value.trim();
-    const gids = document.getElementById('new-m-gids').value.trim().split(',').map(s => s.trim());
-    const img = document.getElementById('new-m-img').value.trim();
-    const url = document.getElementById('new-m-url').value.trim();
-    if (!type || !group || !title || !gids[0]) return showMsg('필수 항목을 입력하세요', 'error');
+    const title = document.getElementById('nm-title').value.trim();
+    const gid = document.getElementById('nm-gid').value.trim();
+    const img = document.getElementById('nm-img').value.trim();
+    const url = document.getElementById('nm-url').value.trim();
+    const type = document.getElementById('nm-type').value.trim().toLowerCase();
+
+    if (!title) return showMsg('상품 이름을 입력해주세요', 'error');
+    if (!gid) return showMsg('마이리얼트립 상품 URL을 붙여넣어주세요', 'error');
+    if (!selectedMissionGroup) return showMsg('미션 그룹을 선택해주세요', 'error');
+    if (!type) return showMsg('상품 영문 키를 입력해주세요', 'error');
+
     try {
       await sb('missions', { method: 'POST', body: {
-        mission_type: type, mission_group: group, title, gids,
-        image_url: img || null, booking_url: url || null,
+        mission_type: type, mission_group: selectedMissionGroup, title,
+        gids: [gid], image_url: img || null, booking_url: url || null,
         city: currentCity, pack: currentCity, is_active: true
       }});
-      showMsg(`${title} 미션이 추가되었습니다`, 'success');
-      ['new-m-type','new-m-group','new-m-title','new-m-gids','new-m-img','new-m-url'].forEach(id => document.getElementById(id).value = '');
+      showMsg(`${title} 상품이 등록되었습니다!`, 'success');
+      ['nm-title','nm-gid','nm-img','nm-url','nm-type'].forEach(id => document.getElementById(id).value = '');
+      document.querySelectorAll('#nm-group-chips .group-chip').forEach(c => c.classList.remove('active'));
+      selectedMissionGroup = null;
       await loadMissions();
     } catch (e) {
-      showMsg(e.code === '23505' ? '이미 존재하는 mission_type입니다' : '추가 실패', 'error');
+      showMsg(e.code === '23505' ? '이미 존재하는 상품 키입니다. 다른 영문 키를 사용해주세요.' : '등록에 실패했습니다', 'error');
     }
   }
 
   async function addReward() {
-    const name = document.getElementById('new-r-name').value.trim();
-    const discount = document.getElementById('new-r-discount').value.trim();
-    if (!name || !discount) return showMsg('업체명과 할인을 입력하세요', 'error');
+    const name = document.getElementById('nr-name').value.trim();
+    const discount = document.getElementById('nr-discount').value.trim();
+    if (!name || !discount) return showMsg('업체 이름과 할인 내용을 입력해주세요', 'error');
+
     try {
       await sb('rewards', { method: 'POST', body: { city: currentCity, name, discount, is_active: true } });
-      showMsg(`${name} 리워드가 추가되었습니다`, 'success');
-      document.getElementById('new-r-name').value = '';
-      document.getElementById('new-r-discount').value = '';
+      showMsg(`${name} 혜택이 등록되었습니다!`, 'success');
+      document.getElementById('nr-name').value = '';
+      document.getElementById('nr-discount').value = '';
       await loadRewards();
     } catch (e) {
-      showMsg('추가 실패', 'error');
+      showMsg('등록에 실패했습니다', 'error');
     }
   }
 
