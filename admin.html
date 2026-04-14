@@ -340,8 +340,18 @@
           <div class="item-meta">${m.mission_group} · ${m.mission_type}</div>
         </div>
         <span class="item-badge badge-blue">${m.mission_group}</span>
+        <button onclick="removeMission('${m.id}','${m.title}')" style="background:none;border:none;cursor:pointer;padding:6px;color:var(--gray-400);font-size:16px" title="삭제">✕</button>
       </div>`
     ).join('') : '<div class="empty-state">등록된 상품이 없습니다</div>';
+  }
+
+  async function removeMission(id, title) {
+    if (!confirm(title + ' 상품을 삭제할까요?')) return;
+    try {
+      await sb(`missions?id=eq.${id}`, { method: 'PATCH', body: { is_active: false } });
+      showMsg(title + ' 상품이 삭제되었습니다', 'success');
+      await loadMissions();
+    } catch (e) { showMsg('삭제에 실패했습니다', 'error'); }
   }
 
   async function loadRewards() {
@@ -353,8 +363,18 @@
           <div class="item-name">${r.name}</div>
         </div>
         <span class="item-badge badge-red">${r.discount}</span>
+        <button onclick="removeReward('${r.id}','${r.name}')" style="background:none;border:none;cursor:pointer;padding:6px;color:var(--gray-400);font-size:16px" title="삭제">✕</button>
       </div>`
     ).join('') : '<div class="empty-state">등록된 혜택이 없습니다</div>';
+  }
+
+  async function removeReward(id, name) {
+    if (!confirm(name + ' 혜택을 삭제할까요?')) return;
+    try {
+      await sb(`rewards?id=eq.${id}`, { method: 'PATCH', body: { is_active: false } });
+      showMsg(name + ' 혜택이 삭제되었습니다', 'success');
+      await loadRewards();
+    } catch (e) { showMsg('삭제에 실패했습니다', 'error'); }
   }
 
   function addGroupRow() {
