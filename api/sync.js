@@ -56,6 +56,8 @@ export default async function handler(req, res) {
         gid: String(r.gid),
         user_id: r.user_id ? String(r.user_id) : null,
         basis_date: r.basis_date,
+        travel_start: r.travel_start || null,
+        travel_end: r.travel_end || null,
         synced_at: new Date().toISOString()
       }));
 

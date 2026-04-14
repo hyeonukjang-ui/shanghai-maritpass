@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마리트 패스 — 관리자</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+  <style>
+    :root { --brand:#51abf3; --secondary:#33b893; --error:#fa5b4a; --bg:#fff; --gray-50:#f8f9fa; --gray-100:#f1f3f5; --gray-200:#e9ecef; --gray-300:#dee2e6; --gray-500:#adb5bd; --gray-600:#868e96; --gray-800:#343a40; --gray-900:#212529; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Noto Sans KR',-apple-system,sans-serif; background:var(--gray-50); color:var(--gray-900); }
+    .header { background:var(--bg); border-bottom:1px solid var(--gray-200); padding:16px 24px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10; }
+    .header h1 { font-size:18px; font-weight:700; }
+    .header a { font-size:13px; color:var(--brand); text-decoration:none; font-weight:500; }
+    .container { max-width:720px; margin:0 auto; padding:24px 16px; }
+
+    .section { background:var(--bg); border-radius:12px; padding:20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+    .section-title { font-size:15px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; }
+    .section-title .count { font-size:12px; color:var(--gray-500); font-weight:400; }
+
+    .form-group { margin-bottom:12px; }
+    .form-group label { display:block; font-size:12px; font-weight:600; color:var(--gray-600); margin-bottom:4px; }
+    .form-group input, .form-group select { width:100%; padding:10px 12px; border:1px solid var(--gray-300); border-radius:8px; font-size:13px; font-family:inherit; outline:none; }
+    .form-group input:focus, .form-group select:focus { border-color:var(--brand); box-shadow:0 0 0 3px rgba(81,171,243,0.1); }
+    .form-row { display:flex; gap:8px; }
+    .form-row .form-group { flex:1; }
+
+    .btn { padding:10px 20px; font-size:13px; font-weight:600; border:none; border-radius:8px; cursor:pointer; font-family:inherit; }
+    .btn-primary { background:var(--brand); color:white; }
+    .btn-primary:hover { background:#3d8fd6; }
+    .btn-secondary { background:var(--gray-100); color:var(--gray-800); }
+    .btn-danger { background:#fff1f0; color:var(--error); }
+    .btn-sm { padding:6px 12px; font-size:12px; }
+
+    .city-card { border:1px solid var(--gray-200); border-radius:10px; padding:14px; margin-bottom:10px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:all 0.15s; }
+    .city-card:hover { border-color:var(--brand); background:var(--gray-50); }
+    .city-card.active { border-color:var(--brand); background:#e8f4fd; }
+    .city-card img { width:48px; height:48px; border-radius:8px; object-fit:cover; }
+    .city-card-info { flex:1; }
+    .city-card-name { font-size:14px; font-weight:600; }
+    .city-card-meta { font-size:11px; color:var(--gray-500); margin-top:2px; }
+    .city-card-link { font-size:11px; color:var(--brand); text-decoration:none; }
+
+    .item-row { display:flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--gray-200); border-radius:8px; margin-bottom:6px; font-size:13px; }
+    .item-row img { width:36px; height:36px; border-radius:6px; object-fit:cover; }
+    .item-row .name { flex:1; font-weight:500; }
+    .item-row .meta { font-size:11px; color:var(--gray-500); }
+    .item-row .badge { font-size:10px; font-weight:600; padding:2px 6px; border-radius:4px; }
+    .badge-ticket { background:#e8f4fd; color:var(--brand); }
+    .badge-village { background:#e6f7f2; color:var(--secondary); }
+
+    .empty { text-align:center; padding:24px; font-size:13px; color:var(--gray-500); }
+    .msg { padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:12px; }
+    .msg-success { background:#e6f7f2; color:var(--secondary); }
+    .msg-error { background:#fff1f0; color:var(--error); }
+    .divider { height:1px; background:var(--gray-200); margin:16px 0; }
+    .tabs { display:flex; gap:8px; margin-bottom:16px; }
+    .tab { padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; border:1.5px solid var(--gray-200); background:var(--bg); color:var(--gray-600); cursor:pointer; }
+    .tab.active { border-color:var(--brand); color:var(--brand); background:#e8f4fd; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>마리트 패스 관리자</h1>
+    <a href="/" target="_blank">고객 페이지 보기 →</a>
+  </div>
+
+  <div class="container">
+    <div id="msg"></div>
+
+    <!-- 도시 목록 -->
+    <div class="section">
+      <div class="section-title">도시 목록 <span class="count" id="city-count"></span></div>
+      <div id="city-list"></div>
+      <div class="divider"></div>
+      <div class="section-title">새 도시 추가</div>
+      <div class="form-row">
+        <div class="form-group"><label>도시 키 (영문)</label><input id="new-city-key" placeholder="beijing"></div>
+        <div class="form-group"><label>도시 이름 (한글)</label><input id="new-city-name" placeholder="베이징"></div>
+      </div>
+      <div class="form-group"><label>히어로 이미지 URL</label><input id="new-city-hero" placeholder="https://...jpg"></div>
+      <div class="form-group"><label>미션 그룹 (JSON)</label><input id="new-city-groups" value='[{"key":"ticket","label":"티켓 선택","sub":"1개"},{"key":"tour","label":"투어 선택","sub":"1개"}]'></div>
+      <button class="btn btn-primary" onclick="addCity()">도시 추가</button>
+    </div>
+
+    <!-- 선택된 도시 편집 -->
+    <div id="city-editor" style="display:none;">
+
+      <div class="section">
+        <div class="section-title">미션 상품 <span class="count" id="mission-count"></span></div>
+        <div id="mission-list"></div>
+        <div class="divider"></div>
+        <div class="section-title">미션 추가</div>
+        <div class="form-row">
+          <div class="form-group"><label>mission_type (영문)</label><input id="new-m-type" placeholder="greatwall"></div>
+          <div class="form-group"><label>그룹</label><input id="new-m-group" placeholder="tour"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>상품명</label><input id="new-m-title" placeholder="만리장성 투어"></div>
+          <div class="form-group"><label>GID (쉼표 구분)</label><input id="new-m-gids" placeholder="1234567"></div>
+        </div>
+        <div class="form-group"><label>이미지 URL</label><input id="new-m-img" placeholder="https://...jpg"></div>
+        <div class="form-group"><label>예약 URL</label><input id="new-m-url" placeholder="https://experiences.myrealtrip.com/products/..."></div>
+        <button class="btn btn-primary" onclick="addMission()">미션 추가</button>
+      </div>
+
+      <div class="section">
+        <div class="section-title">리워드 혜택 <span class="count" id="reward-count"></span></div>
+        <div id="reward-list"></div>
+        <div class="divider"></div>
+        <div class="section-title">리워드 추가</div>
+        <div class="form-row">
+          <div class="form-group"><label>업체명</label><input id="new-r-name" placeholder="하이디라오"></div>
+          <div class="form-group"><label>할인</label><input id="new-r-discount" placeholder="12% OFF"></div>
+        </div>
+        <button class="btn btn-primary" onclick="addReward()">리워드 추가</button>
+      </div>
+
+      <div class="section">
+        <div class="section-title">미리보기</div>
+        <a id="preview-link" href="#" target="_blank" style="font-size:13px;color:var(--brand);font-weight:500;">고객 페이지 열기 →</a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const SB_URL = 'https://glxqsuxhiomukbtqumat.supabase.co';
+  const SB_KEY = 'sb_publishable_dQAbR9SZqND6iX7cqgBWZw_5riX65Eq';
+  let currentCity = null;
+
+  async function sb(path, opts = {}) {
+    const r = await fetch(SB_URL + '/rest/v1/' + path, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': opts.prefer || 'return=representation', ...opts.headers },
+      method: opts.method || 'GET', body: opts.body ? JSON.stringify(opts.body) : undefined
+    });
+    if (!r.ok) throw await r.json().catch(() => ({}));
+    return r.json();
+  }
+
+  function showMsg(text, type) {
+    document.getElementById('msg').innerHTML = `<div class="msg msg-${type}">${text}</div>`;
+    setTimeout(() => document.getElementById('msg').innerHTML = '', 3000);
+  }
+
+  async function loadCities() {
+    const cities = await sb('city_config?order=city.asc');
+    document.getElementById('city-count').textContent = cities.length + '개';
+    document.getElementById('city-list').innerHTML = cities.length ? cities.map(c =>
+      `<div class="city-card ${currentCity === c.city ? 'active' : ''}" onclick="selectCity('${c.city}')">
+        <img src="${c.hero_image || 'https://placehold.co/96/e9ecef/868e96?text=?'}" alt="${c.city_name}">
+        <div class="city-card-info">
+          <div class="city-card-name">${c.city_name}</div>
+          <div class="city-card-meta">${c.city} · ${(typeof c.groups === 'string' ? JSON.parse(c.groups) : c.groups).length}개 미션 그룹</div>
+        </div>
+        <a class="city-card-link" href="/?city=${c.city}" target="_blank" onclick="event.stopPropagation()">열기</a>
+      </div>`
+    ).join('') : '<div class="empty">등록된 도시가 없습니다</div>';
+  }
+
+  async function selectCity(city) {
+    currentCity = city;
+    document.getElementById('city-editor').style.display = 'block';
+    document.getElementById('preview-link').href = `/?city=${city}`;
+    document.getElementById('preview-link').textContent = `/?city=${city} →`;
+    await Promise.all([loadCities(), loadMissions(), loadRewards()]);
+  }
+
+  async function loadMissions() {
+    const items = await sb(`missions?city=eq.${currentCity}&is_active=eq.true&order=display_order.asc`);
+    document.getElementById('mission-count').textContent = items.length + '개';
+    document.getElementById('mission-list').innerHTML = items.length ? items.map(m =>
+      `<div class="item-row">
+        <img src="${m.image_url || 'https://placehold.co/72/e9ecef/868e96?text=?'}">
+        <span class="name">${m.title}</span>
+        <span class="badge badge-${m.mission_group === 'ticket' ? 'ticket' : 'village'}">${m.mission_group}</span>
+        <span class="meta">${m.mission_type}</span>
+      </div>`
+    ).join('') : '<div class="empty">미션이 없습니다</div>';
+  }
+
+  async function loadRewards() {
+    const items = await sb(`rewards?city=eq.${currentCity}&is_active=eq.true&order=display_order.asc`);
+    document.getElementById('reward-count').textContent = items.length + '개';
+    document.getElementById('reward-list').innerHTML = items.length ? items.map(r =>
+      `<div class="item-row">
+        <span class="name">${r.name}</span>
+        <span class="badge" style="background:#fff1f0;color:#fa5b4a;">${r.discount}</span>
+      </div>`
+    ).join('') : '<div class="empty">리워드가 없습니다</div>';
+  }
+
+  async function addCity() {
+    const city = document.getElementById('new-city-key').value.trim();
+    const name = document.getElementById('new-city-name').value.trim();
+    const hero = document.getElementById('new-city-hero').value.trim();
+    const groups = document.getElementById('new-city-groups').value.trim();
+    if (!city || !name) return showMsg('도시 키와 이름을 입력하세요', 'error');
+    try {
+      JSON.parse(groups);
+    } catch { return showMsg('그룹 JSON 형식이 올바르지 않습니다', 'error'); }
+    try {
+      await sb('city_config', { method: 'POST', body: { city, city_name: name, hero_image: hero || null, groups: JSON.parse(groups) } });
+      showMsg(`${name} 도시가 추가되었습니다`, 'success');
+      document.getElementById('new-city-key').value = '';
+      document.getElementById('new-city-name').value = '';
+      document.getElementById('new-city-hero').value = '';
+      await loadCities();
+    } catch (e) {
+      showMsg(e.message || '추가 실패', 'error');
+    }
+  }
+
+  async function addMission() {
+    const type = document.getElementById('new-m-type').value.trim();
+    const group = document.getElementById('new-m-group').value.trim();
+    const title = document.getElementById('new-m-title').value.trim();
+    const gids = document.getElementById('new-m-gids').value.trim().split(',').map(s => s.trim());
+    const img = document.getElementById('new-m-img').value.trim();
+    const url = document.getElementById('new-m-url').value.trim();
+    if (!type || !group || !title || !gids[0]) return showMsg('필수 항목을 입력하세요', 'error');
+    try {
+      await sb('missions', { method: 'POST', body: {
+        mission_type: type, mission_group: group, title, gids,
+        image_url: img || null, booking_url: url || null,
+        city: currentCity, pack: currentCity, is_active: true
+      }});
+      showMsg(`${title} 미션이 추가되었습니다`, 'success');
+      ['new-m-type','new-m-group','new-m-title','new-m-gids','new-m-img','new-m-url'].forEach(id => document.getElementById(id).value = '');
+      await loadMissions();
+    } catch (e) {
+      showMsg(e.code === '23505' ? '이미 존재하는 mission_type입니다' : '추가 실패', 'error');
+    }
+  }
+
+  async function addReward() {
+    const name = document.getElementById('new-r-name').value.trim();
+    const discount = document.getElementById('new-r-discount').value.trim();
+    if (!name || !discount) return showMsg('업체명과 할인을 입력하세요', 'error');
+    try {
+      await sb('rewards', { method: 'POST', body: { city: currentCity, name, discount, is_active: true } });
+      showMsg(`${name} 리워드가 추가되었습니다`, 'success');
+      document.getElementById('new-r-name').value = '';
+      document.getElementById('new-r-discount').value = '';
+      await loadRewards();
+    } catch (e) {
+      showMsg('추가 실패', 'error');
+    }
+  }
+
+  loadCities();
+</script>
+</body>
+</html>

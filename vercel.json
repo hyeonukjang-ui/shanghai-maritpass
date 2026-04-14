@@ -1,5 +1,7 @@
 {
   "rewrites": [
-    { "source": "/api/sync", "destination": "/api/sync.js" }
+    { "source": "/api/sync", "destination": "/api/sync.js" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/:city", "destination": "/index.html" }
   ]
 }

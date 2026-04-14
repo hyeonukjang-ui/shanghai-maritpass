@@ -3,39 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>마리트 패스(상하이) - 마이리얼트립</title>
+  <title>마리트 패스 - 마이리얼트립</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
   <style>
     :root {
-      --brand:#51abf3; --brand-dark:#3d8fd6; --brand-light:#e8f4fd;
-      --secondary:#33b893; --secondary-light:#e6f7f2;
-      --error:#fa5b4a; --gold:#ffbf00;
-      --gray-50:#f8f9fa; --gray-100:#f1f3f5; --gray-200:#e9ecef; --gray-300:#dee2e6;
-      --gray-400:#ced4da; --gray-500:#adb5bd; --gray-600:#868e96; --gray-700:#495057;
-      --gray-800:#343a40; --gray-900:#212529;
-      --bg:#ffffff; --text:var(--gray-900); --text-sub:var(--gray-600); --text-muted:var(--gray-500);
+      --brand:#51abf3;--brand-dark:#3d8fd6;--brand-light:#e8f4fd;
+      --secondary:#33b893;--secondary-light:#e6f7f2;
+      --error:#fa5b4a;--gold:#ffbf00;
+      --gray-50:#f8f9fa;--gray-100:#f1f3f5;--gray-200:#e9ecef;--gray-300:#dee2e6;
+      --gray-400:#ced4da;--gray-500:#adb5bd;--gray-600:#868e96;--gray-700:#495057;
+      --gray-800:#343a40;--gray-900:#212529;
+      --bg:#ffffff;--text:var(--gray-900);--text-sub:var(--gray-600);--text-muted:var(--gray-500);
     }
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--gray-50);color:var(--text);-webkit-font-smoothing:antialiased}
     .container{max-width:480px;margin:0 auto}
-
     .header{background:var(--bg);border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:50}
     .header-inner{display:flex;align-items:center;justify-content:center;height:56px;padding:0 16px}
     .logo{height:24px}
-
-    /* Hero */
-    .hero{position:relative;height:200px;overflow:hidden;
-      background:linear-gradient(180deg,rgba(15,22,40,0) 0%,rgba(15,22,40,0.85) 100%),
-      url('https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2024/08/05/ANRQ/Nd3XAHWuCE.jpg') center/cover;
-      display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px;color:white}
+    .hero{position:relative;height:200px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px;color:white;background-size:cover;background-position:center}
+    .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,22,40,0) 0%,rgba(15,22,40,0.85) 100%)}
+    .hero>*{position:relative;z-index:1}
     .hero h1{font-size:24px;font-weight:800;margin-bottom:4px}
     .hero p{font-size:13px;opacity:0.7}
     .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;margin-top:12px;width:fit-content}
     .hero-dot{width:8px;height:8px;border-radius:50%}
     .hero-dot.done{background:var(--secondary)}
     .hero-dot.pending{background:rgba(255,255,255,0.3)}
-
-    /* Timeline */
     .timeline{padding:0 20px 40px}
     .tl-item{display:flex;gap:16px;position:relative}
     .tl-item:last-child .tl-track::after{display:none}
@@ -49,11 +43,7 @@
     .tl-item.done .tl-track::after{background:var(--secondary)}
     .tl-content{flex:1;padding:16px 0 32px}
     .tl-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-
     @keyframes popIn{0%{transform:scale(0.5)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
-    @keyframes stampIn{0%{transform:scale(0.3) rotate(-20deg);opacity:0}60%{transform:scale(1.15) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
-
-    /* Select grid */
     .select-grid{display:flex;gap:8px;margin-bottom:12px}
     .select-option{flex:1;border:1.5px solid var(--gray-200);border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.15s;background:var(--bg)}
     .select-option:hover{border-color:var(--gray-400)}
@@ -67,22 +57,16 @@
     .select-option.active .select-option-name{color:var(--brand)}
     .select-option.done .select-option-name{color:var(--secondary)}
     .select-option.done .select-option-status{color:var(--secondary);font-weight:600}
-
-    /* Card */
     .tl-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow:hidden;border:1.5px solid transparent;transition:all 0.2s}
     .tl-card.active{border-color:var(--brand);box-shadow:0 4px 16px rgba(81,171,243,0.12)}
     .tl-card.done{border-color:var(--secondary)}
     .tl-card-body{padding:14px 16px}
     .tl-card-title{font-size:15px;font-weight:700;margin-bottom:2px}
     .tl-card-sub{font-size:12px;color:var(--text-muted);margin-bottom:12px}
-
-    /* Cleared */
     .tl-cleared{display:flex;align-items:center;justify-content:space-between}
     .tl-cleared-left{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--secondary)}
     .tl-cleared-left svg{width:16px;height:16px}
     .cleared-pill{background:var(--secondary);color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
-
-    /* Input */
     .input-row{display:flex;gap:8px}
     .input-row input{flex:1;padding:10px 14px;font-size:13px;border:1px solid var(--gray-300);border-radius:8px;outline:none;font-family:inherit;background:var(--bg);color:var(--text)}
     .input-row input::placeholder{color:var(--gray-400)}
@@ -93,8 +77,6 @@
     .booking-link{display:inline-flex;align-items:center;gap:3px;font-size:12px;color:var(--brand);text-decoration:none;font-weight:500;margin-top:8px}
     .error-msg{color:var(--error);font-size:12px;font-weight:500;margin-top:8px}
     .select-prompt{font-size:12px;color:var(--text-muted);text-align:center;padding:8px 0}
-
-    /* Reward */
     .reward-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);padding:20px;text-align:center}
     .reward-card.locked{opacity:0.5}
     .reward-card.unlocked{border:2px solid var(--gold);box-shadow:0 4px 20px rgba(255,191,0,0.15);opacity:1}
@@ -107,10 +89,10 @@
     .reward-item-badge{font-size:11px;font-weight:700;color:var(--error);background:#fff1f0;padding:2px 8px;border-radius:4px}
     .reward-btn{margin-top:16px;padding:14px 32px;background:var(--gold);color:var(--gray-900);font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-family:inherit;width:100%}
     .reward-btn:disabled{background:var(--gray-200);color:var(--gray-500);cursor:not-allowed}
-
     .footer{text-align:center;padding:0 20px 32px}
     .footer-logo{height:18px;opacity:0.25}
     .footer p{color:var(--text-muted);font-size:11px;margin-top:4px}
+    .loading{text-align:center;padding:60px 20px;font-size:13px;color:var(--text-muted)}
 
     /* Modal */
     .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:100;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(4px)}
@@ -121,7 +103,7 @@
     .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(255,255,255,0.25);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:101;backdrop-filter:blur(4px)}
     .modal-close svg{width:16px;height:16px;stroke:white}
 
-    /* Boarding Pass — MRT 브랜드 밝은 스타일 */
+    /* Boarding Pass */
     .boarding-pass{background:linear-gradient(135deg,#51abf3 0%,#3d8fd6 50%,#33b893 100%);border-radius:16px;overflow:hidden;color:white;position:relative;box-shadow:0 8px 32px rgba(81,171,243,0.3)}
     .boarding-pass::before{content:'';position:absolute;top:-80px;right:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);pointer-events:none}
     .boarding-pass::after{content:'';position:absolute;bottom:-60px;left:-60px;width:160px;height:160px;background:radial-gradient(circle,rgba(51,184,147,0.2) 0%,transparent 70%);pointer-events:none}
@@ -166,56 +148,13 @@
   </div>
 
   <div class="container">
-    <div class="hero">
-      <h1>마리트 패스(상하이)</h1>
-      <p>2개 인증하면 상하이 현지 할인 혜택!</p>
-      <div class="hero-badge">
-        <div class="hero-dot pending" id="hdot1"></div>
-        <div class="hero-dot pending" id="hdot2"></div>
-        <span id="hero-status">0 / 2 완료</span>
-      </div>
+    <div class="hero" id="hero">
+      <h1 id="hero-title">마리트 패스</h1>
+      <p id="hero-desc">로딩 중...</p>
+      <div class="hero-badge" id="hero-badge"></div>
     </div>
 
-    <div class="timeline">
-      <!-- Mission 1: 티켓 -->
-      <div class="tl-item" id="tl-ticket">
-        <div class="tl-track"><div class="tl-dot active" id="dot-ticket">1</div></div>
-        <div class="tl-content">
-          <div class="tl-label">티켓 선택 (1개)</div>
-          <div class="select-grid" id="grid-ticket"></div>
-          <div id="auth-ticket"></div>
-        </div>
-      </div>
-
-      <!-- Mission 2: 수향마을 -->
-      <div class="tl-item" id="tl-village">
-        <div class="tl-track"><div class="tl-dot active" id="dot-village">2</div></div>
-        <div class="tl-content">
-          <div class="tl-label">수향마을 선택 (1개)</div>
-          <div class="select-grid" id="grid-village"></div>
-          <div id="auth-village"></div>
-        </div>
-      </div>
-
-      <!-- Reward -->
-      <div class="tl-item">
-        <div class="tl-track"><div class="tl-dot reward" id="dot-reward">🎁</div></div>
-        <div class="tl-content">
-          <div class="tl-label">리워드</div>
-          <div class="reward-card locked" id="reward-card">
-            <div class="reward-icon">🎫</div>
-            <div class="reward-title">마리트 패스</div>
-            <div class="reward-desc" id="reward-desc">2개 미션을 완료하면 패스를 받을 수 있어요</div>
-            <div class="reward-list">
-              <div class="reward-item"><span class="reward-item-name">하이디라오</span><span class="reward-item-badge">12% OFF</span></div>
-              <div class="reward-item"><span class="reward-item-name">BFC 중식당</span><span class="reward-item-badge">10% OFF</span></div>
-              <div class="reward-item"><span class="reward-item-name">마사지샵</span><span class="reward-item-badge">10% OFF</span></div>
-            </div>
-            <button class="reward-btn" disabled id="reward-btn" onclick="updatePassDates();showPassModal()">미션을 완료해주세요</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="main-content"><div class="loading">로딩 중...</div></div>
 
     <div class="footer">
       <img class="footer-logo" src="logo.png" alt="마이리얼트립">
@@ -231,20 +170,16 @@
         <div class="bp-header">
           <img class="bp-logo" src="logo.png" alt="마이리얼트립" style="filter:brightness(0) invert(1);">
           <div class="bp-pass-label">MARIT PASS</div>
-          <div class="bp-title">마리트 패스</div>
-          <div class="bp-subtitle">Shanghai</div>
+          <div class="bp-title" id="bp-title">마리트 패스</div>
+          <div class="bp-subtitle" id="bp-subtitle"></div>
           <div class="bp-stamp"><div class="bp-stamp-text">MISSION<br>CLEAR</div></div>
         </div>
         <div class="bp-divider"><div class="bp-divider-circle-l"></div><div class="bp-divider-line"></div><div class="bp-divider-circle-r"></div></div>
-        <div class="bp-rewards">
-          <div class="bp-reward"><span class="bp-reward-name">하이디라오</span><span class="bp-reward-badge">12% OFF</span></div>
-          <div class="bp-reward"><span class="bp-reward-name">BFC 중식당 (와이탄)</span><span class="bp-reward-badge">10% OFF</span></div>
-          <div class="bp-reward"><span class="bp-reward-name">마사지샵</span><span class="bp-reward-badge">10% OFF</span></div>
-        </div>
+        <div class="bp-rewards" id="bp-rewards"></div>
         <div class="bp-divider"><div class="bp-divider-circle-l"></div><div class="bp-divider-line"></div><div class="bp-divider-circle-r"></div></div>
         <div class="bp-footer">
           <div class="bp-valid">VALID PERIOD</div>
-          <div class="bp-date" id="bp-date-range">여행일 기준 자동 계산</div>
+          <div class="bp-date" id="bp-date-range">여행일 기준</div>
           <div class="bp-howto"><div class="bp-howto-text"><strong>현장에서 이 화면을 제시</strong>하시면<br>할인이 적용됩니다</div></div>
         </div>
       </div>
@@ -261,28 +196,14 @@
   const SUPABASE_URL = 'https://glxqsuxhiomukbtqumat.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_dQAbR9SZqND6iX7cqgBWZw_5riX65Eq';
 
-  // 미션 그룹: 티켓(디즈니 or 유람선) + 수향마을(우전 or 주가각)
-  const TICKET_TYPES = ['disney', 'cruise'];
-  const VILLAGE_TYPES = ['wuzhen', 'zhujiaojiao'];
-
-  const IMAGES = {
-    disney: 'https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2026/03/20/JQoc/LsfcVTJhCw.jpg',
-    cruise: 'https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2024/08/05/ANRQ/Nd3XAHWuCE.jpg',
-    wuzhen: 'https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2025/06/05/1SOP/SlakPmcJ9T.jpg',
-    zhujiaojiao: 'https://dry7pvlp22cox.cloudfront.net/mrt-images-prod/2024/08/05/DBuy/aBBAhRx3SB.jpg'
-  };
-  const NAMES = {
-    disney: '디즈니랜드', cruise: '황푸강 유람선',
-    wuzhen: '우전 수향마을', zhujiaojiao: '주가각 수향마을'
-  };
-  const SHORT_NAMES = {
-    disney: '디즈니랜드', cruise: '유람선',
-    wuzhen: '우전', zhujiaojiao: '주가각'
-  };
+  // URL에서 도시 파악: /shanghai or ?city=shanghai
+  const pathCity = location.pathname.split('/').filter(Boolean).pop();
+  const paramCity = new URLSearchParams(location.search).get('city');
+  const CITY = pathCity && pathCity !== 'index.html' ? pathCity : (paramCity || 'shanghai');
 
   function getSessionId() {
-    let sid = localStorage.getItem('myrealpass_session');
-    if (!sid) { sid = crypto.randomUUID(); localStorage.setItem('myrealpass_session', sid); }
+    let sid = localStorage.getItem('myrealpass_session_' + CITY);
+    if (!sid) { sid = crypto.randomUUID(); localStorage.setItem('myrealpass_session_' + CITY, sid); }
     return sid;
   }
   const SESSION_ID = getSessionId();
@@ -303,17 +224,19 @@
     return r.json();
   }
 
+  let cityConfig = null;
   let missions = [];
+  let rewards = [];
   const cleared = {};
   const travelDates = {};
-  let selectedTicket = null;
-  let selectedVillage = null;
+  const selected = {}; // { groupKey: mission_type }
 
   function getMission(type) { return missions.find(m => m.mission_type === type); }
-  function ticketDone() { return TICKET_TYPES.find(t => cleared[t]); }
-  function villageDone() { return VILLAGE_TYPES.find(t => cleared[t]); }
-  function isComplete() { return !!ticketDone() && !!villageDone(); }
-  function doneCount() { return (ticketDone() ? 1 : 0) + (villageDone() ? 1 : 0); }
+  function groupMissions(groupKey) { return missions.filter(m => m.mission_group === groupKey); }
+  function groupDone(groupKey) { return groupMissions(groupKey).find(t => cleared[t.mission_type]); }
+  function allDone() { return cityConfig && cityConfig.groups.every(g => groupDone(g.key)); }
+  function doneCount() { return cityConfig ? cityConfig.groups.filter(g => groupDone(g.key)).length : 0; }
+  function totalGroups() { return cityConfig ? cityConfig.groups.length : 0; }
 
   function showPassModal() { document.getElementById('pass-modal').classList.add('show'); document.body.style.overflow = 'hidden'; }
   function closeModal() { document.getElementById('pass-modal').classList.remove('show'); document.body.style.overflow = ''; }
@@ -348,118 +271,117 @@
     btn.textContent = '저장 중...'; btn.disabled = true;
     try {
       const canvas = await html2canvas(document.getElementById('boarding-pass'), { backgroundColor:null, scale:3, useCORS:true, logging:false });
-      try { await sb('pass_claims', { method:'POST', body:{ session_id:SESSION_ID, phone_number:'image_save', pack:'city_tour' } }); } catch(_) {}
+      try { await sb('pass_claims', { method:'POST', body:{ session_id:SESSION_ID, phone_number:'image_save', pack:CITY } }); } catch(_) {}
       const link = document.createElement('a');
-      link.download = 'marit-pass-shanghai.png'; link.href = canvas.toDataURL('image/png'); link.click();
+      link.download = `marit-pass-${CITY}.png`; link.href = canvas.toDataURL('image/png'); link.click();
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg><span>저장 완료!</span>';
       setTimeout(() => { btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>이미지 저장하기</span>'; btn.disabled = false; }, 2000);
     } catch (e) { btn.innerHTML = '<span>저장 실패 - 스크린샷을 찍어주세요</span>'; btn.disabled = false; }
   }
 
-  function selectItem(group, type) {
-    if (group === 'ticket') {
-      if (ticketDone()) return;
-      selectedTicket = type;
-    } else {
-      if (villageDone()) return;
-      selectedVillage = type;
-    }
+  function selectItem(groupKey, missionType) {
+    if (groupDone(groupKey)) return;
+    selected[groupKey] = missionType;
     render();
   }
 
-  function renderSelectGrid(containerId, types, selectedType, doneType) {
-    const el = document.getElementById(containerId);
-    el.innerHTML = '';
-    types.forEach(t => {
-      const isDone = cleared[t];
-      const isSelected = selectedType === t;
-      const isDisabled = doneType && doneType !== t;
-      let cls = 'select-option';
-      if (isDone) cls += ' done';
-      else if (isSelected) cls += ' active';
-      if (isDisabled) cls += ' disabled';
-      const status = isDone ? 'CLEAR!' : isSelected ? '선택됨' : '선택하기';
-      const group = TICKET_TYPES.includes(t) ? 'ticket' : 'village';
-      el.innerHTML += `
-        <div class="${cls}" onclick="selectItem('${group}','${t}')">
-          <img src="${IMAGES[t]}" alt="${NAMES[t]}">
-          <div class="select-option-body">
-            <div class="select-option-name">${SHORT_NAMES[t]}</div>
-            <div class="select-option-status">${status}</div>
-          </div>
-        </div>`;
-    });
-  }
-
-  function renderAuthArea(containerId, types, selectedType, doneType) {
-    const el = document.getElementById(containerId);
-    if (doneType) {
-      const m = getMission(doneType);
-      el.innerHTML = `
-        <div class="tl-card done"><div class="tl-card-body">
-          <div class="tl-cleared">
-            <div class="tl-cleared-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 예약번호 ${cleared[doneType]}</div>
-            <span class="cleared-pill">CLEAR!</span>
-          </div>
-        </div></div>`;
-      return;
-    }
-    if (!selectedType) {
-      el.innerHTML = '<div class="select-prompt">위에서 상품을 선택해주세요</div>';
-      return;
-    }
-    const m = getMission(selectedType);
-    const url = m ? m.booking_url : '#';
-    el.innerHTML = `
-      <div class="tl-card active"><div class="tl-card-body">
-        <div class="tl-card-title">${NAMES[selectedType]}</div>
-        <div class="tl-card-sub">예약번호를 입력해주세요</div>
-        <div class="input-row">
-          <input type="text" id="input-${selectedType}" placeholder="예약번호 입력" inputmode="numeric">
-          <button class="btn" id="btn-${selectedType}" onclick="verify('${selectedType}')">인증</button>
-        </div>
-        <div id="error-${selectedType}" class="error-msg" style="display:none;"></div>
-        <a href="${url}" target="_blank" class="booking-link">아직 안 샀다면? 예약하러 가기 →</a>
-      </div></div>`;
-  }
-
   function render() {
-    const td = ticketDone();
-    const vd = villageDone();
+    if (!cityConfig) return;
+    const groups = cityConfig.groups;
     const count = doneCount();
-
-    renderSelectGrid('grid-ticket', TICKET_TYPES, selectedTicket, td);
-    renderAuthArea('auth-ticket', TICKET_TYPES, selectedTicket, td);
-
-    renderSelectGrid('grid-village', VILLAGE_TYPES, selectedVillage, vd);
-    renderAuthArea('auth-village', VILLAGE_TYPES, selectedVillage, vd);
-
-    // Timeline dots
-    const dotT = document.getElementById('dot-ticket');
-    const dotV = document.getElementById('dot-village');
-    const dotR = document.getElementById('dot-reward');
-    dotT.className = 'tl-dot' + (td ? ' done' : ' active');
-    dotT.innerHTML = td ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '1';
-    dotV.className = 'tl-dot' + (vd ? ' done' : ' active');
-    dotV.innerHTML = vd ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '2';
-    document.getElementById('tl-ticket').className = 'tl-item' + (td ? ' done' : '');
-    document.getElementById('tl-village').className = 'tl-item' + (vd ? ' done' : '');
+    const total = totalGroups();
+    const complete = allDone();
 
     // Hero
-    document.getElementById('hdot1').className = 'hero-dot ' + (td ? 'done' : 'pending');
-    document.getElementById('hdot2').className = 'hero-dot ' + (vd ? 'done' : 'pending');
-    document.getElementById('hero-status').textContent = count + ' / 2 완료';
+    document.getElementById('hero-title').textContent = `마리트 패스(${cityConfig.city_name})`;
+    document.getElementById('hero-desc').textContent = `${total}개 인증하면 현지 할인 혜택!`;
+    document.getElementById('hero').style.backgroundImage = `linear-gradient(180deg,rgba(15,22,40,0) 0%,rgba(15,22,40,0.85) 100%), url('${cityConfig.hero_image}')`;
+    document.title = `마리트 패스(${cityConfig.city_name}) - 마이리얼트립`;
+
+    let badgeHTML = '';
+    groups.forEach((g, i) => {
+      badgeHTML += `<div class="hero-dot ${groupDone(g.key) ? 'done' : 'pending'}"></div>`;
+    });
+    badgeHTML += `<span>${count} / ${total} 완료</span>`;
+    document.getElementById('hero-badge').innerHTML = badgeHTML;
+
+    // Boarding pass
+    document.getElementById('bp-title').textContent = `마리트 패스`;
+    document.getElementById('bp-subtitle').textContent = cityConfig.city_name;
+    document.getElementById('bp-rewards').innerHTML = rewards.map(r =>
+      `<div class="bp-reward"><span class="bp-reward-name">${r.name}</span><span class="bp-reward-badge">${r.discount}</span></div>`
+    ).join('');
+
+    // Timeline
+    let html = '<div class="timeline">';
+
+    groups.forEach((g, gi) => {
+      const gd = groupDone(g.key);
+      const gMissions = groupMissions(g.key);
+      const dotClass = gd ? 'done' : 'active';
+      const dotContent = gd ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : (gi + 1);
+      const itemClass = gd ? ' done' : '';
+
+      html += `<div class="tl-item${itemClass}"><div class="tl-track"><div class="tl-dot ${dotClass}">${dotContent}</div></div><div class="tl-content">`;
+      html += `<div class="tl-label">${g.label} (${g.sub})</div>`;
+
+      // Select grid
+      html += '<div class="select-grid">';
+      gMissions.forEach(m => {
+        const isDone = !!cleared[m.mission_type];
+        const isSelected = selected[g.key] === m.mission_type;
+        const isDisabled = gd && !isDone;
+        let cls = 'select-option';
+        if (isDone) cls += ' done';
+        else if (isSelected) cls += ' active';
+        if (isDisabled) cls += ' disabled';
+        const status = isDone ? 'CLEAR!' : isSelected ? '선택됨' : '선택하기';
+        const shortName = m.title.replace(' 야경투어','').replace('+유람선','').replace(' 수향마을','');
+        html += `<div class="${cls}" onclick="selectItem('${g.key}','${m.mission_type}')">
+          <img src="${m.image_url || ''}" alt="${m.title}">
+          <div class="select-option-body"><div class="select-option-name">${shortName}</div><div class="select-option-status">${status}</div></div></div>`;
+      });
+      html += '</div>';
+
+      // Auth area
+      const activeType = gd || selected[g.key];
+      const activeM = activeType ? getMission(gd || selected[g.key]) : null;
+
+      if (activeM && cleared[activeM.mission_type]) {
+        html += `<div class="tl-card done"><div class="tl-card-body"><div class="tl-cleared">
+          <div class="tl-cleared-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 예약번호 ${cleared[activeM.mission_type]}</div>
+          <span class="cleared-pill">CLEAR!</span></div></div></div>`;
+      } else if (activeM) {
+        html += `<div class="tl-card active"><div class="tl-card-body">
+          <div class="tl-card-title">${activeM.title}</div>
+          <div class="tl-card-sub">예약번호를 입력해주세요</div>
+          <div class="input-row"><input type="text" id="input-${activeM.mission_type}" placeholder="예약번호 입력" inputmode="numeric">
+          <button class="btn" id="btn-${activeM.mission_type}" onclick="verify('${activeM.mission_type}')">인증</button></div>
+          <div id="error-${activeM.mission_type}" class="error-msg" style="display:none;"></div>
+          <a href="${activeM.booking_url}" target="_blank" class="booking-link">아직 안 샀다면? 예약하러 가기 →</a>
+        </div></div>`;
+      } else {
+        html += '<div class="select-prompt">위에서 상품을 선택해주세요</div>';
+      }
+
+      html += '</div></div>';
+    });
 
     // Reward
-    if (isComplete()) {
-      dotR.className = 'tl-dot reward unlocked';
-      document.getElementById('reward-card').className = 'reward-card unlocked';
-      document.getElementById('reward-desc').textContent = '미션 완료! 패스를 받으세요 🎉';
-      const btn = document.getElementById('reward-btn');
-      btn.disabled = false;
-      btn.textContent = '🎫 마리트 패스 받기';
-      btn.style.background = '#ffbf00';
-    }
+    const rewardDotClass = complete ? 'reward unlocked' : 'reward';
+    html += `<div class="tl-item"><div class="tl-track"><div class="tl-dot ${rewardDotClass}">🎁</div></div><div class="tl-content">
+      <div class="tl-label">리워드</div>
+      <div class="reward-card ${complete ? 'unlocked' : 'locked'}">
+        <div class="reward-icon">🎫</div>
+        <div class="reward-title">마리트 패스</div>
+        <div class="reward-desc">${complete ? '미션 완료! 패스를 받으세요 🎉' : total + '개 미션을 완료하면 패스를 받을 수 있어요'}</div>
+        <div class="reward-list">${rewards.map(r => `<div class="reward-item"><span class="reward-item-name">${r.name}</span><span class="reward-item-badge">${r.discount}</span></div>`).join('')}</div>
+        <button class="reward-btn" ${complete ? '' : 'disabled'} onclick="updatePassDates();showPassModal()">${complete ? '🎫 마리트 패스 받기' : '미션을 완료해주세요'}</button>
+      </div>
+    </div></div>`;
+
+    html += '</div>';
+    document.getElementById('main-content').innerHTML = html;
   }
 
   async function verify(type) {
@@ -479,23 +401,45 @@
       travelDates[type] = { start: result.travel_start, end: result.travel_end };
       fireConfetti();
       render();
-      if (isComplete()) setTimeout(() => { updatePassDates(); fireConfetti(); showPassModal(); }, 600);
+      if (allDone()) setTimeout(() => { updatePassDates(); fireConfetti(); showPassModal(); }, 600);
     } catch (e) {
       err.textContent = e.code === '23505' ? '이미 인증된 미션입니다' : '오류가 발생했습니다';
       err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증';
     }
   }
 
+  // Init
   (async () => {
     try {
-      missions = await sb('missions?is_active=eq.true&order=display_order.asc');
-      const ex = await sb(`user_missions?session_id=eq.${SESSION_ID}`);
-      ex.forEach(r => { cleared[r.mission_type] = r.order_id; });
-      // auto-select if cleared
-      if (ticketDone()) selectedTicket = ticketDone();
-      if (villageDone()) selectedVillage = villageDone();
+      const [configs, allMissions, allRewards, existing] = await Promise.all([
+        sb(`city_config?city=eq.${CITY}&is_active=eq.true`),
+        sb(`missions?city=eq.${CITY}&is_active=eq.true&order=display_order.asc`),
+        sb(`rewards?city=eq.${CITY}&is_active=eq.true&order=display_order.asc`),
+        sb(`user_missions?session_id=eq.${SESSION_ID}`)
+      ]);
+
+      if (!configs.length) {
+        document.getElementById('main-content').innerHTML = '<div class="loading">존재하지 않는 도시입니다</div>';
+        return;
+      }
+
+      cityConfig = configs[0];
+      cityConfig.groups = typeof cityConfig.groups === 'string' ? JSON.parse(cityConfig.groups) : cityConfig.groups;
+      missions = allMissions;
+      rewards = allRewards;
+      existing.forEach(r => { cleared[r.mission_type] = r.order_id; });
+
+      // Auto-select cleared items
+      cityConfig.groups.forEach(g => {
+        const done = groupDone(g.key);
+        if (done) selected[g.key] = done.mission_type;
+      });
+
       render();
-    } catch (e) { console.error('Failed:', e); }
+    } catch (e) {
+      console.error('Init failed:', e);
+      document.getElementById('main-content').innerHTML = '<div class="loading">로딩에 실패했습니다</div>';
+    }
   })();
 </script>
 </body>
