@@ -22,9 +22,9 @@
     .header{background:var(--bg);border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:50}
     .header-inner{display:flex;align-items:center;justify-content:center;height:56px;padding:0 16px}
     .logo{height:24px}
-    .hero{position:relative;height:220px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px;color:white;background:linear-gradient(135deg,#51abf3 0%,#3d8fd6 40%,#33b893 100%)}
-    .hero::before{content:'';position:absolute;top:-100px;right:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);z-index:1}
-    .hero::after{content:'';position:absolute;bottom:-80px;left:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(51,184,147,0.15) 0%,transparent 70%);z-index:1}
+    .hero{position:relative;height:200px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px;color:white;background:var(--brand)}
+    .hero::before{content:'';position:absolute;top:-80px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.06);z-index:1}
+    .hero::after{content:'';position:absolute;bottom:-60px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.04);z-index:1}
     .hero>*{position:relative;z-index:2}
 
     /* 장식 요소 — 여권 스탬프 */
@@ -313,7 +313,9 @@
     const complete = allDone();
 
     // Hero
-    document.getElementById('hero-title').textContent = `마이리얼트립 패스(${cityConfig.city_name})`;
+    const cityFlags = {shanghai:'🇨🇳',beijing:'🇨🇳',qingdao:'🇨🇳',xian:'🇨🇳',harbin:'🇨🇳',hongkong:'🇭🇰',macau:'🇲🇴',taipei:'🇹🇼',singapore:'🇸🇬'};
+    const flag = cityFlags[CITY] || '';
+    document.getElementById('hero-title').textContent = `${flag} 마이리얼트립 패스(${cityConfig.city_name})`;
     document.getElementById('hero-desc').textContent = `${total}개 인증하면 현지 할인 혜택!`;
     // 배경은 CSS 그래디언트 사용 (사진 없음)
     document.title = `마이리얼트립 패스(${cityConfig.city_name}) - 마이리얼트립`;
