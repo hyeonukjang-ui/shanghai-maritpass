@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>마리트 패스 - 마이리얼트립</title>
+  <title>마이리얼트립 패스 - 마이리얼트립</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
   <style>
     :root {
@@ -168,8 +168,8 @@
       <div class="hero-deco-stamp"><div class="hero-deco-stamp-inner">MARIT<br>PASS</div></div>
       <div class="hero-deco-dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
-      <div class="hero-tag">MARIT PASS</div>
-      <h1 id="hero-title">마리트 패스</h1>
+      <div class="hero-tag">MYREALTRIP PASS</div>
+      <h1 id="hero-title">마이리얼트립 패스</h1>
       <p id="hero-desc">로딩 중...</p>
       <div class="hero-badge" id="hero-badge"></div>
     </div>
@@ -189,8 +189,8 @@
       <div class="boarding-pass" id="boarding-pass">
         <div class="bp-header">
           <img class="bp-logo" src="logo.png" alt="마이리얼트립" style="filter:brightness(0) invert(1);">
-          <div class="bp-pass-label">MARIT PASS</div>
-          <div class="bp-title" id="bp-title">마리트 패스</div>
+          <div class="bp-pass-label">MYREALTRIP PASS</div>
+          <div class="bp-title" id="bp-title">마이리얼트립 패스</div>
           <div class="bp-subtitle" id="bp-subtitle"></div>
           <div class="bp-stamp"><div class="bp-stamp-text">MISSION<br>CLEAR</div></div>
         </div>
@@ -293,7 +293,7 @@
       const canvas = await html2canvas(document.getElementById('boarding-pass'), { backgroundColor:null, scale:3, useCORS:true, logging:false });
       try { await sb('pass_claims', { method:'POST', body:{ session_id:SESSION_ID, phone_number:'image_save', pack:CITY } }); } catch(_) {}
       const link = document.createElement('a');
-      link.download = `marit-pass-${CITY}.png`; link.href = canvas.toDataURL('image/png'); link.click();
+      link.download = `myrealtrip-pass-${CITY}.png`; link.href = canvas.toDataURL('image/png'); link.click();
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg><span>저장 완료!</span>';
       setTimeout(() => { btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>이미지 저장하기</span>'; btn.disabled = false; }, 2000);
     } catch (e) { btn.innerHTML = '<span>저장 실패 - 스크린샷을 찍어주세요</span>'; btn.disabled = false; }
@@ -313,10 +313,10 @@
     const complete = allDone();
 
     // Hero
-    document.getElementById('hero-title').textContent = `마리트 패스(${cityConfig.city_name})`;
+    document.getElementById('hero-title').textContent = `마이리얼트립 패스(${cityConfig.city_name})`;
     document.getElementById('hero-desc').textContent = `${total}개 인증하면 현지 할인 혜택!`;
     document.getElementById('hero').style.backgroundImage = `linear-gradient(180deg,rgba(15,22,40,0) 0%,rgba(15,22,40,0.85) 100%), url('${cityConfig.hero_image}')`;
-    document.title = `마리트 패스(${cityConfig.city_name}) - 마이리얼트립`;
+    document.title = `마이리얼트립 패스(${cityConfig.city_name}) - 마이리얼트립`;
 
     let badgeHTML = '';
     groups.forEach((g, i) => {
@@ -326,7 +326,7 @@
     document.getElementById('hero-badge').innerHTML = badgeHTML;
 
     // Boarding pass
-    document.getElementById('bp-title').textContent = `마리트 패스`;
+    document.getElementById('bp-title').textContent = `마이리얼트립 패스`;
     document.getElementById('bp-subtitle').textContent = cityConfig.city_name;
     document.getElementById('bp-rewards').innerHTML = rewards.map(r =>
       `<div class="bp-reward"><span class="bp-reward-name">${r.name}</span><span class="bp-reward-badge">${r.discount}</span></div>`
@@ -393,10 +393,10 @@
       <div class="tl-label">리워드</div>
       <div class="reward-card ${complete ? 'unlocked' : 'locked'}">
         <div class="reward-icon">🎫</div>
-        <div class="reward-title">마리트 패스</div>
+        <div class="reward-title">마이리얼트립 패스</div>
         <div class="reward-desc">${complete ? '미션 완료! 패스를 받으세요 🎉' : total + '개 미션을 완료하면 패스를 받을 수 있어요'}</div>
         <div class="reward-list">${rewards.map(r => `<div class="reward-item"><span class="reward-item-name">${r.name}</span><span class="reward-item-badge">${r.discount}</span></div>`).join('')}</div>
-        <button class="reward-btn" ${complete ? '' : 'disabled'} onclick="updatePassDates();showPassModal()">${complete ? '🎫 마리트 패스 받기' : '미션을 완료해주세요'}</button>
+        <button class="reward-btn" ${complete ? '' : 'disabled'} onclick="updatePassDates();showPassModal()">${complete ? '🎫 마이리얼트립 패스 받기' : '미션을 완료해주세요'}</button>
       </div>
     </div></div>`;
 
