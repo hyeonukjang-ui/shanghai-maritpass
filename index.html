@@ -16,8 +16,9 @@
       --bg:#ffffff;--text:var(--gray-900);--text-sub:var(--gray-600);--text-muted:var(--gray-500);
     }
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--gray-50);color:var(--text);-webkit-font-smoothing:antialiased}
-    .container{max-width:480px;margin:0 auto}
+    html{overflow-x:hidden}
+    body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--gray-50);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;width:100%}
+    .container{max-width:480px;margin:0 auto;overflow-x:hidden}
     .header{background:var(--bg);border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:50}
     .header-inner{display:flex;align-items:center;justify-content:center;height:56px;padding:0 16px}
     .logo{height:24px}
@@ -30,8 +31,8 @@
     .hero-dot{width:8px;height:8px;border-radius:50%}
     .hero-dot.done{background:var(--secondary)}
     .hero-dot.pending{background:rgba(255,255,255,0.3)}
-    .timeline{padding:0 20px 40px}
-    .tl-item{display:flex;gap:16px;position:relative}
+    .timeline{padding:0 16px 40px}
+    .tl-item{display:flex;gap:12px;position:relative}
     .tl-item:last-child .tl-track::after{display:none}
     .tl-track{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;padding-top:24px}
     .tl-dot{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--gray-300);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--gray-400);position:relative;z-index:2;transition:all 0.3s}
@@ -41,34 +42,34 @@
     .tl-dot.reward.unlocked{background:var(--gold);color:white;animation:popIn 0.4s ease}
     .tl-track::after{content:'';width:2px;flex:1;background:var(--gray-200);margin-top:4px}
     .tl-item.done .tl-track::after{background:var(--secondary)}
-    .tl-content{flex:1;padding:16px 0 32px}
+    .tl-content{flex:1;padding:16px 0 32px;min-width:0;overflow:hidden}
     .tl-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
     @keyframes popIn{0%{transform:scale(0.5)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
-    .select-grid{display:flex;gap:8px;margin-bottom:12px}
-    .select-option{flex:1;border:1.5px solid var(--gray-200);border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.15s;background:var(--bg)}
+    .select-grid{display:flex;gap:8px;margin-bottom:12px;width:100%}
+    .select-option{flex:1;min-width:0;border:1.5px solid var(--gray-200);border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.15s;background:var(--bg)}
     .select-option:hover{border-color:var(--gray-400)}
     .select-option.active{border-color:var(--brand);box-shadow:0 0 0 3px rgba(81,171,243,0.1)}
     .select-option.done{border-color:var(--secondary)}
     .select-option.disabled{opacity:0.3;pointer-events:none}
     .select-option img{width:100%;height:80px;object-fit:cover;display:block}
     .select-option-body{padding:8px;text-align:center}
-    .select-option-name{font-size:12px;font-weight:600}
+    .select-option-name{font-size:11px;font-weight:600;word-break:keep-all;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .select-option-status{font-size:10px;color:var(--text-muted);margin-top:2px}
     .select-option.active .select-option-name{color:var(--brand)}
     .select-option.done .select-option-name{color:var(--secondary)}
     .select-option.done .select-option-status{color:var(--secondary);font-weight:600}
-    .tl-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow:hidden;border:1.5px solid transparent;transition:all 0.2s}
+    .tl-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow:hidden;border:1.5px solid transparent;transition:all 0.2s;width:100%}
     .tl-card.active{border-color:var(--brand);box-shadow:0 4px 16px rgba(81,171,243,0.12)}
     .tl-card.done{border-color:var(--secondary)}
-    .tl-card-body{padding:14px 16px}
+    .tl-card-body{padding:14px 16px;overflow:hidden}
     .tl-card-title{font-size:15px;font-weight:700;margin-bottom:2px}
     .tl-card-sub{font-size:12px;color:var(--text-muted);margin-bottom:12px}
     .tl-cleared{display:flex;align-items:center;justify-content:space-between}
     .tl-cleared-left{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--secondary)}
     .tl-cleared-left svg{width:16px;height:16px}
     .cleared-pill{background:var(--secondary);color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
-    .input-row{display:flex;gap:8px}
-    .input-row input{flex:1;padding:10px 14px;font-size:13px;border:1px solid var(--gray-300);border-radius:8px;outline:none;font-family:inherit;background:var(--bg);color:var(--text)}
+    .input-row{display:flex;gap:8px;width:100%}
+    .input-row input{flex:1;min-width:0;padding:10px 12px;font-size:13px;border:1px solid var(--gray-300);border-radius:8px;outline:none;font-family:inherit;background:var(--bg);color:var(--text)}
     .input-row input::placeholder{color:var(--gray-400)}
     .input-row input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(81,171,243,0.12)}
     .btn{padding:10px 20px;background:var(--brand);color:white;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit;white-space:nowrap}
@@ -77,7 +78,7 @@
     .booking-link{display:inline-flex;align-items:center;gap:3px;font-size:12px;color:var(--brand);text-decoration:none;font-weight:500;margin-top:8px}
     .error-msg{color:var(--error);font-size:12px;font-weight:500;margin-top:8px}
     .select-prompt{font-size:12px;color:var(--text-muted);text-align:center;padding:8px 0}
-    .reward-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);padding:20px;text-align:center}
+    .reward-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);padding:20px;text-align:center;overflow:hidden;width:100%}
     .reward-card.locked{opacity:0.5}
     .reward-card.unlocked{border:2px solid var(--gold);box-shadow:0 4px 20px rgba(255,191,0,0.15);opacity:1}
     .reward-icon{font-size:32px;margin-bottom:8px}
