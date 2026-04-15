@@ -22,14 +22,14 @@
     .header{background:var(--bg);border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:50}
     .header-inner{display:flex;align-items:center;justify-content:center;height:56px;padding:0 16px}
     .logo{height:24px}
-    .hero{position:relative;height:240px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px;color:white;background-size:cover;background-position:center}
-    .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(81,171,243,0.4) 0%,rgba(15,22,40,0) 50%);z-index:1}
-    .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,22,40,0) 20%,rgba(15,22,40,0.9) 100%);z-index:1}
+    .hero{position:relative;height:220px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px;color:white;background:linear-gradient(135deg,#51abf3 0%,#3d8fd6 40%,#33b893 100%)}
+    .hero::before{content:'';position:absolute;top:-100px;right:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);z-index:1}
+    .hero::after{content:'';position:absolute;bottom:-80px;left:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(51,184,147,0.15) 0%,transparent 70%);z-index:1}
     .hero>*{position:relative;z-index:2}
 
     /* 장식 요소 — 여권 스탬프 */
-    .hero-deco-stamp{position:absolute;top:16px;right:16px;width:72px;height:72px;border:2.5px solid rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(-15deg);z-index:2}
-    .hero-deco-stamp-inner{font-size:8px;font-weight:900;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1px;text-align:center;line-height:1.3}
+    .hero-deco-stamp{position:absolute;top:16px;right:16px;width:72px;height:72px;border:2px solid rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(-15deg);z-index:2}
+    .hero-deco-stamp-inner{font-size:7px;font-weight:900;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px;text-align:center;line-height:1.3}
     /* 장식 — 비행기 아이콘 */
     .hero-deco-plane{position:absolute;top:20px;left:20px;z-index:2;opacity:0.2}
     .hero-deco-plane svg{width:28px;height:28px}
@@ -315,7 +315,7 @@
     // Hero
     document.getElementById('hero-title').textContent = `마이리얼트립 패스(${cityConfig.city_name})`;
     document.getElementById('hero-desc').textContent = `${total}개 인증하면 현지 할인 혜택!`;
-    document.getElementById('hero').style.backgroundImage = `linear-gradient(180deg,rgba(15,22,40,0) 0%,rgba(15,22,40,0.85) 100%), url('${cityConfig.hero_image}')`;
+    // 배경은 CSS 그래디언트 사용 (사진 없음)
     document.title = `마이리얼트립 패스(${cityConfig.city_name}) - 마이리얼트립`;
 
     let badgeHTML = '';
