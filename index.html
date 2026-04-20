@@ -342,11 +342,7 @@
     document.getElementById('hero-badge').innerHTML = badgeHTML;
 
     // Boarding pass
-    document.getElementById('bp-title').textContent = `마이리얼트립 패스`;
-    document.getElementById('bp-subtitle').textContent = cityConfig.city_name;
-    document.getElementById('bp-rewards').innerHTML = rewards.map(r =>
-      `<div class="bp-reward"><span class="bp-reward-name">${r.name}</span><span class="bp-reward-badge">${r.discount}</span></div>`
-    ).join('');
+    // 패스 모달 리워드는 showPassModal()에서 렌더링
 
     // Timeline
     let html = '<div class="timeline">';
