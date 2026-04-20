@@ -408,7 +408,7 @@
         <div class="reward-title">마이리얼트립 패스</div>
         <div class="reward-desc">${complete ? '미션 완료! 패스를 받으세요 🎉' : total + '개 미션을 완료하면 패스를 받을 수 있어요'}</div>
         <div class="reward-list">${rewards.map(r => `<div class="reward-item"><span class="reward-item-name">${r.name}</span><span class="reward-item-badge">${r.discount}</span></div>`).join('')}</div>
-        <button class="reward-btn" ${complete ? '' : 'disabled'} onclick="showPassModal()">${complete ? '🎫 마이리얼트립 패스 받기' : '미션을 완료해주세요'}</button>
+        <button class="reward-btn" onclick="showPassModal()">🎫 마이리얼트립 패스 받기</button>
       </div>
     </div></div>`;
 
