@@ -117,36 +117,27 @@
     .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(255,255,255,0.25);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:101;backdrop-filter:blur(4px)}
     .modal-close svg{width:16px;height:16px;stroke:white}
 
-    /* Boarding Pass */
-    .boarding-pass{background:linear-gradient(135deg,#51abf3 0%,#3d8fd6 50%,#33b893 100%);border-radius:16px;overflow:hidden;color:white;position:relative;box-shadow:0 8px 32px rgba(81,171,243,0.3)}
-    .boarding-pass::before{content:'';position:absolute;top:-80px;right:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);pointer-events:none}
-    .boarding-pass::after{content:'';position:absolute;bottom:-60px;left:-60px;width:160px;height:160px;background:radial-gradient(circle,rgba(51,184,147,0.2) 0%,transparent 70%);pointer-events:none}
-    .bp-header{padding:24px 24px 16px;text-align:center;position:relative}
-    .bp-logo{height:18px;opacity:0.7;margin-bottom:12px}
-    .bp-pass-label{display:inline-block;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);border:1.5px solid rgba(255,255,255,0.3);padding:3px 12px;border-radius:9999px;margin-bottom:12px}
-    .bp-title{font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px;color:white}
-    .bp-subtitle{font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:2px;text-transform:uppercase}
-    .bp-divider{display:flex;align-items:center}
-    .bp-divider-line{flex:1;border-top:2px dashed rgba(255,255,255,0.25)}
-    .bp-divider-circle-l{width:20px;height:20px;background:rgba(0,0,0,0.4);border-radius:50%;margin-left:-10px;flex-shrink:0}
-    .bp-divider-circle-r{width:20px;height:20px;background:rgba(0,0,0,0.4);border-radius:50%;margin-right:-10px;flex-shrink:0}
-    .bp-rewards{padding:16px 24px}
-    .bp-reward{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.15)}
-    .bp-reward:last-child{border-bottom:none}
-    .bp-reward-name{font-size:13px;font-weight:600;color:white}
-    .bp-reward-badge{background:rgba(255,255,255,0.2);color:white;font-weight:700;font-size:12px;padding:3px 10px;border-radius:9999px;backdrop-filter:blur(4px)}
-    .bp-footer{padding:12px 24px 20px;text-align:center}
-    .bp-valid{font-size:9px;color:rgba(255,255,255,0.6);letter-spacing:1.5px;text-transform:uppercase}
-    .bp-date{font-size:14px;font-weight:700;color:white;margin-top:2px}
-    .bp-howto{margin-top:16px;padding:12px;background:rgba(255,255,255,0.12);border-radius:8px;backdrop-filter:blur(4px)}
-    .bp-howto-text{font-size:12px;color:rgba(255,255,255,0.85);text-align:center;line-height:1.5}
-    .bp-howto-text strong{color:white}
-    .bp-stamp{position:absolute;top:16px;right:16px;width:50px;height:50px;border:2.5px solid rgba(255,255,255,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(12deg)}
-    .bp-stamp-text{font-size:8px;font-weight:900;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.5px;text-align:center;line-height:1.2}
-    .save-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:12px;background:white;color:var(--brand);font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;font-family:inherit}
+    /* Pass Modal — 카드 이미지 기반 */
+    .pass-wrap{background:#1a1a2e;border-radius:20px;overflow:hidden;padding:24px 20px 20px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+    .pass-card-img{width:180px;height:auto;display:block;margin:0 auto 20px;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+    .pass-info{text-align:center;margin-bottom:16px}
+    .pass-code-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px}
+    .pass-code{font-size:20px;font-weight:800;color:white;letter-spacing:2px;font-family:'Barlow Condensed','Noto Sans KR',monospace,sans-serif}
+    .pass-date-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:12px;margin-bottom:2px}
+    .pass-date{font-size:13px;font-weight:600;color:rgba(255,255,255,0.7)}
+    .pass-divider{height:1px;background:rgba(255,255,255,0.08);margin:16px 0}
+    .pass-rewards-title{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:10px;letter-spacing:1px;text-transform:uppercase}
+    .pass-reward{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .pass-reward:last-child{border-bottom:none}
+    .pass-reward-name{font-size:12px;font-weight:500;color:rgba(255,255,255,0.75)}
+    .pass-reward-badge{font-size:11px;font-weight:700;color:#ff6b6b;background:rgba(255,107,107,0.12);padding:2px 8px;border-radius:6px}
+    .pass-notice{margin-top:16px;padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.06);text-align:center}
+    .pass-notice-text{font-size:11px;color:rgba(255,255,255,0.45);line-height:1.5}
+    .pass-notice-text strong{color:rgba(255,255,255,0.75)}
+    .save-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:12px;background:white;color:var(--gray-900);font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;font-family:inherit}
     .save-btn:hover{background:var(--gray-100)}
     .save-btn svg{width:18px;height:18px}
-    .save-btn-sub{text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,0.5)}
+    .save-btn-sub{text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,0.4)}
 
     .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
     .confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;animation:confettiFall 1.5s ease forwards}
@@ -182,25 +173,23 @@
     </div>
   </div>
 
-  <!-- Boarding Pass Modal -->
+  <!-- Pass Modal -->
   <div class="modal-overlay" id="pass-modal">
     <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <div class="modal-content">
-      <div class="boarding-pass" id="boarding-pass">
-        <div class="bp-header">
-          <img class="bp-logo" src="logo.png" alt="마이리얼트립" style="filter:brightness(0) invert(1);">
-          <div class="bp-pass-label">MYREALTRIP PASS</div>
-          <div class="bp-title" id="bp-title">마이리얼트립 패스</div>
-          <div class="bp-subtitle" id="bp-subtitle"></div>
-          <div class="bp-stamp"><div class="bp-stamp-text">MISSION<br>CLEAR</div></div>
+      <div class="pass-wrap" id="pass-capture">
+        <img class="pass-card-img" src="pass-card.png" alt="SHANGHAI TRAVEL PASS">
+        <div class="pass-info">
+          <div class="pass-code-label">PASS CODE</div>
+          <div class="pass-code" id="pass-code">—</div>
+          <div class="pass-date-label">VALID PERIOD</div>
+          <div class="pass-date" id="pass-date">여행일 기준</div>
         </div>
-        <div class="bp-divider"><div class="bp-divider-circle-l"></div><div class="bp-divider-line"></div><div class="bp-divider-circle-r"></div></div>
-        <div class="bp-rewards" id="bp-rewards"></div>
-        <div class="bp-divider"><div class="bp-divider-circle-l"></div><div class="bp-divider-line"></div><div class="bp-divider-circle-r"></div></div>
-        <div class="bp-footer">
-          <div class="bp-valid">VALID PERIOD</div>
-          <div class="bp-date" id="bp-date-range">여행일 기준</div>
-          <div class="bp-howto"><div class="bp-howto-text"><strong>현장에서 이 화면을 제시</strong>하시면<br>할인이 적용됩니다</div></div>
+        <div class="pass-divider"></div>
+        <div class="pass-rewards-title">혜택</div>
+        <div id="pass-rewards"></div>
+        <div class="pass-notice">
+          <div class="pass-notice-text"><strong>현장에서 이 화면을 제시</strong>하시면 할인이 적용됩니다</div>
         </div>
       </div>
       <button class="save-btn" onclick="savePassImage()">
@@ -258,7 +247,32 @@
   function doneCount() { return cityConfig ? cityConfig.groups.filter(g => groupDone(g.key)).length : 0; }
   function totalGroups() { return cityConfig ? cityConfig.groups.length : 0; }
 
-  function showPassModal() { document.getElementById('pass-modal').classList.add('show'); document.body.style.overflow = 'hidden'; }
+  // 고유 코드 생성 (MP-6자리 영숫자)
+  function generatePassCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = 'MP-';
+    for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+    return code;
+  }
+
+  let passCode = null;
+
+  function showPassModal() {
+    // 고유 코드 생성 (한 번만)
+    if (!passCode) passCode = generatePassCode();
+    document.getElementById('pass-code').textContent = passCode;
+
+    // 리워드 렌더링
+    document.getElementById('pass-rewards').innerHTML = rewards.map(r =>
+      `<div class="pass-reward"><span class="pass-reward-name">${r.name}</span><span class="pass-reward-badge">${r.discount}</span></div>`
+    ).join('');
+
+    // valid date 업데이트
+    updatePassDates();
+
+    document.getElementById('pass-modal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
   function closeModal() { document.getElementById('pass-modal').classList.remove('show'); document.body.style.overflow = ''; }
   document.getElementById('pass-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
@@ -271,7 +285,7 @@
     const latest = new Date(Math.max(...ends));
     latest.setDate(latest.getDate() + 7);
     const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-    document.getElementById('bp-date-range').textContent = `${fmt(earliest)} – ${fmt(latest)}`;
+    document.getElementById('pass-date').textContent = `${fmt(earliest)} – ${fmt(latest)}`;
   }
 
   function fireConfetti() {
@@ -290,8 +304,8 @@
     const btn = document.querySelector('.save-btn');
     btn.textContent = '저장 중...'; btn.disabled = true;
     try {
-      const canvas = await html2canvas(document.getElementById('boarding-pass'), { backgroundColor:null, scale:3, useCORS:true, logging:false });
-      try { await sb('pass_claims', { method:'POST', body:{ session_id:SESSION_ID, phone_number:'image_save', pack:CITY } }); } catch(_) {}
+      const canvas = await html2canvas(document.getElementById('pass-capture'), { backgroundColor:null, scale:3, useCORS:true, logging:false });
+      try { await sb('pass_claims', { method:'POST', body:{ session_id:SESSION_ID, phone_number:passCode || 'image_save', pack:CITY } }); } catch(_) {}
       const link = document.createElement('a');
       link.download = `myrealtrip-pass-${CITY}.png`; link.href = canvas.toDataURL('image/png'); link.click();
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg><span>저장 완료!</span>';
@@ -398,7 +412,7 @@
         <div class="reward-title">마이리얼트립 패스</div>
         <div class="reward-desc">${complete ? '미션 완료! 패스를 받으세요 🎉' : total + '개 미션을 완료하면 패스를 받을 수 있어요'}</div>
         <div class="reward-list">${rewards.map(r => `<div class="reward-item"><span class="reward-item-name">${r.name}</span><span class="reward-item-badge">${r.discount}</span></div>`).join('')}</div>
-        <button class="reward-btn" ${complete ? '' : 'disabled'} onclick="updatePassDates();showPassModal()">${complete ? '🎫 마이리얼트립 패스 받기' : '미션을 완료해주세요'}</button>
+        <button class="reward-btn" ${complete ? '' : 'disabled'} onclick="showPassModal()">${complete ? '🎫 마이리얼트립 패스 받기' : '미션을 완료해주세요'}</button>
       </div>
     </div></div>`;
 
@@ -423,7 +437,7 @@
       travelDates[type] = { start: result.travel_start, end: result.travel_end };
       fireConfetti();
       render();
-      if (allDone()) setTimeout(() => { updatePassDates(); fireConfetti(); showPassModal(); }, 600);
+      if (allDone()) setTimeout(() => { fireConfetti(); showPassModal(); }, 600);
     } catch (e) {
       err.textContent = e.code === '23505' ? '이미 인증된 미션입니다' : '오류가 발생했습니다';
       err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증';
