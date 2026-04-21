@@ -404,7 +404,7 @@
         html += `<div class="tl-card active"><div class="tl-card-body">
           <div class="tl-card-title">${activeM.title}</div>
           <div class="tl-card-sub">예약번호를 입력해주세요</div>
-          <div class="input-row"><input type="text" id="input-${activeM.mission_type}" placeholder="예약번호 입력" inputmode="numeric">
+          <div class="input-row"><input type="text" id="input-${activeM.mission_type}" placeholder="EXP-20260421-00015366" oninput="this.value=this.value.toUpperCase()">
           <button class="btn" id="btn-${activeM.mission_type}" onclick="verify('${activeM.mission_type}')">인증</button></div>
           <div id="error-${activeM.mission_type}" class="error-msg" style="display:none;"></div>
           <a href="${activeM.booking_url}" target="_blank" class="booking-link">아직 안 샀다면? 예약하러 가기 →</a>
@@ -439,7 +439,7 @@
     const val = input.value.trim();
     err.style.display = 'none';
     if (!val) { err.textContent = '예약번호를 입력해주세요'; err.style.display = 'block'; return; }
-    if (!/^\d+$/.test(val)) { err.textContent = '예약번호는 숫자만 입력해주세요'; err.style.display = 'block'; return; }
+    if (!/^EXP-\d{8}-\d{8}$/.test(val)) { err.textContent = '올바른 예약번호 형식을 입력해주세요 (예: EXP-20260421-00015366)'; err.style.display = 'block'; return; }
     btn.disabled = true; btn.textContent = '확인중...';
     try {
       const result = await rpc('verify_reservation', { p_order_id: val, p_mission_type: type });
