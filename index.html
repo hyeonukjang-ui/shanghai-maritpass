@@ -443,7 +443,17 @@
     btn.disabled = true; btn.textContent = '확인중...';
     try {
       const result = await rpc('verify_reservation', { p_order_id: val, p_mission_type: type });
-      if (!result || !result.valid) { err.textContent = '유효하지 않은 예약번호입니다'; err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증'; return; }
+      if (!result || !result.valid) {
+        const reason = result && result.reason;
+        if (reason === 'expired') {
+          err.textContent = '여행이 종료된 예약번호입니다 (여행 종료일 + 7일 이후)';
+        } else if (reason === 'not_found') {
+          err.textContent = '유효하지 않은 예약번호입니다. 다시 확인해주세요';
+        } else {
+          err.textContent = '유효하지 않은 예약번호입니다';
+        }
+        err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증'; return;
+      }
       await sb('user_missions', { method:'POST', body:{ session_id:SESSION_ID, mission_type:type, order_id:val } });
       cleared[type] = val;
       travelDates[type] = { start: result.travel_start, end: result.travel_end };
