@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>마이리얼트립 패스 - 마이리얼트립</title>
+  <title>상하이 트래블 패스 - 마이리얼트립</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
   <style>
     :root {
@@ -159,8 +159,8 @@
       <div class="hero-deco-stamp"><div class="hero-deco-stamp-inner">MYREALTRIP<br>PASS</div></div>
       <div class="hero-deco-dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
-      <div class="hero-tag">MYREALTRIP PASS</div>
-      <h1 id="hero-title">마이리얼트립 패스</h1>
+      <div class="hero-tag">SHANGHAI TRAVEL PASS</div>
+      <h1 id="hero-title">상하이 트래블 패스</h1>
       <p id="hero-desc">로딩 중...</p>
       <div class="hero-badge" id="hero-badge"></div>
     </div>
@@ -329,10 +329,10 @@
     // Hero
     const cityFlags = {shanghai:'🇨🇳',beijing:'🇨🇳',qingdao:'🇨🇳',xian:'🇨🇳',harbin:'🇨🇳',hongkong:'🇭🇰',macau:'🇲🇴',taipei:'🇹🇼',singapore:'🇸🇬'};
     const flag = cityFlags[CITY] || '';
-    document.getElementById('hero-title').textContent = `${flag} 마이리얼트립 패스(${cityConfig.city_name})`;
+    document.getElementById('hero-title').textContent = `${flag} ${cityConfig.city_name} 트래블 패스`;
     document.getElementById('hero-desc').textContent = `${total}개 인증하면 현지 할인 혜택!`;
     // 배경은 CSS 그래디언트 사용 (사진 없음)
-    document.title = `마이리얼트립 패스(${cityConfig.city_name}) - 마이리얼트립`;
+    document.title = `${cityConfig.city_name} 트래블 패스 - 마이리얼트립`;
 
     let badgeHTML = '';
     groups.forEach((g, i) => {
@@ -405,10 +405,9 @@
       <div class="tl-label">리워드</div>
       <div class="reward-card ${complete ? 'unlocked' : 'locked'}">
         <div class="reward-icon">🎫</div>
-        <div class="reward-title">마이리얼트립 패스</div>
+        <div class="reward-title">상하이 트래블 패스</div>
         <div class="reward-desc">${complete ? '미션 완료! 패스를 받으세요 🎉' : total + '개 미션을 완료하면 패스를 받을 수 있어요'}</div>
-        <div class="reward-list">${rewards.map(r => `<div class="reward-item"><span class="reward-item-name">${r.name}</span><span class="reward-item-badge">${r.discount}</span></div>`).join('')}</div>
-        <button class="reward-btn" onclick="showPassModal()">🎫 마이리얼트립 패스 받기</button>
+        <button class="reward-btn" onclick="showPassModal()">🎫 상하이 트래블 패스 받기</button>
       </div>
     </div></div>`;
 
