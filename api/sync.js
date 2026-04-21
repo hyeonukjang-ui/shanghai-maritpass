@@ -14,7 +14,17 @@ export default async function handler(req, res) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
+  const missing = [];
+  if (!REDASH_URL) missing.push('REDASH_URL');
+  if (!REDASH_API_KEY) missing.push('REDASH_API_KEY');
+  if (!REDASH_QUERY_ID) missing.push('REDASH_QUERY_ID');
+  if (!SUPABASE_URL) missing.push('SUPABASE_URL');
+  if (!SUPABASE_SERVICE_KEY) missing.push('SUPABASE_SERVICE_KEY');
+  if (missing.length) return res.status(500).json({ error: 'Missing env vars', missing });
+
   try {
+    const targetUrl = `${REDASH_URL}/api/queries/${REDASH_QUERY_ID}/results?max_age=0`;
+    console.log('[sync] Fetching Redash:', targetUrl);
     // 1. Redash 쿼리 실행 (최신 결과 요청, 캐시 0초)
     const redashRes = await fetch(
       `${REDASH_URL}/api/queries/${REDASH_QUERY_ID}/results?max_age=0`,
@@ -87,8 +97,13 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error('Sync failed:', error);
-    return res.status(500).json({ error: error.message });
+    console.error('Sync failed:', error.message, error.cause);
+    return res.status(500).json({
+      error: error.message,
+      cause: error.cause ? String(error.cause) : null,
+      redash_url: REDASH_URL,
+      query_id: REDASH_QUERY_ID
+    });
   }
 }
 
