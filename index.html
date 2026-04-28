@@ -6,28 +6,26 @@
   <title>상하이 트래블 패스 - 마이리얼트립</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
   <style>
-    :root {
+    :root{
       --brand:#51abf3;--brand-dark:#3d8fd6;--brand-light:#e8f4fd;
-      --secondary:#33b893;--secondary-light:#e6f7f2;
-      --error:#fa5b4a;--gold:#ffbf00;
+      --secondary:#33b893;--error:#fa5b4a;--gold:#ffbf00;
       --gray-50:#f8f9fa;--gray-100:#f1f3f5;--gray-200:#e9ecef;--gray-300:#dee2e6;
       --gray-400:#ced4da;--gray-500:#adb5bd;--gray-600:#868e96;--gray-700:#495057;
       --gray-800:#343a40;--gray-900:#212529;
-      --bg:#ffffff;--text:var(--gray-900);--text-sub:var(--gray-600);--text-muted:var(--gray-500);
+      --bg:#ffffff;--text:var(--gray-900);--text-sub:var(--gray-600);
     }
     *{margin:0;padding:0;box-sizing:border-box}
     html{overflow-x:hidden}
     body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--gray-50);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;width:100%}
     .container{max-width:480px;margin:0 auto;overflow-x:hidden}
+
     .header{background:var(--bg);border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:50}
     .header-inner{display:flex;align-items:center;justify-content:center;height:56px;padding:0 16px}
     .logo{height:24px}
-    /* Hero — Figma 디자인 기반 파스텔 그래디언트 */
+
+    /* Hero — 파스텔 그래디언트 */
     .hero{
-      position:relative;overflow:hidden;
-      padding:32px 20px 40px;
-      text-align:center;
-      color:var(--gray-900);
+      position:relative;overflow:hidden;padding:32px 20px 40px;text-align:center;color:var(--gray-900);
       background:
         radial-gradient(circle at 15% 50%, rgba(135,206,250,0.35) 0%, transparent 45%),
         radial-gradient(circle at 85% 50%, rgba(255,182,193,0.4) 0%, transparent 45%),
@@ -42,81 +40,50 @@
     .hero h1{font-size:26px;font-weight:800;margin-bottom:20px;letter-spacing:-1px;line-height:1.25;color:#1a1a1a}
     .hero p{font-size:14px;color:var(--gray-700);line-height:1.6;margin-top:20px;margin-bottom:20px;font-weight:700}
 
-    /* 히어로 카드 이미지 — 3D 플립 효과 */
     .hero-card-wrap{perspective:1000px;width:180px;margin:0 auto 16px;cursor:pointer}
     .hero-card{display:block;width:100%;height:auto;filter:drop-shadow(0 12px 30px rgba(231,76,60,0.25));transition:transform 0.8s cubic-bezier(0.4,0,0.2,1);transform-style:preserve-3d;user-select:none;-webkit-user-drag:none}
     .hero-card-wrap.flipping .hero-card{transform:rotateY(360deg)}
     .hero-card:hover{filter:drop-shadow(0 16px 36px rgba(231,76,60,0.35))}
 
-    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:rgba(0,0,0,0.7);margin-bottom:8px}
-    .hero-dot{width:8px;height:8px;border-radius:50%;transition:background 0.3s}
-    .hero-dot.done{background:var(--secondary);box-shadow:0 0 6px rgba(51,184,147,0.5)}
-    .hero-dot.pending{background:rgba(0,0,0,0.15)}
-    .timeline{padding:0 16px 40px}
-    .tl-item{display:flex;gap:12px;position:relative}
-    .tl-item:last-child .tl-track::after{display:none}
-    .tl-track{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;padding-top:24px}
-    .tl-dot{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--gray-300);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--gray-400);position:relative;z-index:2;transition:all 0.3s}
-    .tl-dot.active{border-color:var(--brand);color:var(--brand);background:var(--brand-light)}
-    .tl-dot.done{border-color:var(--secondary);background:var(--secondary);color:white}
-    .tl-dot.reward{border-color:var(--gold);background:#fff9e6;color:var(--gold);font-size:16px}
-    .tl-dot.reward.unlocked{background:var(--gold);color:white;animation:popIn 0.4s ease}
-    .tl-track::after{content:'';width:2px;flex:1;background:var(--gray-200);margin-top:4px}
-    .tl-item.done .tl-track::after{background:var(--secondary)}
-    .tl-content{flex:1;padding:16px 0 32px;min-width:0;overflow:hidden}
-    .tl-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-    @keyframes popIn{0%{transform:scale(0.5)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
-    .select-grid{display:flex;gap:8px;margin-bottom:12px;width:100%}
-    .select-option{flex:1;min-width:0;border:1.5px solid var(--gray-200);border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.15s;background:var(--bg)}
-    .select-option:hover{border-color:var(--gray-400)}
-    .select-option.active{border-color:var(--brand);box-shadow:0 0 0 3px rgba(81,171,243,0.1)}
-    .select-option.done{border-color:var(--secondary)}
-    .select-option.disabled{opacity:0.3;pointer-events:none}
-    .select-option img{width:100%;height:80px;object-fit:cover;display:block}
-    .select-option-body{padding:8px;text-align:center}
-    .select-option-name{font-size:11px;font-weight:600;word-break:keep-all;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .select-option-status{font-size:10px;color:var(--text-muted);margin-top:2px}
-    .select-option.active .select-option-name{color:var(--brand)}
-    .select-option.done .select-option-name{color:var(--secondary)}
-    .select-option.done .select-option-status{color:var(--secondary);font-weight:600}
-    .tl-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow:hidden;border:1.5px solid transparent;transition:all 0.2s;width:100%}
-    .tl-card.active{border-color:var(--brand);box-shadow:0 4px 16px rgba(81,171,243,0.12)}
-    .tl-card.done{border-color:var(--secondary)}
-    .tl-card-body{padding:14px 16px;overflow:hidden}
-    .tl-card-title{font-size:15px;font-weight:700;margin-bottom:2px}
-    .tl-card-sub{font-size:12px;color:var(--text-muted);margin-bottom:12px}
-    .tl-cleared{display:flex;align-items:center;justify-content:space-between}
-    .tl-cleared-left{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--secondary)}
-    .tl-cleared-left svg{width:16px;height:16px}
-    .cleared-pill{background:var(--secondary);color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
-    .input-row{display:flex;gap:8px;width:100%}
-    .input-row input{flex:1;min-width:0;padding:10px 12px;font-size:13px;border:1px solid var(--gray-300);border-radius:8px;outline:none;font-family:inherit;background:var(--bg);color:var(--text)}
-    .input-row input::placeholder{color:var(--gray-400)}
-    .input-row input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(81,171,243,0.12)}
-    .btn{padding:10px 20px;background:var(--brand);color:white;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit;white-space:nowrap}
-    .btn:hover{background:var(--brand-dark)}
-    .btn:disabled{opacity:0.45;cursor:not-allowed}
-    .booking-link{display:inline-flex;align-items:center;gap:3px;font-size:12px;color:var(--brand);text-decoration:none;font-weight:500;margin-top:8px}
-    .error-msg{color:var(--error);font-size:12px;font-weight:500;margin-top:8px}
-    .select-prompt{font-size:12px;color:var(--text-muted);text-align:center;padding:8px 0}
-    .reward-card{background:var(--bg);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);padding:20px;text-align:center;overflow:hidden;width:100%}
-    .reward-card.locked{opacity:0.5}
-    .reward-card.unlocked{border:2px solid var(--gold);box-shadow:0 4px 20px rgba(255,191,0,0.15);opacity:1}
-    .reward-icon{font-size:32px;margin-bottom:8px}
-    .reward-title{font-size:16px;font-weight:700;margin-bottom:4px}
-    .reward-desc{font-size:12px;color:var(--text-sub);margin-bottom:16px}
-    .reward-list{display:flex;flex-direction:column;gap:8px;text-align:left}
-    .reward-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--gray-50);border-radius:8px}
-    .reward-item-name{font-size:13px;font-weight:500}
-    .reward-item-badge{font-size:11px;font-weight:700;color:var(--error);background:#fff1f0;padding:2px 8px;border-radius:4px}
-    .reward-btn{margin-top:16px;padding:14px 32px;background:var(--gold);color:var(--gray-900);font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-family:inherit;width:100%}
-    .reward-btn:disabled{background:var(--gray-200);color:var(--gray-500);cursor:not-allowed}
-    .footer{text-align:center;padding:0 20px 32px}
-    .footer-logo{height:18px;opacity:0.25}
-    .footer p{color:var(--text-muted);font-size:11px;margin-top:4px}
-    .loading{text-align:center;padding:60px 20px;font-size:13px;color:var(--text-muted)}
+    /* 메인 코드 입력 영역 */
+    .main{padding:32px 20px 60px}
+    .code-card{background:var(--bg);border-radius:16px;padding:28px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+    .code-card-title{font-size:18px;font-weight:800;text-align:center;margin-bottom:6px;letter-spacing:-0.5px}
+    .code-card-desc{font-size:13px;color:var(--gray-600);text-align:center;line-height:1.5;margin-bottom:24px}
+    .code-card-desc strong{color:var(--brand);font-weight:700}
 
-    /* Modal */
+    .code-input-wrap{margin-bottom:12px}
+    .code-input{
+      width:100%;padding:18px 16px;font-size:18px;font-weight:700;letter-spacing:3px;
+      border:2px solid var(--gray-300);border-radius:12px;outline:none;
+      text-align:center;font-family:'Noto Sans KR',monospace;
+      background:var(--gray-50);color:var(--gray-900);
+      text-transform:uppercase;
+    }
+    .code-input::placeholder{color:var(--gray-400);letter-spacing:2px;font-weight:500}
+    .code-input:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(81,171,243,0.15);background:var(--bg)}
+
+    .code-btn{
+      width:100%;padding:16px;background:var(--brand);color:white;font-size:15px;font-weight:700;
+      border:none;border-radius:12px;cursor:pointer;font-family:inherit;transition:background 0.15s;
+    }
+    .code-btn:hover{background:var(--brand-dark)}
+    .code-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+    .error-msg{display:none;color:var(--error);font-size:13px;font-weight:500;margin-top:12px;text-align:center;padding:10px;background:#fff1f0;border-radius:8px}
+    .error-msg.show{display:block}
+
+    .help-section{margin-top:24px;padding:16px;background:var(--gray-50);border-radius:12px}
+    .help-title{font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px}
+    .help-list{font-size:12px;color:var(--gray-600);line-height:1.7}
+    .help-list li{list-style:none;padding-left:14px;position:relative}
+    .help-list li::before{content:'•';position:absolute;left:4px}
+
+    .footer{text-align:center;padding:24px 20px 32px}
+    .footer-logo{height:18px;opacity:0.25}
+    .footer p{color:var(--gray-500);font-size:11px;margin-top:4px}
+
+    /* 보딩패스 모달 */
     .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:100;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(4px)}
     .modal-overlay.show{display:flex;animation:fadeIn 0.3s ease}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -125,13 +92,12 @@
     .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(255,255,255,0.25);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:101;backdrop-filter:blur(4px)}
     .modal-close svg{width:16px;height:16px;stroke:white}
 
-    /* Pass Modal — 카드 이미지 기반 */
     .pass-wrap{background:#1a1a2e;border-radius:20px;overflow:hidden;padding:24px 20px 20px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
     .pass-card-img{width:180px;height:auto;display:block;margin:0 auto 20px;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,0.3)}
     .pass-info{text-align:center;margin-bottom:16px}
     .pass-code-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px}
-    .pass-code{font-size:20px;font-weight:800;color:white;letter-spacing:2px;font-family:'Barlow Condensed','Noto Sans KR',monospace,sans-serif}
-    .pass-date-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:12px;margin-bottom:2px}
+    .pass-code{font-size:22px;font-weight:800;color:white;letter-spacing:3px;font-family:'Barlow Condensed','Noto Sans KR',monospace,sans-serif}
+    .pass-date-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:14px;margin-bottom:2px}
     .pass-date{font-size:13px;font-weight:600;color:rgba(255,255,255,0.7)}
     .pass-divider{height:1px;background:rgba(255,255,255,0.08);margin:16px 0}
     .pass-rewards-title{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:10px;letter-spacing:1px;text-transform:uppercase}
@@ -142,6 +108,7 @@
     .pass-notice{margin-top:16px;padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.06);text-align:center}
     .pass-notice-text{font-size:11px;color:rgba(255,255,255,0.45);line-height:1.5}
     .pass-notice-text strong{color:rgba(255,255,255,0.75)}
+
     .save-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:12px;background:white;color:var(--gray-900);font-weight:600;font-size:14px;border:none;border-radius:12px;cursor:pointer;font-family:inherit}
     .save-btn:hover{background:var(--gray-100)}
     .save-btn svg{width:18px;height:18px}
@@ -161,21 +128,42 @@
   </div>
 
   <div class="container">
-    <div class="hero" id="hero">
+    <!-- Hero -->
+    <div class="hero">
       <div class="hero-logos">
         <img class="hero-logo-img" src="/logo.png" alt="마이리얼트립">
         <div class="hero-logo-divider"></div>
         <span class="hero-logo-partner">miracle tour</span>
       </div>
-      <h1 id="hero-title">상하이 트래블 패스</h1>
+      <h1>상하이 트래블 패스</h1>
       <div class="hero-card-wrap" id="hero-card-wrap" onclick="flipCard()">
         <img class="hero-card" src="/pass-card.png" alt="Shanghai Travel Pass">
       </div>
-      <p id="hero-desc">디즈니랜드나 유람선을 구매했다면?<br>투어 예약하고 10여개 제휴샵 최대 10% 할인 받으세요!</p>
-      <div class="hero-badge" id="hero-badge"></div>
+      <p>알림톡으로 받으신 패스 코드를<br>아래에 입력하시면 패스를 받으실 수 있어요</p>
     </div>
 
-    <div id="main-content"><div class="loading">로딩 중...</div></div>
+    <!-- Code Input -->
+    <div class="main">
+      <div class="code-card">
+        <div class="code-card-title">패스 코드 입력</div>
+        <div class="code-card-desc">알림톡으로 발송된 <strong>MP-XXXXXX</strong> 형식의 코드를 입력해주세요</div>
+
+        <div class="code-input-wrap">
+          <input type="text" id="code-input" class="code-input" placeholder="MP-XXXXXX" maxlength="9" autocomplete="off">
+        </div>
+        <button class="code-btn" id="submit-btn" onclick="submitCode()">패스 받기</button>
+        <div class="error-msg" id="error-msg"></div>
+
+        <div class="help-section">
+          <div class="help-title">안내</div>
+          <ul class="help-list">
+            <li>패스 코드는 알림톡으로만 발송됩니다</li>
+            <li>코드를 입력하면 보딩패스 이미지가 발급됩니다</li>
+            <li>현장에서 보딩패스 화면을 제시하시면 할인이 적용됩니다</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <div class="footer">
       <img class="footer-logo" src="/logo.png" alt="마이리얼트립">
@@ -185,19 +173,26 @@
 
   <!-- Pass Modal -->
   <div class="modal-overlay" id="pass-modal">
-    <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <button class="modal-close" onclick="closeModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
     <div class="modal-content">
       <div class="pass-wrap" id="pass-capture">
         <img class="pass-card-img" src="/pass-card.png" alt="SHANGHAI TRAVEL PASS">
         <div class="pass-info">
           <div class="pass-code-label">PASS CODE</div>
           <div class="pass-code" id="pass-code">—</div>
-          <div class="pass-date-label">VALID PERIOD</div>
-          <div class="pass-date" id="pass-date">여행일 기준</div>
+          <div class="pass-date-label">VALID UNTIL</div>
+          <div class="pass-date" id="pass-date">—</div>
         </div>
         <div class="pass-divider"></div>
-        <div class="pass-rewards-title">혜택</div>
-        <div id="pass-rewards"></div>
+        <div class="pass-rewards-title">제휴 혜택</div>
+        <div class="pass-reward"><span class="pass-reward-name">하이디라오 (海底捞)</span><span class="pass-reward-badge">10% OFF</span></div>
+        <div class="pass-reward"><span class="pass-reward-name">해가대원 (蟹家大院)</span><span class="pass-reward-badge">10% OFF</span></div>
+        <div class="pass-reward"><span class="pass-reward-name">차이란 딤섬</span><span class="pass-reward-badge">10% OFF</span></div>
+        <div class="pass-reward"><span class="pass-reward-name">Bamboo 마사지</span><span class="pass-reward-badge">10% OFF</span></div>
+        <div class="pass-reward"><span class="pass-reward-name">康友四季 난징동루</span><span class="pass-reward-badge">10% OFF</span></div>
+        <div class="pass-reward"><span class="pass-reward-name">BFC 중식당 (와이탄)</span><span class="pass-reward-badge">10% OFF</span></div>
         <div class="pass-notice">
           <div class="pass-notice-text"><strong>현장에서 이 화면을 제시</strong>하시면 할인이 적용됩니다</div>
         </div>
@@ -215,58 +210,7 @@
   const SUPABASE_URL = 'https://glxqsuxhiomukbtqumat.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdseHFzdXhoaW9tdWtidHF1bWF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjcxMTMsImV4cCI6MjA5MTMwMzExM30.atohBI0QqyoAU3G-ZVl1ei5xgWuGOEjL14nG8duDyD0';
 
-  // URL에서 도시 파악: /shanghai or ?city=shanghai
-  const pathCity = location.pathname.split('/').filter(Boolean).pop();
-  const paramCity = new URLSearchParams(location.search).get('city');
-  const CITY = pathCity && pathCity !== 'index.html' ? pathCity : (paramCity || 'shanghai');
-
-  function getSessionId() {
-    let sid = localStorage.getItem('myrealpass_session_' + CITY);
-    if (!sid) { sid = crypto.randomUUID(); localStorage.setItem('myrealpass_session_' + CITY, sid); }
-    return sid;
-  }
-  const SESSION_ID = getSessionId();
-
-  async function sb(path, opts = {}) {
-    const r = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': opts.prefer || 'return=representation', ...opts.headers },
-      method: opts.method || 'GET', body: opts.body ? JSON.stringify(opts.body) : undefined
-    });
-    if (!r.ok) { const e = await r.json().catch(() => ({})); throw e; }
-    return r.json();
-  }
-  async function rpc(fn, p) {
-    const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/' + fn, {
-      method: 'POST', headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(p)
-    });
-    if (!r.ok) throw await r.json().catch(() => ({}));
-    return r.json();
-  }
-
-  let cityConfig = null;
-  let missions = [];
-  let rewards = [];
-  const cleared = {};
-  const travelDates = {};
-  const selected = {}; // { groupKey: mission_type }
-
-  function getMission(type) { return missions.find(m => m.mission_type === type); }
-  function groupMissions(groupKey) { return missions.filter(m => m.mission_group === groupKey); }
-  function groupDone(groupKey) { return groupMissions(groupKey).find(t => cleared[t.mission_type]); }
-  function allDone() { return cityConfig && cityConfig.groups.every(g => groupDone(g.key)); }
-  function doneCount() { return cityConfig ? cityConfig.groups.filter(g => groupDone(g.key)).length : 0; }
-  function totalGroups() { return cityConfig ? cityConfig.groups.length : 0; }
-
-  // 고유 코드 생성 (MP-6자리 영숫자)
-  function generatePassCode() {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let code = 'MP-';
-    for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-    return code;
-  }
-
-  let passCode = null;
-
+  // ── 카드 플립 효과 ──
   function flipCard() {
     const wrap = document.getElementById('hero-card-wrap');
     if (!wrap || wrap.classList.contains('flipping')) return;
@@ -274,231 +218,156 @@
     setTimeout(() => wrap.classList.remove('flipping'), 800);
   }
 
-  function showPassModal() {
-    // 고유 코드 생성 (한 번만)
-    if (!passCode) passCode = generatePassCode();
+  // ── 입력 자동 포맷 (대문자 + MP- 자동 추가) ──
+  const codeInput = document.getElementById('code-input');
+  codeInput.addEventListener('input', (e) => {
+    let v = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+    if (v.length > 0 && !v.startsWith('M') && !v.startsWith('MP')) {
+      v = 'MP-' + v;
+    } else if (v === 'M') {
+      v = 'MP-';
+    } else if (v.startsWith('MP') && !v.startsWith('MP-') && v.length >= 3) {
+      v = 'MP-' + v.slice(2);
+    }
+    if (v.length > 9) v = v.slice(0, 9);
+    e.target.value = v;
+  });
+  codeInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitCode();
+  });
+
+  // ── 코드 제출 ──
+  async function submitCode() {
+    const input = document.getElementById('code-input');
+    const errEl = document.getElementById('error-msg');
+    const btn = document.getElementById('submit-btn');
+    const code = input.value.trim().toUpperCase();
+
+    errEl.classList.remove('show');
+
+    if (!code) {
+      errEl.textContent = '패스 코드를 입력해주세요';
+      errEl.classList.add('show');
+      return;
+    }
+    if (!/^MP-[A-Z0-9]{6}$/.test(code)) {
+      errEl.textContent = '올바른 코드 형식이 아닙니다 (예: MP-X8F2K9)';
+      errEl.classList.add('show');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '확인 중...';
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/verify_pass_code`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ p_code: code })
+      });
+
+      if (!res.ok) throw new Error('서버 오류');
+      const result = await res.json();
+
+      if (!result || !result.valid) {
+        if (result?.reason === 'expired') {
+          errEl.textContent = '유효 기간이 지난 패스 코드입니다';
+        } else if (result?.reason === 'not_found') {
+          errEl.textContent = '존재하지 않는 패스 코드입니다. 다시 확인해주세요';
+        } else {
+          errEl.textContent = '확인할 수 없는 코드입니다';
+        }
+        errEl.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = '패스 받기';
+        return;
+      }
+
+      // 성공! 보딩패스 표시
+      showPassModal({
+        passCode: result.pass_code,
+        validUntil: formatDate(result.valid_until)
+      });
+
+      btn.disabled = false;
+      btn.textContent = '패스 받기';
+    } catch (e) {
+      console.error(e);
+      errEl.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해주세요';
+      errEl.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = '패스 받기';
+    }
+  }
+
+  function formatDate(isoDate) {
+    if (!isoDate) return '—';
+    const d = new Date(isoDate);
+    return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  // ── 보딩패스 모달 ──
+  function showPassModal({ passCode, validUntil }) {
     document.getElementById('pass-code').textContent = passCode;
-
-    // 리워드 렌더링
-    document.getElementById('pass-rewards').innerHTML = rewards.map(r =>
-      `<div class="pass-reward"><span class="pass-reward-name">${r.name}</span><span class="pass-reward-badge">${r.discount}</span></div>`
-    ).join('');
-
-    // valid date 업데이트
-    updatePassDates();
-
+    document.getElementById('pass-date').textContent = `~ ${validUntil}`;
     document.getElementById('pass-modal').classList.add('show');
     document.body.style.overflow = 'hidden';
+    fireConfetti();
   }
-  function closeModal() { document.getElementById('pass-modal').classList.remove('show'); document.body.style.overflow = ''; }
-  document.getElementById('pass-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-
-  function updatePassDates() {
-    const dates = Object.values(travelDates).filter(d => d.start && d.end);
-    if (!dates.length) return;
-    const starts = dates.map(d => new Date(d.start));
-    const ends = dates.map(d => new Date(d.end));
-    const earliest = new Date(Math.min(...starts));
-    const latest = new Date(Math.max(...ends));
-    latest.setDate(latest.getDate() + 7);
-    const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-    document.getElementById('pass-date').textContent = `${fmt(earliest)} – ${fmt(latest)}`;
+  function closeModal() {
+    document.getElementById('pass-modal').classList.remove('show');
+    document.body.style.overflow = '';
   }
+  document.getElementById('pass-modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
 
+  // ── 컨페티 ──
   function fireConfetti() {
-    const c = document.createElement('div'); c.className = 'confetti'; document.body.appendChild(c);
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    document.body.appendChild(c);
     const colors = ['#51abf3','#33b893','#ffbf00','#fa5b4a','#a78bfa','#f472b6'];
     for (let i = 0; i < 40; i++) {
-      const p = document.createElement('div'); p.className = 'confetti-piece';
-      p.style.left = Math.random()*100+'%'; p.style.background = colors[Math.floor(Math.random()*colors.length)];
-      p.style.animationDelay = Math.random()*0.5+'s'; p.style.animationDuration = (1+Math.random())+'s';
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.left = Math.random()*100+'%';
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
+      p.style.animationDelay = Math.random()*0.5+'s';
+      p.style.animationDuration = (1+Math.random())+'s';
       c.appendChild(p);
     }
     setTimeout(() => c.remove(), 2500);
   }
 
+  // ── 이미지 저장 ──
   async function savePassImage() {
     const btn = document.querySelector('.save-btn');
-    btn.textContent = '저장 중...'; btn.disabled = true;
+    btn.textContent = '저장 중...';
+    btn.disabled = true;
     try {
-      const canvas = await html2canvas(document.getElementById('pass-capture'), { backgroundColor:null, scale:3, useCORS:true, logging:false });
-      try { await sb('pass_claims', { method:'POST', body:{ session_id:SESSION_ID, phone_number:passCode || 'image_save', pack:CITY } }); } catch(_) {}
+      const canvas = await html2canvas(document.getElementById('pass-capture'), {
+        backgroundColor: null, scale: 3, useCORS: true, logging: false
+      });
       const link = document.createElement('a');
-      link.download = `myrealtrip-pass-${CITY}.png`; link.href = canvas.toDataURL('image/png'); link.click();
+      link.download = `shanghai-travel-pass-${document.getElementById('pass-code').textContent}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg><span>저장 완료!</span>';
-      setTimeout(() => { btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>이미지 저장하기</span>'; btn.disabled = false; }, 2000);
-    } catch (e) { btn.innerHTML = '<span>저장 실패 - 스크린샷을 찍어주세요</span>'; btn.disabled = false; }
-  }
-
-  function selectItem(groupKey, missionType) {
-    if (groupDone(groupKey)) return;
-    selected[groupKey] = missionType;
-    render();
-  }
-
-  function render() {
-    if (!cityConfig) return;
-    const groups = cityConfig.groups;
-    const count = doneCount();
-    const total = totalGroups();
-    const complete = allDone();
-
-    // Hero
-    const cityFlags = {shanghai:'🇨🇳',beijing:'🇨🇳',qingdao:'🇨🇳',xian:'🇨🇳',harbin:'🇨🇳',hongkong:'🇭🇰',macau:'🇲🇴',taipei:'🇹🇼',singapore:'🇸🇬'};
-    const flag = cityFlags[CITY] || '';
-    document.getElementById('hero-title').textContent = `${cityConfig.city_name} 트래블 패스`;
-    document.getElementById('hero-desc').innerHTML = `디즈니랜드나 유람선을 구매했다면?<br>투어 예약하고 10여개 제휴샵 최대 10% 할인 받으세요!`;
-    // 배경은 CSS 그래디언트 사용 (사진 없음)
-    document.title = `${cityConfig.city_name} 트래블 패스 - 마이리얼트립`;
-
-    let badgeHTML = '';
-    groups.forEach((g, i) => {
-      badgeHTML += `<div class="hero-dot ${groupDone(g.key) ? 'done' : 'pending'}"></div>`;
-    });
-    badgeHTML += `<span>${count} / ${total} 완료</span>`;
-    document.getElementById('hero-badge').innerHTML = badgeHTML;
-
-    // Boarding pass
-    // 패스 모달 리워드는 showPassModal()에서 렌더링
-
-    // Timeline
-    let html = '<div class="timeline">';
-
-    groups.forEach((g, gi) => {
-      const gd = groupDone(g.key);
-      const gMissions = groupMissions(g.key);
-      const dotClass = gd ? 'done' : 'active';
-      const dotContent = gd ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : (gi + 1);
-      const itemClass = gd ? ' done' : '';
-
-      html += `<div class="tl-item${itemClass}"><div class="tl-track"><div class="tl-dot ${dotClass}">${dotContent}</div></div><div class="tl-content">`;
-      html += `<div class="tl-label">${g.label} (${g.sub})</div>`;
-
-      // Select grid
-      html += '<div class="select-grid">';
-      gMissions.forEach(m => {
-        const isDone = !!cleared[m.mission_type];
-        const isSelected = selected[g.key] === m.mission_type;
-        const isDisabled = gd && !isDone;
-        let cls = 'select-option';
-        if (isDone) cls += ' done';
-        else if (isSelected) cls += ' active';
-        if (isDisabled) cls += ' disabled';
-        const status = isDone ? 'CLEAR!' : isSelected ? '선택됨' : '선택하기';
-        const shortName = m.title.replace(' 야경투어','').replace('+유람선','').replace(' 수향마을','');
-        html += `<div class="${cls}" onclick="selectItem('${g.key}','${m.mission_type}')">
-          <img src="${m.image_url || ''}" alt="${m.title}">
-          <div class="select-option-body"><div class="select-option-name">${shortName}</div><div class="select-option-status">${status}</div></div></div>`;
-      });
-      html += '</div>';
-
-      // Auth area
-      const activeType = gd || selected[g.key];
-      const activeM = activeType ? getMission(gd || selected[g.key]) : null;
-
-      if (activeM && cleared[activeM.mission_type]) {
-        html += `<div class="tl-card done"><div class="tl-card-body"><div class="tl-cleared">
-          <div class="tl-cleared-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 예약번호 ${cleared[activeM.mission_type]}</div>
-          <span class="cleared-pill">CLEAR!</span></div></div></div>`;
-      } else if (activeM) {
-        html += `<div class="tl-card active"><div class="tl-card-body">
-          <div class="tl-card-title">${activeM.title}</div>
-          <div class="tl-card-sub">예약번호를 입력해주세요</div>
-          <div class="input-row"><input type="text" id="input-${activeM.mission_type}" placeholder="EXP-20260421-00015366" oninput="this.value=this.value.toUpperCase()">
-          <button class="btn" id="btn-${activeM.mission_type}" onclick="verify('${activeM.mission_type}')">인증</button></div>
-          <div id="error-${activeM.mission_type}" class="error-msg" style="display:none;"></div>
-          <a href="${activeM.booking_url}" target="_blank" class="booking-link">아직 안 샀다면? 예약하러 가기 →</a>
-        </div></div>`;
-      } else {
-        html += '<div class="select-prompt">위에서 상품을 선택해주세요</div>';
-      }
-
-      html += '</div></div>';
-    });
-
-    // Reward
-    const rewardDotClass = complete ? 'reward unlocked' : 'reward';
-    html += `<div class="tl-item"><div class="tl-track"><div class="tl-dot ${rewardDotClass}">🎁</div></div><div class="tl-content">
-      <div class="tl-label">리워드</div>
-      <div class="reward-card ${complete ? 'unlocked' : 'locked'}">
-        <div class="reward-icon">🎫</div>
-        <div class="reward-title">상하이 트래블 패스</div>
-        <div class="reward-desc">${complete ? '미션 완료! 패스를 받으세요 🎉' : total + '개 미션을 완료하면 패스를 받을 수 있어요'}</div>
-        <button class="reward-btn" onclick="showPassModal()">🎫 상하이 트래블 패스 받기</button>
-      </div>
-    </div></div>`;
-
-    html += '</div>';
-    document.getElementById('main-content').innerHTML = html;
-  }
-
-  async function verify(type) {
-    const input = document.getElementById('input-' + type);
-    const err = document.getElementById('error-' + type);
-    const btn = document.getElementById('btn-' + type);
-    const val = input.value.trim();
-    err.style.display = 'none';
-    if (!val) { err.textContent = '예약번호를 입력해주세요'; err.style.display = 'block'; return; }
-    if (!/^EXP-\d{8}-\d{8}$/.test(val)) { err.textContent = '올바른 예약번호 형식을 입력해주세요 (예: EXP-20260421-00015366)'; err.style.display = 'block'; return; }
-    btn.disabled = true; btn.textContent = '확인중...';
-    try {
-      const result = await rpc('verify_reservation', { p_order_id: val, p_mission_type: type });
-      if (!result || !result.valid) {
-        const reason = result && result.reason;
-        if (reason === 'expired') {
-          err.textContent = '여행이 종료된 예약번호입니다 (여행 종료일 + 7일 이후)';
-        } else if (reason === 'not_found') {
-          err.textContent = '유효하지 않은 예약번호입니다. 다시 확인해주세요';
-        } else {
-          err.textContent = '유효하지 않은 예약번호입니다';
-        }
-        err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증'; return;
-      }
-      await sb('user_missions', { method:'POST', body:{ session_id:SESSION_ID, mission_type:type, order_id:val } });
-      cleared[type] = val;
-      travelDates[type] = { start: result.travel_start, end: result.travel_end };
-      fireConfetti();
-      render();
-      if (allDone()) setTimeout(() => { fireConfetti(); showPassModal(); }, 600);
+      setTimeout(() => {
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>이미지 저장하기</span>';
+        btn.disabled = false;
+      }, 2000);
     } catch (e) {
-      err.textContent = e.code === '23505' ? '이미 인증된 미션입니다' : '오류가 발생했습니다';
-      err.style.display = 'block'; btn.disabled = false; btn.textContent = '인증';
+      btn.innerHTML = '<span>저장 실패 - 스크린샷을 찍어주세요</span>';
+      btn.disabled = false;
     }
   }
-
-  // Init
-  (async () => {
-    try {
-      const [configs, allMissions, allRewards, existing] = await Promise.all([
-        sb(`city_config?city=eq.${CITY}&is_active=eq.true`),
-        sb(`missions?city=eq.${CITY}&is_active=eq.true&order=display_order.asc`),
-        sb(`rewards?city=eq.${CITY}&is_active=eq.true&order=display_order.asc`),
-        sb(`user_missions?session_id=eq.${SESSION_ID}`)
-      ]);
-
-      if (!configs.length) {
-        document.getElementById('main-content').innerHTML = '<div class="loading">존재하지 않는 도시입니다</div>';
-        return;
-      }
-
-      cityConfig = configs[0];
-      cityConfig.groups = typeof cityConfig.groups === 'string' ? JSON.parse(cityConfig.groups) : cityConfig.groups;
-      missions = allMissions;
-      rewards = allRewards;
-      existing.forEach(r => { cleared[r.mission_type] = r.order_id; });
-
-      // Auto-select cleared items
-      cityConfig.groups.forEach(g => {
-        const done = groupDone(g.key);
-        if (done) selected[g.key] = done.mission_type;
-      });
-
-      render();
-    } catch (e) {
-      console.error('Init failed:', e);
-      document.getElementById('main-content').innerHTML = '<div class="loading">로딩 실패: ' + (e.message || e.hint || JSON.stringify(e)) + '</div>';
-    }
-  })();
 </script>
 </body>
 </html>
